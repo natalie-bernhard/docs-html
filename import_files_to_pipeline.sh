@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in ./*.html; do
+for f in en/*.html; do
     fileid="$(basename "$f" .html)"
     java -Djavax.net.ssl.trustStore=.keystore -Djavax.net.ssl.trustStorePassword=openliberty \
     -jar gp-cli-2.4.0-SNAPSHOT-with-dependencies.jar create-file -j openliberty__credential.json \
