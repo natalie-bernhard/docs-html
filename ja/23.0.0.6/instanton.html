@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Open Liberty InstantOn :: Open Liberty 資料を使用した、コンテナー化されたアプリケーションの始動の迅速化</title>
+    <link rel="canonical" href="https://openliberty.io/docs/latest/instanton.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Asap:400,500" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/default.min.css">
+<link rel="stylesheet" href="../../_/css/site.css">
+<meta name="robots" content="noindex" />
+<meta name="description" content="Open Liberty InstantOn は、 MicroProfile および Jakarta EE アプリケーションに対して、非常に高速な起動時間を提供します。">
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@OpenLibertyIO" />
+<meta name="twitter:title" content="Open Liberty 資料" />
+<meta name="twitter:description" content="Open Liberty InstantOn は、 MicroProfile および Jakarta EE アプリケーションに対して、非常に高速な起動時間を提供します。" />
+<meta name="twitter:image" content="https://openliberty.io/img/twitter_card.jpg" />
+
+
+<meta property="og:title" content="Open Liberty Docs" />
+<meta property="og:description" content="Open Liberty InstantOn provides incredibly fast startup times for MicroProfile and Jakarta EE applications." />
+<meta property="og:image" content="https://openliberty.io/img/twitter_card.jpg" />
+<meta property='og:type' content="website" />
+<meta property='og:url' content="https://openliberty.io/docs/23.0.0.6/instanton.html" />
+
+    <script async src="../../_/js/vendor/highlight.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  </head>
+  <body class="article">
+<header>
+    <nav id="nav_bar" aria-label="ナビゲーション・ヘッダー・リンク">
+        <div id="nav_header"><a id="home_link" href="/" aria-label="Open Liberty ホーム"> <img id="ol_logo" src="../../_/img/docs_openliberty_logo.png" alt="Open Liberty ロゴ"> </a> <button id="hamburger_toggle_button" onclick="$('#nav_bar').toggleClass('responsive');" aria-label="ナビゲーション・メニューの切り替え"> <span id="hamburger_toggle_icon"></span> </button></div>
+        <div id="hamburger_menu">
+            <ul class="nav_list">
+                <li class="nav_link"><a href="/start">ゲット・スタート</a></li>
+                <li class="nav_link"><a href="/guides">ガイド</a></li>
+                <li class="nav_link"><a href="/docs">資料</a></li>
+                <li class="nav_link"><a href="/support">サポート</a></li>
+                <li class="nav_link"><a href="/blog">ブログ</a></li>
+            </ul>
+            <div id="header_round_links_container"><a id="header_twitter_link" class="header_round_button" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener noreferrer" aria-label="&lt;"></a> <a id="header_stackoverflow_link" class="header_round_button" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener noreferrer" aria-label="Stack Overflow での Open Liberty に関する質問"></a> <a id="header_groupsio_link" class="header_round_button" href="https://groups.io/g/openliberty" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Groups.io"></a> <a id="header_gitter_link" class="header_round_button" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Gitter"></a></div>
+        </div>
+    </nav>
+</header><div class="body">
+<div class="nav-container" data-component="docs" data-version="23.0.0.6">
+  <aside class="nav" aria-label="ナビゲーションの目次">
+    <div class="panels">
+      <div class="nav-panel-explore" data-panel="explore">
+    <div class="doc_select version_select">
+      <div class="context"><span class="title">バージョン</span> <a class="version" href="#">23.0.0.6</a> <img src="../../_/img/chevron.svg" class="version_select_chevron"/></div>
+      <ul class="components">
+        <li class="component is-current"><ul class="versions">
+              <li class="version"><span class="title">バージョン</span> <a href="../latest/instanton.html" aria-label="バージョン 23.0.0.12">23.0.0.12</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.11/instanton.html" aria-label="バージョン 23.0.0.11">23.0.0.11</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.10/instanton.html" aria-label="バージョン 23.0.0.10">23.0.0.10</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.9/instanton.html" aria-label="バージョン 23.0.0.9">23.0.0.9</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.8/instanton.html" aria-label="バージョン 23.0.0.8">23.0.0.8</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.7/instanton.html" aria-label="バージョン 23.0.0.7">23.0.0.7</a></li>
+              <li class="version is-current"><span class="title">バージョン</span> <a href="instanton.html" aria-label="バージョン 23.0.0.6">23.0.0.6</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/23.0.0.5/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 23.0.0.5">23.0.0.5</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/23.0.0.4/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 23.0.0.4">23.0.0.4</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/23.0.0.3/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 23.0.0.3">23.0.0.3</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/23.0.0.2/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 23.0.0.2">23.0.0.2</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/23.0.0.1/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 23.0.0.1">23.0.0.1</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.13/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.13">22.0.0.13</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.12/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.12">22.0.0.12</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.11/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.11">22.0.0.11</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.10/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.10">22.0.0.10</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.9/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.9">22.0.0.9</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.8/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.8">22.0.0.8</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.7/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.7">22.0.0.7</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.6/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.6">22.0.0.6</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.5/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.5">22.0.0.5</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.4/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.4">22.0.0.4</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.3/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.3">22.0.0.3</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.2/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.2">22.0.0.2</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.1/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 22.0.0.1">22.0.0.1</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/21.0.0.12/noversion.html?ref=/docs/23.0.0.6/instanton.html" aria-label="バージョン 21.0.0.12">21.0.0.12</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="doc_select language_select">
+      <div class="context lang_picker"><img src="../../_/img/filled_globe.svg" class="globe_icon"/> <a class="version" href="#"> </a> <img src="../../_/img/chevron.svg" class="version_select_chevron"/></div>
+        <ul class="components language_list">
+          <li class="component"><ul class="versions">
+                <li class="version is-current"><a href="/docs/23.0.0.6/instanton.html" translate="no">English</a></li>
+                <li class="version"><a href="/ja/docs/23.0.0.6/instanton.html" translate="no">日本語</a></li>
+                <li class="version"><a href="/zh-Hans/docs/23.0.0.6/instanton.html" translate="no">中文（简体)</a></li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    
+</div>
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu" aria-label="Open Liberty 資料のナビゲーション・メニュー">
+    <h3 class="title"><a href="overview.html">資料の概要</a></h3>
+    <ul class="nav-list">
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button><span class="nav-text" tabindex="0" role="button"> の基本</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="zero-migration-architecture.html">マイグレーションなし</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="development-mode.html">開発モード</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="java-se.html">Java SEサポート</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="installing-open-liberty-betas.html"> Open Liberty ベータ・リリースのインストール</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="develop-liberty-tools.html">Liberty ツールを使用した開発</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/getting-started.html">ガイド: Open Liberty</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">開発</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="cloud-native-microservices.html">クラウド・ネイティブ・マイクロサービス</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="microprofile.html">MicroProfile 概要</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="jakarta-ee.html">Jakarta EE の概要</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="container-images.html">コンテナー・イメージ</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="verify-signatures-for-container-images-in-open-liberty.html"> Open Liberty</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="rest-microservices.html">RESTful サービス</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="sync-async-rest-clients.html">同期および非同期 REST クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="rest-clients.html">REST クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="json-p-b.html">JSON-P および JSON-B</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="send-receive-multipart-jaxrs.html">multipart/form-data パーツの送受信</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#restful_service">ガイド: RESTful サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#getting_started">ガイド: 始めに</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="rest-alternatives.html">REST の代替</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-graphql.html"> GraphQL アプリケーションのビルド</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="grpc-services.html"> gRPC サービスの提供と取り込み</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="web-socket.html"> WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#rest_alternatives">ガイド: REST 代替</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="documentation-openapi.html">API の文書化</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/microprofile-openapi.html">ガイド: RESTful API の文書化</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="external-configuration.html">マイクロサービスの外部構成</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-config-properties.html">MicroProfile Config プロパティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#configuration">ガイド: 構成</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="cdi-beans.html">Context and Dependency Injection (コンテキストおよび依存関係の注入)</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jaxrs-integration-cdi.html">RESTful Web Services と CDI の統合</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/cdi-intro.html">ガイド: マイクロサービスへの依存関係の注入</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="data-persistence.html">データ・パーシスタンス</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="relational-database-connections-JDBC.html"> JDBC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="kerberos-authentication-jdbc.html">JDBC の Kerberos 認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="data-persistence-jpa.html">JPA によるデータ・パーシスタンス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="access-nosql-databases.html">CDI を使用した NoSQL データベースへのアクセス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="create-session-table.html">セッション・パーシスタンス用のデータベース表の作成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#persistence">ガイド: パーシスタンス</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="transaction-service.html">トランザクション・リカバリー</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="distributed-caching-jcache.html">JCache を使用した分散キャッシング</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="distributed-session-caching.html">分散セッション・キャッシング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-infinispan-support.html"> Infinispan を JCache プロバイダーとして構成する</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="observability.html">プログラム識別情報</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microservice-observability-metrics.html">Microservice 可観測性 (メトリックあり)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="micrometer-metrics.html"> MicroProfile Metrics を使用した独自のモニタリング・ツールの選択</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="health-check-microservices.html">マイクロサービスのヘルス・チェック</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-telemetry.html">分散トレースを使用可能にする</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#observability">ガイド: プログラム識別情報</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="integration-testing.html">テスト</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#test">ガイド: テスト</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="fault-tolerance.html">フォールト・トレランス</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="async-programming-fault-tolerance.html">Resilient 非同期プログラミング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#fault_tolerance">ガイド: フォールト・トレランス</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="concurrency.html">並行性</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-context-propagation.html"> MicroProfile コンテキスト伝搬との並行性</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="async-io.html">非同期入出力</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">セキュリティー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="authentication.html">認証</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="authentication-filters.html">認証フィルター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="authentication-cache.html">認証キャッシュ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="user-registries-application-security.html">ユーザー・レジストリー</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="single-sign-on.html">シングル・サインオン</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="kerberos-authentication.html">Kerberos 認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="track-loggedout-sso.html">ログアウト SSO Cookie の追跡</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-spnego-authentication.html">SPNEGO 認証の構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="enable-openid-connect-client.html"> OpenID Connect クライアントの有効化</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="authorization.html">許可</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="secure-communication-tls.html">TLS を使用したセキュア通信</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="acme-cert-management.html">ACME による自動証明書管理</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="security-hardening.html">セキュリティー強化</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="server-configuration-hardening.html">サーバー構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="network-hardening.html">ネットワーク</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="application-configuration-hardening.html">アプリケーション構成</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="password-encryption.html">パスワード暗号化の制限</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="audit-logs.html">監査ログ</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="verifying-package-signatures.html">リリース・パッケージの署名の検証</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="enable-fips.html">FIPS 準拠アプリケーションの実行</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="security-vulnerabilities.html">セキュリティー脆弱性リスト</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="troubleshooting.html">セキュリティーのトラブルシューティング</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#security">ガイド: セキュリティー</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">デプロイメント</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="deployment-openshift.html"> OpenShift</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="open-liberty-operator.html">Open Liberty オペレーター</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="container-images.html">コンテナー・イメージ</a></li>
+  <li class="nav-item is-current-page" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="instanton.html"> InstantOn</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="instanton-sycalls-json.html">InstantOn システム・コール</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="instanton-limitations.html">InstantOn の制限および既知の問題</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="runnable-jar-files.html">実行可能 JAR ファイル</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="class-loader-library-config.html">クラス・ローダー構成</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="virtual-hosts.html">仮想ホスト</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="application-bindings.html">アプリケーションのバインディング</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#kubernetes">ガイド: Kubernetes</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#cloud_deployment">ガイド: クラウド・デプロイメント</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button><span class="nav-text" tabindex="0" role="button"> 操作</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="log-trace-configuration.html">ログ</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="log-management.html">ログ管理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="access-logging.html">HTTP アクセスのロギング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jdbc-tracing.html">JDBC トレース</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="json-log-events-list.html">JSON ログ・イベントの参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="logstash-events-list.html">Logstash イベントの参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="audit-log-events-list-cadf.html">監査ログ・イベント (CADF) 参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="analyzing-logs-elk.html">Elastic Stack を使用した JSON ログの分析</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="forwarding-logs-logstash.html">Logstash コレクターを使用したログの転送</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="introduction-monitoring-metrics.html">メトリック</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="metrics-list.html">メトリックの参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-jmx-connection.html">JMX 接続の構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jmx-metrics-list.html">JMX メトリックのリファレンス・リスト</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="slow-hung-request-detection.html">遅い要求およびハング要求の検出</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="validating-server-connections.html">サーバー接続の検証</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="admin-center.html">Admin Center GUI</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="oidc-tools.html">Admin Center OIDC ツール</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="performance-tuning.html">パフォーマンス・チューニング</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="thread-pool-tuning.html">スレッド・プールのチューニング</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button>
+                                        <span class="nav-text" tabindex="0" role="button">参照</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/directory-locations-properties.html">ディレクトリーのロケーションおよびプロパティー</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/default-environment-variables.html">デフォルトの環境変数</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/default-port-numbers.html">デフォルトのポート番号</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/bootstrap-properties.html">ブートストラップ・プロパティー</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/config/server-configuration-overview.html">サーバー構成</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeCA.html">acmeCA</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeRevocationChecker.html">acmeRevocationチェッカー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeTransportConfig.html">acmeTransport構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/activationSpec.html">activationSpec</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/activedLdapFilterProperties.html">activedLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/adminObject.html">adminObject</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/administrator-role.html">administrator-role</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/application.html">アプリケーション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/applicationManager.html">applicationManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/applicationMonitor.html">applicationMonitor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/auditEvent.html">auditEvent</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/auditFileHandler.html">auditFileハンドラー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authCache.html">authCache</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authData.html">authData</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authFilter.html">authFilter</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authentication.html">認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authorization-roles.html">authorization-roles</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/basicRegistry.html">basicRegistry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsDispatcher.html">batchJmsディスパッチャー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsEvents.html">batchJmsイベント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsExecutor.html">batchJms実行プログラム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJobLogging.html">batchJobロギング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchPersistence.html">batchPersistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/bell.html">ベル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cache.html">キャッシュ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cacheManager.html">cacheManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cachingProvider.html">cachingProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cdi.html">CDI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cdi12.html">cdi12</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/channelfw.html">channelfw</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/classloader.html">classloader</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/classloading.html">クラス・ロード</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cloudant.html">Cloudant</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cloudantDatabase.html">cloudantDatabase</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/compression.html">compression</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/concurrencyPolicy.html">concurrencyPolicy</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/config.html">構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/connectionFactory.html">connectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/connectionManager.html">connectionManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/constrainedDelegation.html">constrainedDelegation</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/contextService.html">contextService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cors.html">CORS</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/couchdb.html">couchdb</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/customLdapFilterProperties.html">customLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/dataSource.html">dataSource</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/databaseStore.html">databaseStore</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/distributedMap.html">distributedMap</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/domainResolver.html">domainResolver</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/domino50LdapFilterProperties.html">domino50LdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/edirectoryLdapFilterProperties.html">edirectoryLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ejbApplication.html">ejbApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ejbContainer.html">ejbContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/enterpriseApplication.html">enterpriseApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/eventLogging.html">eventLogging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/executor.html">executor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/facebookLogin.html">facebookLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/featureManager.html">featureManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/federatedRepository.html">federatedRepository</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/fileset.html">FILESET</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/githubLogin.html">githubLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/googleLogin.html">googleLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/grpc.html">gRPC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/grpcClient.html">grpcClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/headers.html">ヘッダー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpAccessLogging.html">httpAccessLogging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpDispatcher.html">httpDispatcher</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpEncoding.html">httpEncoding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpEndpoint.html">httpEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpOptions.html">httpOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpProxyRedirect.html">httpProxyリダイレクト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSession.html">httpSession</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSessionCache.html">httpSessionキャッシュ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSessionDatabase.html">httpSessionDatabase</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/idsLdapFilterProperties.html">idsLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iiopEndpoint.html">iiopEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iiopServerPolicies.html">iiopServerポリシー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/include.html">include</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iplanetLdapFilterProperties.html">iplanetLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jaasLoginContextEntry.html">jaasLoginContextEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jaasLoginModule.html">jaasLoginModule</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/javaPermission.html">javaPermission</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jdbcDriver.html">jdbcDriver</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsActivationSpec.html">jmsActivationSpec</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsConnectionFactory.html">jmsConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsDestination.html">jmsDestination</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsQueue.html">jmsQueue</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsQueueConnectionFactory.html">jmsQueueConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsTopic.html">jmsTopic</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsTopicConnectionFactory.html">jmsTopicConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiEntry.html">jndiEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiObjectFactory.html">jndiObjectFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiReferenceEntry.html">jndiReferenceEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiURLEntry.html">jndiURLEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jpa.html">jpa</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jspEngine.html">jspEngine</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtBuilder.html">jwtBuilder</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtConsumer.html">jwtConsumer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtSso.html">jwtSso</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/kerberos.html">Kerberos</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/keyStore.html">keyStore</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ldapRegistry.html">ldapRegistry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/library.html">ライブラリー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/linkedinLogin.html">linkedinLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/logging.html">ロギング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/logstashCollector.html">logstashCollector</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ltpa.html">ltpa</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mailSession.html">mailSession</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedExecutorService.html">managedExecutorService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedScheduledExecutorService.html">managedScheduledExecutorService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedThreadFactory.html">managedThreadファクトリー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/messagingEngine.html">messagingEngine</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mimeTypes.html">mimeTypes</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mongo.html">mongo</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mongoDB.html">mongoDB</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/monitor.html">監視</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mpJwt.html">mpJwt</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mpMetrics.html">mpMetrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/netscapeLdapFilterProperties.html">netscapeLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauth-roles.html">oauth-roles</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauth2Login.html">oauth2Login</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauthProvider.html">oauthProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oidcClientWebapp.html">oidcClientWeb アプリケーション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oidcLogin.html">oidcLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/okdServiceLogin.html">okdServiceログイン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openId.html">openId</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openidConnectClient.html">openidConnectClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openidConnectProvider.html">openidConnectProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/orb.html">ORB</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/persistentExecutor.html">persistentExecutor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/pluginConfiguration.html">pluginConfiguration</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/quickStartSecurity.html">quickStartSecurity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/reader-role.html">リーダー・ロール (reader-role)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/remoteFileAccess.html">remoteFileAccess</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/remoteIp.html">remoteIp</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/requestTiming.html">requestTiming</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/resourceAdapter.html">resourceAdapter</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/samesite.html">Samesite</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/samlWebSso20.html">samlWebSso20</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/securewayLdapFilterProperties.html">securewayLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipApplicationRouter.html">sipApplicationルーター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipContainer.html">sipContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipEndpoint.html">sipEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipStack.html">sipStack</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/socialLoginWebapp.html">socialLoginWeb アプリ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/spnego.html">SPNEGO</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/springBootApplication.html">springBootアプリケーション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ssl.html">SSL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sslDefault.html">sslDefault</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sslOptions.html">sslOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/tcpOptions.html">tcpOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/transaction.html">トランザクション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/trustAssociation.html">trustAssociation</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/twitterLogin.html">twitterLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/userInfo.html">userInfo</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/variable.html">変数</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/virtualHost.html">virtualHost</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wasJmsEndpoint.html">wasJmsEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wasJmsOutbound.html">wasJmsOutbound</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webAppSecurity.html">webAppSecurity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webApplication.html">webApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webContainer.html">webContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webTarget.html">webTarget</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsAtomicTransaction.html">wsAtomicトランザクション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsSecurityClient.html">wsSecurityClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsSecurityProvider.html">wsSecurityProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsocOutbound.html">wsocOutbound</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/feature/feature-overview.html">の機能</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/adminCenter-1.0.html">Admin Center</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/localConnector-1.0.html">管理ローカル・コネクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restConnector-2.0.html">管理 REST コネクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-1.0.html">Application Client Support for Server</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-1.0.html">アプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-2.0.html">アプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-3.0.html">アプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-4.0.html">アプリケーション・セキュリティー (Jakarta Security)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-5.0.html">アプリケーション・セキュリティー (Jakarta Security)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurityClient-1.0.html">クライアントのアプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/audit-1.0.html">監査</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/acmeCA-2.0.html">Automatic Certificate Management Environment (ACME) のサポート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/bells-1.0.html">Basic Extensions using Liberty Libraries</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batch-1.0.html">バッチ API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batchManagement-1.0.html">Batch Management</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-1.1.html">Bean 検証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-2.0.html">Bean 検証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cloudant-1.0.html">Cloudant 組み込み</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/concurrent-1.0.html">Concurrency Utilities for Java EE</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-1.2.html">コンテキストと依存関係の注入</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-2.0.html">コンテキストと依存関係の注入</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/couchdb-1.0.html">CouchDB 統合</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sessionDatabase-1.0.html">Database Session Persistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/distributedMap-1.0.html">Distributed Map interface for Dynamic Caching</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejb-3.2.html">Enterprise JavaBeans</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbHome-3.2.html">Enterprise JavaBeans ホーム・インターフェース</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbLite-3.2.html">Enterprise JavaBeans ライト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbPersistentTimer-3.2.html">Enterprise JavaBeans パーシスタント・タイマー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbRemote-3.2.html">Enterprise JavaBeans リモート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/eventLogging-1.0.html">イベント・ログ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/el-3.0.html">式の言語</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/federatedRegistry-1.0.html">Federated User Registry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/grpc-1.0.html">gRPC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/grpcClient-1.0.html">gRPC Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-2.0.html">Jakarta Application Client Support for Server</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthentication-2.0.html">Jakarta 認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthentication-3.0.html">Jakarta 認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthorization-2.0.html">Jakarta 許可</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthorization-2.1.html">Jakarta 許可</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batch-2.0.html">Jakarta Batch (ジャカルタ・バッチ)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batch-2.1.html">Jakarta Batch (ジャカルタ・バッチ)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-3.0.html">Jakarta Bean 検証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/concurrent-2.0.html">ジャカルタ並行性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/concurrent-3.0.html">ジャカルタ並行性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/connectors-2.0.html">Jakarta コネクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/connectors-2.1.html">Jakarta コネクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/connectorsInboundSecurity-2.0.html">Jakarta Connectors インバウンド・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-3.0.html">Jakarta Contexts and Dependency Injection</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-4.0.html">Jakarta Contexts and Dependency Injection</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaeeClient-10.0.html">Jakarta EE アプリケーション・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaeeClient-9.1.html">Jakarta EE アプリケーション・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaee-8.0.html">Jakarta EE Platform</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaee-10.0.html">Jakarta EE Platform</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaee-9.1.html">Jakarta EE Platform</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-10.0.html">Jakarta EE Web プロファイル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-9.1.html">Jakarta EE Web プロファイル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeans-4.0.html">Jakarta Enterprise Beans</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansHome-4.0.html">Jakarta Enterprise Beans ホーム・インターフェース</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansLite-4.0.html">Jakarta Enterprise Beans Lite</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mdb-4.0.html">Jakarta Enterprise Beans メッセージ駆動型 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansPersistentTimer-4.0.html">Jakarta Enterprise Beans Persistent Timers</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansRemote-4.0.html">Jakarta Enterprise Beans Remote</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/expressionLanguage-4.0.html">Jakarta Expression Language (Jakarta 式言語)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/expressionLanguage-5.0.html">Jakarta Expression Language (Jakarta 式言語)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/faces-4.0.html">Jakarta Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/facesContainer-4.0.html">Jakarta Faces コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonb-2.0.html">Jakarta JSON バインディング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonb-3.0.html">Jakarta JSON バインディング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-2.0.html">Jakarta JSON Binding Container (Jakarta JSON バインディング・コンテナー)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-3.0.html">Jakarta JSON Binding Container (Jakarta JSON バインディング・コンテナー)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-2.0.html">Jakarta JSON 処理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-2.1.html">Jakarta JSON 処理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-2.0.html">Jakarta JSON Processing Container (Jakarta JSON 処理コンテナー)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-2.1.html">Jakarta JSON Processing Container (Jakarta JSON 処理コンテナー)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mail-2.0.html">Jakarta Mail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mail-2.1.html">Jakarta Mail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/managedBeans-2.0.html">Jakarta Managed Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messaging-3.0.html">Jakarta Messaging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messaging-3.1.html">Jakarta Messaging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistence-3.0.html">Jakarta Persistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistence-3.1.html">Jakarta Persistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistenceContainer-3.0.html">Jakarta Persistence コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistenceContainer-3.1.html">Jakarta Persistence コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWS-3.0.html">Jakarta RESTful Web Services</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWS-3.1.html">Jakarta RESTful Web Services</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWSClient-3.0.html">Jakarta RESTful Web Services Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWSClient-3.1.html">Jakarta RESTful Web Services Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/faces-3.0.html">Jakarta Server Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/facesContainer-3.0.html">Jakarta Server Faces コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/pages-3.0.html">Jakarta Server Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/pages-3.1.html">Jakarta Server Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-5.0.html">Jakarta Servlet</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-6.0.html">Jakarta Servlet</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-2.0.html">Jakarta WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-2.1.html">Jakarta WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlBinding-3.0.html">Jakarta XML Binding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlBinding-4.0.html">Jakarta XML Binding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlWS-3.0.html">Jakarta XML Web Services</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlWS-4.0.html">Jakarta XML Web Services</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaspic-1.1.html">コンテナー用 Java 認証 SPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jacc-1.5.html">Java Authorization Contract for Containers</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jca-1.7.html">Java コネクター・アーキテクチャー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jcaInboundSecurity-1.0.html">Java コネクター・アーキテクチャーのセキュリティー・インフロー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.0.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.1.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.2.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.3.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-7.0.html">Java EE アプリケーション・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-8.0.html">Java EE アプリケーション・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaee-7.0.html">Java EE フル・プラットフォーム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaee-8.0.html">Java EE フル・プラットフォーム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/managedBeans-1.0.html">Java EE 管理 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-7.0.html">Java EE Web プロファイル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-8.0.html">Java EE Web プロファイル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jms-2.0.html">Java Message Service</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jndi-1.0.html">Java Naming and Directory Interface</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpa-2.1.html">Java Persistence API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpa-2.2.html">Java Persistence API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.1.html">Java Persistence API コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.2.html">Java Persistence API コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.0.html">Java RESTful サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.1.html">Java RESTful サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.0.html">Java RESTful サービス・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.1.html">Java RESTful サービス・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-3.1.html">Java サーブレット</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-4.0.html">Java サーブレット</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxws-2.2.html">Java Web サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-1.0.html">Java WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-1.1.html">Java WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxb-2.2.html">Java XML バインディング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.5.html">JavaMail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.6.html">JavaMail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonb-1.0.html">JavaScript Object Notation Binding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-1.0.html">JavaScript Object Notation Binding via Bells</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/json-1.0.html">JavaScript Object Notation for Java</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.0.html">JavaScript Object Notation Processing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.1.html">JavaScript Object Notation Processing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-1.1.html">JavaScript Object Notation Processing via Bells</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsf-2.2.html">JavaServer Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsf-2.3.html">JavaServer Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.2.html">JavaServer Faces Container</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.3.html">JavaServer Faces Container</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsp-2.2.html">JavaServer Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsp-2.3.html">JavaServer Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sessionCache-1.0.html">JCache セッション・パーシスタンス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/j2eeManagement-1.1.html">JEE 管理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsClient-2.0.html">JMS クライアント (メッセージ・サーバー用)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jmsMdb-3.2.html">JMS メッセージ駆動型 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jwt-1.0.html">JSON Web Token</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jwtSso-1.0.html">JSON Web トークン・シングル・サインオン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/constrainedDelegation-1.0.html">Kerberos Constrained Delegation for SPNEGO</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ldapRegistry-3.0.html">LDAP ユーザー・レジストリー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/kernel.html">Liberty カーネル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/logstashCollector-1.0.html">Logstash コレクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsServer-1.0.html">メッセージ・サーバー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsSecurity-1.0.html">メッセージ・サーバー・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mdb-3.2.html">メッセージ駆動型 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingServer-3.0.html">メッセージング・サーバー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingClient-3.0.html">メッセージング・サーバー・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingSecurity-3.0.html">メッセージング・サーバー・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.3.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.4.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.1.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.3.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.1.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-5.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-6.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.1.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.2.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.3.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.4.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-2.0.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-3.0.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.0.html">MicroProfile コンテキストの伝搬</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.2.html">MicroProfile コンテキストの伝搬</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.3.html">MicroProfile コンテキストの伝搬</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.1.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.1.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-3.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-4.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-1.0.html">MicroProfile GraphQL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-2.0.html">MicroProfile GraphQL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-1.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.1.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.2.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.1.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-4.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.0.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.1.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.2.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-2.0.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-2.1.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.1.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.2.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.3.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-3.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-4.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-5.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.1.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-2.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-3.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-3.1.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.1.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.2.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.3.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-2.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-3.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpReactiveMessaging-1.0.html">MicroProfile リアクティブ・メッセージング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpReactiveStreams-1.0.html">MicroProfile リアクティブ・ストリーム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.1.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.2.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.3.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.4.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-2.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-3.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpTelemetry-1.0.html">MicroProfile Telemetry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mongodb-2.0.html">MongoDB 統合</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/oauth-2.0.html">OAuth</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openapi-3.1.html">OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openid-2.0.html">OpenID</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openidConnectClient-1.0.html">OpenID Connect クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openidConnectServer-1.0.html">OpenID Connect プロバイダー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.0.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.1.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.2.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.3.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-2.0.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/osgiConsole-1.0.html">OSGi Debug Console</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.0.html">パスワード・ユーティリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.1.html">パスワード・ユーティリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/monitor-1.0.html">Performance Monitoring</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/requestTiming-1.0.html">要求についての通知タイミング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/samlWeb-2.0.html">SAML Web シングル・サインオン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ssl-1.0.html">Secure Socket Layer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/spnego-1.0.html">Simple and Protected GSSAPI Negotiation Mechanism</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sipServlet-1.1.html">SIP サーブレット</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/socialLogin-1.0.html">ソーシャル・メディア・ログイン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/springBoot-1.5.html">Spring Boot サポート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/springBoot-2.0.html">Spring Boot サポート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/transportSecurity-1.0.html">トランスポート・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webCache-1.0.html">Web Response Cache</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsSecurity-1.1.html">Web Service Security</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsAtomicTransaction-1.2.html">WS-AT Service</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsSecuritySaml-1.1.html">WSSecurity SAML</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/command-overview.html">コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/auditUtility-auditReader.html">auditUtility auditReader</a></li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/featureUtility-commands.html">featureUtility コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-find.html">検索</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-help.html">ヘルプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-installFeature.html">installFeature</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-installServerFeatures.html">installServerの機能</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-viewSettings.html">viewSettings</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/securityUtility-commands.html">securityUtility コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-createLTPAKeys.html">createLTPAKeys</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-createSSLCertificate.html">createSSLCertificate</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-encode.html">encode</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-help.html">ヘルプ</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/schemaGen.html">schemaGen</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/serverSchemaGen.html">serverSchema世代</a></li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/server-commands.html">サーバー・コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-create.html">作成</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-debug.html">デバッグ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-dump.html">ダンプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-help.html">ヘルプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-javadump.html">javadump</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-list.html">リスト</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-package.html">パッケージ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-pause.html">一時停止</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-resume.html">resume</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-run.html">実行</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-start.html">開始</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-status.html">状況</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-stop.html">停止</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-version.html">version</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/springbootUtility-commands.html">springbootUtility コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/springbootUtility-help.html">ヘルプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/springbootUtility-thin.html">thin</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/jakarta-ee-api.html">Jakarta EE API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee10-javadoc.html">Jakarta EE 10</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee9.1-javadoc.html">Jakarta EE 9.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee8-javadoc.html">Jakarta EE 8 (Jakarta EE 8)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/jakarta-ee10-diff.html">Jakarta EE 10.0 と 9.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/jakarta-ee-diff.html">Jakarta EE 9.1 と 8.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/jakarta-ee9-feature-updates.html">Jakarta EE 9.1 フィーチャーの更新</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/java-ee-api.html">Java EE API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee8-javadoc.html">Java EE 8</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee7-javadoc.html">Java EE 7</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/microprofile-api.html">MicroProfile API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-6.0-javadoc.html">MicroProfile 6.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-5.0-javadoc.html">MicroProfile 5.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.1-javadoc.html">MicroProfile 4.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.0-javadoc.html">MicroProfile 4.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.3-javadoc.html">MicroProfile 3.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.2-javadoc.html">MicroProfile 3.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.0-javadoc.html">MicroProfile 3.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.2-javadoc.html">MicroProfile 2.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.1-javadoc.html">MicroProfile 2.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.0-javadoc.html">MicroProfile 2.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.4-javadoc.html">MicroProfile 1.4</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.3-javadoc.html">MicroProfile 1.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.2-javadoc.html">MicroProfile 1.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/mp-50-60-diff.html"> MicroProfile 6.0 と 5.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/mp-41-50-diff.html"> MicroProfile 5.0 と 4.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/mp-33-40-diff.html"> MicroProfile 4.0 と 3.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/mp-22-30-diff.html"> MicroProfile 3.0 と 2.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/diff/mp-21-22-diff.html"> MicroProfile 2.2 と 2.1</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Open Liberty API</span><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Admin REST コネクター</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/restConnector-2.0.com.ibm.websphere.filetransfer.html">com.ibm.websphere.filetransfer</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/restConnector-2.0.com.ibm.websphere.jmx.connector.rest.html">com.ibm.websphere.jmx.connector.rest</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/restConnector-2.0.com.ibm.ws.jmx.connector.client.rest.html">com.ibm.ws.jmx.connector.client.rest</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Application Security for Client</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/appSecurityClient-1.0.com.ibm.websphere.security.html">com.ibm.websphere.security</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/appSecurityClient-1.0.com.ibm.websphere.security.auth.callback.html">com.ibm.websphere.security.auth.callback</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/appSecurityClient-1.0.com.ibm.wsspi.security.auth.callback.html">com.ibm.wsspi.security.auth.callback</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">動的キャッシングのための分散マップ・インターフェース</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.websphere.cache.html">com.ibm.websphere.cache</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.websphere.cache.exception.html">com.ibm.websphere.cache.exception</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.websphere.exception.html">com.ibm.websphere.exception</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.ws.cache.spi.html">com.ibm.ws.cache.spi</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.wsspi.cache.html">com.ibm.wsspi.cache</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Enterprise JavaBeans ライト</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/ejbLite-3.2.com.ibm.websphere.ejbcontainer.html">com.ibm.websphere.ejbcontainer</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/ejbLite-3.2.com.ibm.websphere.ejbcontainer.mbean.html">com.ibm.websphere.ejbcontainer.mbean</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">JEE 管理</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/j2eeManagement-1.1.html">com.ibm.websphere.management.j2ee</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">JSON Web トークン</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/jwt-1.0.html">com.ibm.websphere.security.jwt</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta 許可</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/appAuthorization-2.0.html">com.ibm.wsspi.security.authorization.jacc</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta 許可</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/appAuthorization-2.1.html">com.ibm.wsspi.security.authorization.jacc</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta Enterprise Beans Lite</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/enterpriseBeansLite-4.0.com.ibm.websphere.ejbcontainer.html">com.ibm.websphere.ejbcontainer</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/enterpriseBeansLite-4.0.com.ibm.websphere.ejbcontainer.mbean.html">com.ibm.websphere.ejbcontainer.mbean</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta RESTful Web Services Client</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/restfulWSClient-3.0.html">com.ibm.websphere.jaxrs20.multipart</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta RESTful Web Services Client</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/restfulWSClient-3.1.html">com.ibm.websphere.jaxrs20.multipart</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta サーブレット</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta サーブレット</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta WebSocket</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-2.0.html">com.ibm.websphere.wsoc</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta WebSocket</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-2.1.html">com.ibm.websphere.wsoc</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Java Authorization Contract for Containers</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/jacc-1.5.html">com.ibm.wsspi.security.authorization.jacc</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Java RESTful サービス・クライアント</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/jaxrsClient-2.1.com.ibm.websphere.jaxrs.providers.json4j.html">com.ibm.websphere.jaxrs.providers.json4j</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/jaxrsClient-2.1.com.ibm.websphere.jaxrs20.multipart.html">com.ibm.websphere.jaxrs20.multipart</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Java サーブレット</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Java サーブレット</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Java WebSocket</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-1.0.html">com.ibm.websphere.wsoc</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Java WebSocket</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-1.1.html">com.ibm.websphere.wsoc</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">JavaScript Object Notation for Java</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/json-1.0.com.ibm.json.java.html">com.ibm.json.java</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/json-1.0.com.ibm.json.xml.html">com.ibm.json.xml</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Kerberos SPNEGO の制約付き委任</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/constrainedDelegation-1.0.html">com.ibm.websphere.security.s4u2proxy</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">メッセージ・サーバー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/wasJmsServer-1.0.html">com.ibm.websphere.messaging.mbean</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">メッセージング・サーバー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/messagingServer-3.0.html">com.ibm.websphere.messaging.mbean</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">OAuth</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.attributes.html">com.ibm.oauth.core.api.attributes</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.config.html">com.ibm.oauth.core.api.config</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.error.html">com.ibm.oauth.core.api.error</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.error.oauth20.html">com.ibm.oauth.core.api.error.oauth20</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.oauth20.mediator.html">com.ibm.oauth.core.api.oauth20.mediator</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.websphere.security.oauth20.html">com.ibm.websphere.security.oauth20</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.websphere.security.oauth20.store.html">com.ibm.websphere.security.oauth20.store</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.websphere.security.openidconnect.token.html">com.ibm.websphere.security.openidconnect.token</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.wsspi.security.oauth20.token.html">com.ibm.wsspi.security.oauth20.token</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">OpenID Connect クライアント</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/openidConnectClient-1.0.html">com.ibm.websphere.security.openidconnect</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">OpenID Connect プロバイダー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/openidConnectServer-1.0.html">com.ibm.websphere.security.openidconnect</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">パスワード・ユーティリティー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.0.com.ibm.websphere.crypto.html">com.ibm.websphere.crypto</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.0.com.ibm.websphere.security.auth.data.html">com.ibm.websphere.security.auth.data</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.0.com.ibm.websphere.security.jca.html">com.ibm.websphere.security.jca</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">パスワード・ユーティリティー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.1.com.ibm.websphere.crypto.html">com.ibm.websphere.crypto</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.1.com.ibm.websphere.security.auth.data.html">com.ibm.websphere.security.auth.data</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.1.com.ibm.websphere.security.jca.html">com.ibm.websphere.security.jca</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">パフォーマンス・モニター</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/monitor-1.0.html">com.ibm.websphere.monitor.jmx</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">SIP サーブレット</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.html">com.ibm.websphere.sip</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.resolver.html">com.ibm.websphere.sip.resolver</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.resolver.events.html">com.ibm.websphere.sip.resolver.events</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.resolver.exception.html">com.ibm.websphere.sip.resolver.exception</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.unmatchedMessages.html">com.ibm.websphere.sip.unmatchedMessages</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.unmatchedMessages.events.html">com.ibm.websphere.sip.unmatchedMessages.events</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Secure Socket Layer</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/ssl-1.0.html">com.ibm.websphere.ssl</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">ソーシャル・メディア・ログイン</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/socialLogin-1.0.html">com.ibm.websphere.security.social</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Web 応答キャッシュ</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/webCache-1.0.com.ibm.websphere.command.html">com.ibm.websphere.command</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/webCache-1.0.com.ibm.websphere.command.web.html">com.ibm.websphere.command.web</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/webCache-1.0.com.ibm.websphere.servlet.cache.html">com.ibm.websphere.servlet.cache</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">gRPC</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/api/grpc-1.0.html">io.openliberty.grpc.annotation</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Open Liberty SPI</span><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Contexts and Dependency Injection (Contexts and Dependency Injection)</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-1.2.html">io.openliberty.cdi.spi</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Contexts and Dependency Injection (Contexts and Dependency Injection)</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-2.0.html">io.openliberty.cdi.spi</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">統合ユーザー・レジストリー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/federatedRegistry-1.0.com.ibm.wsspi.security.wim.html">com.ibm.wsspi.security.wim</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/federatedRegistry-1.0.com.ibm.wsspi.security.wim.exception.html">com.ibm.wsspi.security.wim.exception</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/federatedRegistry-1.0.com.ibm.wsspi.security.wim.model.html">com.ibm.wsspi.security.wim.model</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta 認証</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/appAuthentication-2.0.html">com.ibm.wsspi.security.jaspi</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta 認証</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/appAuthentication-3.0.html">com.ibm.wsspi.security.jaspi</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta Contexts and Dependency Injection</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-3.0.html">io.openliberty.cdi.spi</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Jakarta Contexts and Dependency Injection</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-4.0.html">io.openliberty.cdi.spi</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">Java Authentication SPI for Containers</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/jaspic-1.1.html">com.ibm.wsspi.security.jaspi</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">OpenAPI</span><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/javadoc/spi/openapi-3.1.html">com.ibm.wsspi.openapi31</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+
+    </div>
+  </aside>
+</div>
+<main role="main">
+<div class="toolbar" role="navigation" aria-label="この文書のツールバー"><button class="nav-toggle" aria-label="ナビゲーション・メニューの切り替え"></button><nav class="breadcrumbs" aria-label="パンくずリスト">
+  <ul>
+    <li><a href="overview.html">資料の概要</a></li>
+    <li>デプロイメント</li>
+    <li><a href="instanton.html"> InstantOnを使用した始動の高速化</a></li>
+  </ul>
+</nav>
+    <div id="github_link"><img id="docs_github_logo" src="/img/docs_github_logo.svg" alt="GitHub ロゴ"> <a id="open_issue_link" href="https://github.com/OpenLiberty/docs/issues/new?body=Document: Faster startup for containerized applications with Open Liberty InstantOn%0Ahttp://openliberty.io/docs/23.0.0.6/instanton.html%0A%0A**Please describe the problem you are having with the documentation. Is information missing, inaccurate, or unclear? Tell us about the context where you encountered the problem so we can understand how to address it.**" target="_blank">問題を開く</a> | <a id="edit_topic_link" href="https://github.com/OpenLiberty/docs/edit/v23.0.0.6/modules/ROOT/pages/instanton.adoc" target="_blank" rel="noopener">トピックの編集</a></div>
+</div>
+<article class="doc">   
+<h1 class="page">Open Liberty InstantOn を使用した、コンテナー化されたアプリケーションの始動の高速化</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Open Liberty InstantOn は、 MicroProfile および Jakarta EE アプリケーションの起動時間を短縮します。 InstantOnを使用すると、アプリケーションをミリ秒単位で開始することができ、スループット、メモリー、開発/実動パリティー、または Java 言語機能を損なうことはありません。</p>
+</div>
+<div class="paragraph">
+<p>InstantOn は、 Linux カーネルの Checkpoint/Restore In Userspace (<a href="https://criu.org/">CRIU</a>) 機能を使用して、後でリストアできる JVM のチェックポイントを取得します。 InstantOnを使用すると、アプリケーションは通常どおりに開発され、アプリケーション・コンテナー・イメージのビルド時に InstantOn によってアプリケーション・プロセスのチェックポイントが作成されます。 アプリケーションが復元されると、そのアプリケーションは同じ JVM で実行されます。これにより、開発と実動の間の完全なパリティーが提供されます。 チェックポイント処理には数秒しかかからないため、CI/CD 処理はほとんど影響を受けません。</p>
+</div>
+<div class="paragraph">
+<p>アプリケーション・コンテナー・イメージをビルドすると、 InstantOn は、 Open Liberty アプリケーション・プロセスのチェックポイントを含む追加のイメージ層を作成します。 アプリケーション・イメージが開始されると、 Open Liberty ランタイムは InstantOn レイヤーを認識し、アプリケーション・コンテナー・イメージのビルド中に作成されたチェックポイントにアプリケーション・プロセスをリストアします。</p>
+</div>
+<div class="paragraph">
+<p>Open Liberty および <a href="https://blog.openj9.org/2022/10/14/openj9-criu-support-a-look-under-the-hood/">OpenJ9</a> には、チェックポイントおよびリストア・プロセスに参加するフックが含まれています。 これらのフックにより、 Open Liberty ランタイムは、コンテナー・イメージ内のチェックポイント・プロセスの永続化が安全であるように、チェックポイントのプロセスを準備することができます。 この準備ステップにより、コンテナー・イメージ内の同じ永続状態から、アプリケーションの複数の (場合によっては並行) インスタンスにプロセスをリストアできるようになります。 OpenJ9 および IBM Semeru JVM での CRIU サポートについて詳しくは、Java <a href="https://www.eclipse.org/openj9/docs/criusupport/">CRIU Support</a> 資料を参照してください。</p>
+</div>
+<div class="paragraph">
+<p>InstantOn は、コンテナー・イメージ・ビルドの外部では使用できません。 アプリケーション・コンテナー・イメージは、 Open Liberty アプリケーション・プロセスの信頼性の高いリストアを確保するために必要な、一貫性のある環境を提供します。 InstantOn コンテナー層は、アプリケーション・コンテナー・イメージの最後の層です。 この構成により、イメージの基礎となるレイヤー内のリソースが、チェックポイントが取られた時点から、 InstantOnを使用してイメージが開始された時点まで変更されないことが保証されます。</p>
+</div>
+<div class="paragraph">
+<p>以下のセクションでは、 InstantOn アプリケーション・イメージをビルドして実行するための前提条件とプロセスについて説明します。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><a href="#beforeAppStart">チェックポイントを取る場合: beforeAppStart または afterAppStart</a></p>
+</li>
+<li><p><a href="#prereq">ランタイムおよびホスト・ビルド・システムの前提条件</a></p>
+</li>
+<li><p><a href="#build"> InstantOn アプリケーション・イメージのビルド</a></p>
+</li>
+<li><p><a href="#run"> InstantOn アプリケーション・イメージの実行およびデプロイ</a></p>
+</li>
+<li><p><a href="#supported-features">Open Liberty InstantOn でサポートされるフィーチャー</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="beforeAppStart"><a class="anchor" href="#beforeAppStart"></a>チェックポイントを作成する場合: beforeAppStart または afterAppStart</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>InstantOn チェックポイントが発生すると、 Open Liberty ランタイムが開始されます。 この始動時に、ランタイムは構成を処理し、使用可能なすべてのフィーチャーをロードし、構成されたアプリケーションの処理を開始します。 この始動シーケンスは、アプリケーションのサイズと複雑さ、およびアプリケーションが必要とする Open Liberty フィーチャーの数によって異なります。 小規模な単純なアプリケーションの場合、このプロセスにかかる時間は 1 秒未満になる可能性があります。 より一般的なアプリケーションの場合は、数秒かかることがあります。 InstantOn は、 Open Liberty ランタイムが始動を完了した後にチェックポイントを取得します。 アプリケーション自体の開始前または開始後にチェックポイントが発生するかどうかを判別するために、以下の 2 つのオプションを使用できます。どちらのオプションも、 InstantOn <code>RUN</code> 構成の一部として指定できます。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><code>afterAppStart</code> -アプリケーションの開始後にチェックポイントを実行します。 このオプションは、最も高速な始動を提供しますが、一部のアプリケーションには適していない場合があります。</p>
+</li>
+<li><p><code>beforeAppStart</code> -アプリケーション・コードが実行される前にチェックポイントを実行します。 このオプションは、アプリケーション・コードが <code>afterAppStart</code> オプションと互換性がない場合に使用します。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>どちらのオプションを選択するかは、アプリケーションで実行する必要があるコードによって異なります。 <a href="https://jakarta.ee/">Jakarta EE</a> および <a href="https://microprofile.io/">MicroProfile</a> アプリケーションには、以下の例のように、アプリケーションの開始時に実行されるアプリケーション・コードが含まれることがあります。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><code>loadOnStartup</code> 属性を使用するサーブレット</p>
+</li>
+<li><p><code>@Startup</code> アノテーションを使用する EJB</p>
+</li>
+<li><p><code>@Observes @Initialized(ApplicationScoped.class)</code> アノテーションを使用する CDI Bean</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>場合によっては、アプリケーションの開始時に実行されるアプリケーション・コードが、 InstantOn チェックポイントの実行に適していないことがあります。 そのような場合は、 <code>beforeAppStart</code> オプションを使用してください。 例えば、以下のアプリケーション・コード・シナリオは、 InstantOn チェックポイントの前に回避する必要があるため、 <code>beforeAppStart</code> オプションに適しています。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p>データベースなどのリモート・リソースへのアクセス。 アプリケーション・コンテナーのビルド中に、正しいデータ・ソースに接続できる可能性はほとんどありません。</p>
+</li>
+<li><p>トランザクションの作成。 現在、トランザクションは InstantOn チェックポイントの前に禁止されています。</p>
+</li>
+<li><p>アプリケーションのデプロイ時に変更されることが予期される読み取り構成 (例えば、 MicroProfile Config からの構成)。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>このような場合に <code>beforeAppStart</code> オプションを使用すると、 InstantOn チェックポイント・プロセスの復元後にのみアプリケーション・コードが実行されます。 このオプションでは、アプリケーションが着信要求を処理する準備ができる前に、より多くのコードを実行する必要があるため、リストア時間が遅くなる可能性があります。 アプリケーションの早期開始コードが、チェックポイントにとって安全かつ受け入れ可能であると判断された場合は、 <code>afterAppStart</code> チェックポイント・オプションを使用することができます。 このオプションを選択すると、アプリケーション・プロセスが復元されたときの起動時間が短縮されます。</p>
+</div>
+<div class="paragraph">
+<p>アプリケーションの開始時に実行されるコードがアプリケーションにない場合、 <code>beforeAppStart</code> チェックポイントと <code>afterAppStart</code> チェックポイントは同等です。 これらの場合、両方のチェックポイント・オプションがプロセスのチェックポイントを実行してから、構成されたポートが要求を処理できるようになります。 この手順により、 InstantOn チェックポイント・プロセスが復元された後でのみ、アプリケーションのトランスポート・プロトコルが使用可能になります。</p>
+</div>
+<div class="paragraph">
+<p>早期開始コードの制限事項および考えられる回避策について詳しくは、 <a href="instanton-limitations.html" class="xref page">InstantOn の制限事項および既知の問題</a>を参照してください。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prereq"><a class="anchor" href="#prereq"></a>ランタイムおよびホスト・ビルド・システムの前提条件</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Open Liberty バージョン 23.0.0.6以降、すべての X86-64/AMD64 UBI <a href="container-images.html" class="xref page">Open Liberty コンテナー・イメージ</a> には、 Open Liberty アプリケーション・プロセスのチェックポイントを指定してリストアするための InstantOn の前提条件が含まれています。 Open Liberty Ubuntu コンテナー・イメージは、 InstantOnに対して有効になっていません。</p>
+</div>
+<div class="paragraph">
+<p>現在、 InstantOn は、 IBM Semeru Java バージョン 11.0.19+ および IBM Semeru Java バージョン 17.0.7+ でサポートされています。 InstantOn は、リリース時に IBM Semeru Java の新規バージョンをサポートすることが期待されています。 現在、 InstantOn は、他の Java ベンダー実装ではサポートされていません。</p>
+</div>
+<div class="paragraph">
+<p>アプリケーション・コンテナー・イメージのビルド中に InstantOn を使用するには、ホスト・マシンが以下の前提条件を満たしている必要があります。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p>カーネル・バージョン 5.9 以上の Linux オペレーティング・システムを使用します。</p>
+</li>
+<li><p>X86-64/AMD64 プロセッサー・アーキテクチャーを使用します。</p>
+</li>
+<li><p>Podman または Docker を使用した特権コンテナー・ビルドの実行を許可します。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>アプリケーション・コンテナー・イメージ・ビルドで特権コンテナーを使用する必要があるのは、 InstantOnを使用してコンテナー・イメージをビルドする場合のみです。 結果の InstantOn アプリケーション・イメージを実行するために特権コンテナーを使用する必要はありません。</p>
+</div>
+<div class="paragraph">
+<p>Dockerを使用するには、バージョン 23.0 以上が必要です。 以前のバージョンの Docker では、 <code>CHECKPOINT_RESTORE</code> Linux 機能はサポートされていませんでした。これにより、 InstantOn はコンテナー内のプロセスのチェックポイントやリストアを実行できなくなります。</p>
+</div>
+<div class="sect2">
+<h3 id="linux-capabilities">チェックポイントおよびリストアのための <a class="anchor" href="#linux-capabilities"></a>Linux 機能の前提条件</h3>
+<div class="paragraph">
+<p>非特権 (非 root) ユーザーは、アプリケーション・プロセスのチェックポイント処理および復元のために CRIU によってサポートされます。 チェックポイント処理と復元を行うために、CRIU には異なる <a href="https://man7.org/linux/man-pages/man7/capabilities.7.html">Linux 機能</a>が必要です。</p>
+</div>
+<div class="paragraph">
+<p>アプリケーション・プロセス・チェックポイントを実行するには、CRIU に以下の Linux 機能が必要です。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><code>CHECKPOINT_RESTORE</code> -この機能は、チェックポイント/復元機能を過負荷の SYS_ADMIN 機能から分離するために、 Linux 5.9 で追加されました。</p>
+</li>
+<li><p><code>SETPCAP</code> -CRIU が、リストアされたアプリケーション・プロセスから機能をドロップできるようにします。 CRIU バイナリーには、 <code>CHECKPOINT_RESTORE</code>などのより多くの機能が付与されているため、CRIU が復元した最終プロセスからそのような機能をドロップできるように、これらの機能が必要です。</p>
+</li>
+<li><p><code>SYS_PTRACE</code> -CRIU が完全なプロセス状態をキャプチャーして記録できるようにするために必要な強力な機能。 この機能は、CRIU がアプリケーション・プロセスをチェックポイント処理している場合にのみ必要です。 リストア・プロセスでは、 <code>CHECKPOINT_RESTORE</code> および <code>SETPCAP</code> の機能のみが必要です。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="build"><a class="anchor" href="#build"></a> InstantOn アプリケーション・イメージのビルド</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>InstantOnを使用するアプリケーション・コンテナー・イメージをビルドするために、以下の 2 つのオプションを使用できます。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p>コンテナー・イメージのビルド時にアプリケーション・チェックポイントを実行するために、 <a href="#checkpoint_script">checkpoint.sh スクリプト</a> を実行する <code>Dockerfile</code> または <code>Containerfile</code> の最後に、特別な <code>RUN</code> 命令を追加します。 このオプションでは、 <a href="https://podman.io/">Podman</a>を使用する必要があります。</p>
+</li>
+<li><p><a href="#three_step_process">3 ステップのプロセス</a> を使用して、アプリケーション・イメージをビルドし、チェックポイントを実行し、最終結果を InstantOn アプリケーション・コンテナー・イメージにコミットします。 このオプションでは、 Podman または Docker バージョン 23.0 以降を使用する必要があります。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>checkpoint.sh</code> スクリプトを実行するには、 Podman を使用してアプリケーション・コンテナー・イメージをビルドする必要があります。 現在、 Docker を使用して InstantOn アプリケーション・コンテナー・イメージをビルドすることはできません。これは、 Docker が、必要な Linux 機能をコンテナー・ビルドに付与する方法を提供していないためです。 Docker を使用して InstantOn アプリケーション・コンテナー・イメージをビルドするには、3 ステップのビルド・プロセスに従う必要があります。</p>
+</div>
+<div class="sect2">
+<h3 id="checkpoint_script"><a class="anchor" href="#checkpoint_script"></a> Podman および checkpoint.sh スクリプトを使用した InstantOn イメージのビルド</h3>
+<div class="paragraph">
+<p><code>checkpoint.sh</code> スクリプトを使用して、 <code>Dockerfile</code> ファイルまたは <code>Containerfile</code> ファイルの末尾に <code>RUN checkpoint.sh</code> 命令を追加することにより、アプリケーション・チェックポイントを実行できます。 <code>checkpoint.sh</code> の実行は、コンテナー・イメージ・ビルド中の最後の <code>RUN</code> 命令でなければなりません。 この構成は、アプリケーション・プロセス・チェックポイントを実行し、プロセス・データをアプリケーション・コンテナー・イメージの最後のレイヤーとして保管します。 現在、 Docker は必要な Linux 機能を付与できないため、このスクリプトでは、 Docker ではなく Podman を使用する必要があります。</p>
+</div>
+<div class="paragraph">
+<p>以下のイメージ・テンプレートの例では、 <code>kernel-slim-java17-openj9-ubi</code> タグを使用して、Java 17 の IBM Semeru ディストリビューションで最新の Open Liberty リリースを使用するイメージをビルドします。 この例では、 <code>afterAppStart</code> チェックポイント・オプションを使用します。</p>
+</div>
+<div class="listingblock">
+<div class="title">Dockerfile</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-dockerfile hljs" data-lang="dockerfile">FROM icr.io/appcafe/open-liberty:kernel-slim-java17-openj9-ubi
+
+# Add a Liberty server configuration that includes all necessary features
+COPY --chown=1001:0  server.xml /config/
+
+# This script adds the requested XML snippets to enable Liberty features and grow the image to be fit-for-purpose.
+# This option is available only in the 'kernel-slim' image type. The 'full' and 'beta' tags already include all features.
+RUN features.sh
+
+# Add interim fixes (optional)
+COPY --chown=1001:0  interim-fixes /opt/ol/fixes/
+
+# Add an application
+COPY --chown=1001:0  Sample1.war /config/dropins/
+
+# This script adds the requested server configuration, applies any interim fixes, and populates caches to optimize the runtime.
+RUN configure.sh
+
+# This script performs an InstantOn checkpoint of the application.
+# The application can use beforeAppStart or afterAppStart to do the checkpoint.
+# The default is beforeAppStart when not specified
+RUN checkpoint.sh afterAppStart</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下の Podman コマンドを使用して、 InstantOn アプリケーション・コンテナー・イメージをビルドします。 必要な Linux 機能をコンテナー・イメージ・ビルドに付与するには、このコマンドを <code>root</code> ユーザーとして実行するか、 <code>sudo</code> ユーティリティーを使用して実行する必要があります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">podman build \
+   -t dev.local/liberty-app-instanton \
+   --cap-add=CHECKPOINT_RESTORE \
+   --cap-add=SYS_PTRACE\
+   --cap-add=SETPCAP \
+   --security-opt seccomp=unconfined .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>3 つの <code>--cap-add</code> オプションは、コンテナー・イメージのビルド中にアプリケーション・プロセス・チェックポイントを実行するために CRIU が必要とする 3 つの Linux 機能を付与します。 <code>--security-opt</code> オプションは、コンテナー・イメージ・ビルドに対するすべての Linux システム呼び出しへのアクセス権限を付与します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="three_step_process"><a class="anchor" href="#three_step_process"></a> Docker または Podman での 3 ステップ・プロセスを使用した InstantOn イメージのビルド</h3>
+<div class="paragraph">
+<p>コンテナー・イメージのビルド中に Podman を使用して <code>checkpoint.sh</code> を実行できない場合は、以下の 3 ステップのプロセスを使用して、 InstantOn アプリケーション・コンテナー・イメージをビルドできます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li><p>InstantOn レイヤーを使用せずにアプリケーション・コンテナー・イメージをビルドする</p>
+</li>
+<li><p>アプリケーション・コンテナーを実行して、実行中のコンテナー内のアプリケーションのチェックポイントを実行します。</p>
+</li>
+<li><p>停止したコンテナーをチェックポイント・プロセス・データとともに InstantOn アプリケーション・コンテナー・イメージにコミットします。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>これらのステップを Podman および Docker で使用して、 InstantOn アプリケーション・イメージをビルドできます。 Dockerの場合、バージョン 23.0 以降が必要です。 以下の例では、 Docker を使用して、 <code>liberty-app</code>という名前のアプリケーション・イメージをビルドすることを想定しています。</p>
+</div>
+<div class="sect3">
+<h4 id="_1_build_the_application_container_image"><a class="anchor" href="#_1_build_the_application_container_image"></a>1. アプリケーション・コンテナー・イメージのビルド</h4>
+<div class="paragraph">
+<p>以下の例のように、イメージ・テンプレート (<code>Dockerfile</code> または <code>Containerfile</code>) を設定します。 この例では、 <code>kernel-slim-java17-openj9-ubi</code> タグを使用して、Java 17 の IBM Semeru ディストリビューションで最新の Open Liberty リリースを使用するイメージをビルドします。 このテンプレートでは、 <code>checkpoint.sh</code> スクリプトは実行されません。</p>
+</div>
+<div class="listingblock">
+<div class="title">Dockerfile</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-dockerfile hljs" data-lang="dockerfile">FROM icr.io/appcafe/open-liberty:kernel-slim-java17-openj9-ubi
+
+# Add a Liberty server configuration that includes all necessary features
+COPY --chown=1001:0  server.xml /config/
+
+# This script adds the requested XML snippets to enable Liberty features and grow the image to be fit-for-purpose.
+# This option is available only in the 'kernel-slim' image type. The 'full' and 'beta' tags already include all features.
+RUN features.sh
+
+# Add interim fixes (optional)
+COPY --chown=1001:0  interim-fixes /opt/ol/fixes/
+
+# Add an application
+COPY --chown=1001:0  Sample1.war /config/dropins/
+
+# This script adds the requested server configuration, applies any interim fixes, and populates caches to optimize the runtime.
+RUN configure.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Dockerを使用してアプリケーション・コンテナー・イメージをビルドするには、以下のコマンドを実行します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">docker build -t liberty-app .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>liberty-app</code>というタグが付けられた結果のアプリケーション・コンテナー・イメージには、 InstantOn チェックポイント・プロセス層は含まれません。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_2_run_the_application_container_to_perform_a_checkpoint"><a class="anchor" href="#_2_run_the_application_container_to_perform_a_checkpoint"></a>2. チェックポイントを実行するためのアプリケーション・コンテナーの実行</h4>
+<div class="paragraph">
+<p>アプリケーション・コンテナー・イメージを実行して、実行中のコンテナー内でアプリケーション・プロセスのチェックポイントを実行します。 以下の例では、 <code>liberty-app</code> アプリケーション・イメージを使用して、 <code>afterAppStart</code> オプションを指定してアプリケーション・プロセスのチェックポイントを実行します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">docker run \
+  --name liberty-app-checkpoint-container \
+  --privileged \
+  --env WLP_CHECKPOINT=afterAppStart \
+  liberty-app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このコマンドは、コンテナー内でアプリケーションを実行し、アプリケーション・プロセス・チェックポイントを実行します。 <code>--env</code> オプションは、チェックポイント <code>afterAppStart</code> オプションを指定するために <code>WLP_CHECKPOINT</code> 環境変数を設定します。 アプリケーション・プロセスのチェックポイントが完了すると、 <code>liberty-app-checkpoint-container</code> アプリケーション・コンテナーは停止し、終了します。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_commit_the_stopped_container_with_the_checkpoint_process_data"><a class="anchor" href="#_3_commit_the_stopped_container_with_the_checkpoint_process_data"></a>3. チェックポイント・プロセス・データを使用して、停止したコンテナーをコミットします。</h4>
+<div class="paragraph">
+<p>前のステップで停止した <code>liberty-app-checkpoint-container</code> コンテナーには、 InstantOn チェックポイント・プロセスからのデータが含まれています。 最後に、以下のコミット・コマンドを実行して、このチェックポイント・プロセス・データを取得し、それをアプリケーション・コンテナー・イメージ層にコミットします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">docker commit liberty-app-checkpoint-container liberty-app-instanton
+docker rm liberty-app-checkpoint-container</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これで、 <code>liberty-app</code> と <code>liberty-app-instanton</code>の 2 つのアプリケーション・イメージが作成されました。 <code>liberty-app-instanton</code> コンテナー・イメージを使用してコンテナーを開始すると、元の <code>liberty-app</code> イメージよりも起動時間が短縮されます。 停止した <code>liberty-app-checkpoint-container</code> コンテナーは不要になったため、安全に削除できます。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="run"><a class="anchor" href="#run"></a> InstantOn アプリケーション・イメージの実行およびデプロイ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>InstantOn アプリケーション・イメージをローカルで実行する場合、またはパブリック・クラウドにデプロイする場合は、特別な考慮事項が必要です。 InstantOn チェックポイント・プロセスをリストアするには、以下の前提条件が必要です。</p>
+</div>
+<div id="required-to-restore" class="olist arabic">
+<ol class="arabic">
+<li><p>コンテナー・イメージを実行するホストは、 Linux カーネル 5.9 以上を使用する必要があります。</p>
+</li>
+<li><p>Linux 機能の CHECKPOINT_RESTORE および SETPCAP が、実行中のコンテナーに付与されている必要があります。</p>
+</li>
+<li><p>必要なシステム呼び出しが、実行中のコンテナーに付与されている必要があります。</p>
+</li>
+<li><p>ホスト・プロセッサーは X86-64/AMD64 でなければなりません。</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_running_an_instanton_application_image_locally"><a class="anchor" href="#_running_an_instanton_application_image_locally"></a>ローカルでの InstantOn アプリケーション・イメージの実行</h3>
+<div class="paragraph">
+<p>ホスト・システムが X86-64/AMD64 プロセッサーを使用して Linux カーネル 5.9 以上を実行している場合は、 Podman または Docker をローカルで使用して InstantOn アプリケーション・イメージを実行できます。 以下のコマンドは、 Podmanを使用して <code>liberty-app-instanton</code> InstantOn アプリケーション・イメージを実行します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">podman run \
+  --rm \
+  --cap-add=CHECKPOINT_RESTORE \
+  --cap-add=SETPCAP \
+  --security-opt seccomp=unconfined \
+  -p 9080:9080 \
+  liberty-app-instanton</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下のコマンドは、 Dockerを使用して <code>liberty-app-instanton</code> InstantOn アプリケーション・イメージを実行します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">docker run \
+  --rm \
+  --cap-add=CHECKPOINT_RESTORE \
+  --cap-add=SETPCAP \
+  --security-opt seccomp=unconfined \
+  -p 9080:9080 \
+  liberty-app-instanton</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>どちらの場合も、 <code>--cap-add</code> オプションは <code>CHECKPOINT_RESTORE</code> 機能と <code>SETPCAP</code> 機能を付与します。 InstantOn アプリケーション・コンテナー・イメージを実行するために <code>SYS_PTRACE</code> 機能は必要ありません。</p>
+</div>
+<div class="sect3">
+<h4 id="required-system-calls"><a class="anchor" href="#required-system-calls"></a>必須の Linux システム・コール</h4>
+<div class="paragraph">
+<p><code>--security-opt</code> オプションは、実行中のコンテナーに、すべての Linux システム・コールへのアクセス権限を付与します。 コンテナー・エンジンのデフォルトによっては、 <code>seccomp-unconfined</code> 設定の <code>--security-opt</code> は必要ない場合があります。 CRIU が InstantOn アプリケーション・プロセスをリストアするには、コンテナーが <code>clone3</code>、 <code>ptrace</code>、およびその他のシステム呼び出しにアクセスできる必要があります。 この要件は、 <code>SYS_PTRACE</code> の昇格された Linux 機能がプロセスのリストアに必要とされない場合でも当てはまります。 コンテナー・エンジンのデフォルトを更新して、必要なすべてのシステム呼び出しを組み込むことができます。</p>
+</div>
+<div class="paragraph">
+<p>あるいは、コンテナーのポリシーを指定する <code>--security-opt seccomp</code> オプションを使用してファイルを指定することもできます。 以下のコマンドを使用して、 <code>seccomp</code>の JSON ポリシー・ファイルを指定します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">podman run \
+  --rm \
+  --cap-add=CHECKPOINT_RESTORE \
+  --cap-add=NET_ADMIN \
+  --cap-add=SYS_PTRACE \
+  --security-opt seccomp=criuRequiredSysCalls.json \
+  -p 9080:9080 \
+  liberty-app-instanton</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>結果の <a href="instanton-sycalls-json.html" class="xref page">criuRequiredSysCalls.json</a> ファイルにより、CRIU が InstantOn アプリケーション・プロセスをリストアするために必要とするすべての Linux システム・コールへのアクセス権限が付与されます。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_recovering_from_a_failed_instanton_restore"><a class="anchor" href="#_recovering_from_a_failed_instanton_restore"></a>失敗した InstantOn リストアからのリカバリー</h4>
+<div class="paragraph">
+<p>InstantOn アプリケーション・プロセスのリストアが失敗した場合、 Open Liberty は、 InstantOn チェックポイント・プロセスを使用せずにサーバーを始動します。 このような場合、 Open Liberty アプリケーションは、 InstantOn チェックポイント・プロセス層が存在しないかのように開始します。これは、正常にリストアされた InstantOn プロセスよりも時間がかかります。 失敗した InstantOn リストアからのこのリカバリー起動は、以下の環境変数を設定することで無効にできます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">CRIU_RESTORE_DISABLE_RECOVERY=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>InstantOn アプリケーション・コンテナー・イメージをビルドした後、この環境変数をローカルで実行するように設定することで、リストアが正常に行われたことを確認できます。 例えば、以下の Podman コマンドを実行できます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">podman run \
+  --rm \
+  --cap-add=CHECKPOINT_RESTORE \
+  --cap-add=SETPCAP \
+  --security-opt seccomp=unconfined \
+  --env CRIU_RESTORE_DISABLE_RECOVERY=true \
+  -p 9080:9080 \
+  liberty-app-instanton</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>失敗したアプリケーション・コンテナー・イメージの開始をクラウド環境が継続的に再始動しようとしないようにするため、 <code>CRIU_RESTORE_DISABLE_RECOVERY</code> 変数のデフォルト値は <code>false</code>です。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_an_instanton_application_to_kubernetes_services"><a class="anchor" href="#_deploying_an_instanton_application_to_kubernetes_services"></a> Kubernetes サービスへの InstantOn アプリケーションのデプロイ</h3>
+<div class="paragraph">
+<p>現在、 Open Liberty InstantOn は、以下のパブリック・クラウド Kubernetes サービスでテストおよびサポートされています。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><a href="https://aws.amazon.com/eks/">Amazon Elastic Kubernetes Service (EKS)</a></p>
+</li>
+<li><p><a href="https://azure.microsoft.com/en-us/products/kubernetes-service">Azure Kubernetes Service (AKS)</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>InstantOn アプリケーション・プロセスを復元するための <a href="#required-to-restore">前提条件</a> がある場合は、他のパブリック・クラウド Kubernetes サービスも機能する可能性があります。</p>
+</div>
+<div class="paragraph">
+<p>Kubernetesにデプロイする場合は、 InstantOn アプリケーション・プロセスをリストアできるように、コンテナーに <code>CHECKPOINT_RESTORE</code> 機能と <code>SETPCAP</code> Linux 機能を付与する必要があります。 コンテナーに以下の <code>securityContext</code> を指定することで、デプロイメント YAML ファイルでこれらの機能を構成できます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">        securityContext:
+          allowPrivilegeEscalation: true
+          privileged: false
+          runAsNonRoot: true
+          capabilities:
+            add:
+            - CHECKPOINT_RESTORE
+            - SETPCAP
+            drop:
+            - ALL</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="supported-features"><a class="anchor" href="#supported-features"></a>Open Liberty InstantOn のサポート対象フィーチャー</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>InstantOn は、 Open Liberty フィーチャーのサブセットをサポートしています。 InstantOn がサポートしていない機能が有効になっている場合、アプリケーション・プロセスのチェックポイントを実行しようとすると障害が発生します。 InstantOn は、以下の Jakarta EE および MicroProfile <a href="reference/feature/feature-overview.html#conv" class="xref page">コンビニエンス・フィーチャー</a>をサポートします。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p>Jakarta EE Web Profile バージョン <a href="/docs/latest/reference/feature/webProfile-8.0.html">8.0</a> 以降</p>
+</li>
+<li><p>MicroProfile バージョン <a href="/docs/latest/reference/feature/microProfile-4.1.html">4.1</a> 以降</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>アプリケーションのニーズに応じて、 <a href="/docs/latest/reference/feature/webProfile.html">Jakarta EE Web Profile</a> および <a href="/docs/latest/reference/feature/microProfile.html">MicroProfile</a> フィーチャーによって有効にされた Open Liberty パブリック・フィーチャーを個別に有効にすることができます。 このオプションは、コンビニエンス・フィーチャーによって使用可能になっているフィーチャーの完全なセットを使用可能にしないようにします。</p>
+</div>
+<div class="paragraph">
+<p>InstantOn は、コンビニエンス・フィーチャーで有効になっているフィーチャーに加えて、以下のフィーチャーもサポートしています。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><a href="/docs/latest/reference/feature/audit-1.0.html">audit-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/bells-1.0.html">bells-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/distributedMap-1.0.html">distributedMap-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/federatedRegistry-1.0.html">federatedRegistry-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/ldapRegistry-3.0.html">ldapRegistry-3.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/monitor-1.0.html">monitor-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/openidConnectClient-1.0.html">openidConnectClient-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/passwordUtilities-1.1.html">passwordUtilities-1.1</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/restConnector-2.0.html">restConnector-2.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/sessionDatabase-1.0.html">sessionDatabase-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/socialLogin-1.0.html">socialLogin-1.0</a></p>
+</li>
+<li><p><a href="/docs/latest/reference/feature/webCache-1.0.html">webCache-1.0</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>制限について詳しくは、 <a href="instanton-limitations.html" class="xref page">InstantOn の制限と既知の問題</a>を参照してください。</p>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+ <footer>
+    <div id="footer_gray_background">
+        <div id="footer_top_container" class="footer_container container-fluid">
+            <div id="footer_project_container"><span id="footer_open_liberty"></span><p id="footer_project">IBM オープン・ソース・プロジェクト</p>
+            </div>
+            <div id="footer_round_links_container"><a id="footer_github_link" class="footer_round_btn" href="https://github.com/OpenLiberty/" target="_blank" rel="noopener" aria-label="Github"></a> <a id="footer_twitter_link" class="footer_round_btn" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener" aria-label="&lt;"></a> <a id="footer_stackoverflow_link" class="footer_round_btn" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener" aria-label="Stack Overflow での Open Liberty に関する質問"></a> <a id="footer_groupsio_link" class="footer_round_btn" href="https://groups.io/g/openliberty" target="_blank" rel="noopener" aria-label="Open Liberty Groups.io"></a> <a id="footer_gitter_link" class="footer_round_btn" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener" aria-label="Open Liberty Gitter"></a></div>
+        </div>         
+    </div>
+
+    <div id="footer_bottom_container" class="footer_container container-fluid">
+        <div id="footer_bottom_left_section">
+            <p id="footer_copyright">© Copyright IBM Corp. 2017, 2023</p>
+            <p class="vertical_bar">|</p><a id="footer_privacy_policy_link" href="https://www.ibm.com/privacy/" target="_blank" rel="noopener" class="left_footer_link">プライバシー・ポリシー</a><p class="vertical_bar">|</p><a id="footer_license_link" href="https://github.com/OpenLiberty/open-liberty/blob/release/LICENSE" target="_blank" rel="noopener" class="left_footer_link">使用許諾条件</a><p class="vertical_bar">|</p><a id="footer_logos_link" href="https://github.com/OpenLiberty/logos" target="_blank" rel="noopener" class="left_footer_link">ロゴス (論理)</a></div>      
+        <div id="footer_bottom_right_section"><a id="footer_docs_link" href="/docs" aria-label="Open Liberty 資料" class="right_footer_link blue_link_light_background">資料</a> <a id="footer_blog_link" href="/blog" aria-label="Open Liberty ブログ" class="right_footer_link blue_link_light_background">ブログ</a> <a id="footer_support_link" href="/support" aria-label="Open Liberty のサポート" class="right_footer_link blue_link_light_background">サポート</a></div>
+    </div>
+</footer>
+
+<!-- PRE-LOADED IMAGES FOR ON HOVER BEHAVIOR -->
+<div class="d-none hidden"><img src="../../_/img/Footer_GitCat_Hover.svg" alt="OpenLiberty Github リンク"> <img src="../../_/img/Footer_TwitterBird_Hover.svg" alt="OpenLibertyIO Twitter リンク"> <img src="../../_/img/Footer_StackO_Hover.svg" alt="Open-liberty Stack Overflow リンク"> <img src="../../_/img/Footer_GroupsIO_Hover.svg" alt="Openliberty Groups IO リンク"> <img src="../../_/img/footer_gitter_hover.svg" alt="Openliberty Gitter リンク"></div>
+<script src="../../_/js/01-nav.js"></script>
+<script src="../../_/js/02-fragment-jumper.js"></script>
+<script src="../../_/js/03-mobile-navbar.js"></script>
+<script src="../../_/js/07-tabs.js"></script>
+<script src="../../_/js/08-links.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/10-navscroll.js"></script>
+<script src="../../_/js/11-copy-to-clipboard.js"></script>
+  </body>
+</html>
+
+<!-- v2.0.64 : caits-prod-app-gp_openliberty_20240126T180414-1_en_ja -->

@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>对安全性进行故障诊断 :: Open Liberty Docs</title>
+    <link rel="canonical" href="https://openliberty.io/docs/latest/troubleshooting.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Asap:400,500" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/default.min.css">
+<link rel="stylesheet" href="../../_/css/site.css">
+<meta name="robots" content="noindex" />
+<meta name="description" content="Open Liberty 文档和参考资料，供开发人员构建应用程序，供管理员和操作团队使用开放式云本机 Java 来管理 DevOps 并将工作负载部署到云。 此内容涵盖 Open Liberty 基础知识，开发，安全性，部署和操作主题。 它还包括 Javadoc for Jakarta EE API ， MicroProfile API ， Java EE API 以及 Open Liberty API 和 SPI。">
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@OpenLibertyIO" />
+<meta name="twitter:title" content="Open Liberty 文档" />
+<meta name="twitter:description" content="Open Liberty 文档和参考资料，供开发人员构建应用程序，供管理员和操作团队使用开放式云本机 Java 来管理 DevOps 并将工作负载部署到云。 此内容涵盖 Open Liberty 基础知识，开发，安全性，部署和操作主题。 它还包括 Javadoc for Jakarta EE API ， MicroProfile API ， Java EE API 以及 Open Liberty API 和 SPI。" />
+<meta name="twitter:image" content="https://openliberty.io/img/twitter_card.jpg" />
+
+
+<meta property="og:title" content="Open Liberty Docs" />
+<meta property="og:description" content="Open Liberty documentation and reference materials for developers to build applications and for administrators and operation teams to manage DevOps and deploy workloads to clouds by using open cloud-native Java. This content covers Open Liberty basics, development, security, deployment, and operations topics. It also includes Javadoc for Jakarta EE APIs, MicroProfile APIs, Java EE APIs, and Open Liberty APIs and SPIs." />
+<meta property="og:image" content="https://openliberty.io/img/twitter_card.jpg" />
+<meta property='og:type' content="website" />
+<meta property='og:url' content="https://openliberty.io/docs/23.0.0.2/troubleshooting.html" />
+
+    <script async src="../../_/js/vendor/highlight.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  </head>
+  <body class="article">
+<header>
+    <nav id="nav_bar" aria-label="导航标题链接">
+        <div id="nav_header"><a id="home_link" href="/" aria-label="Open Liberty 主页"> <img id="ol_logo" src="../../_/img/docs_openliberty_logo.png" alt="Open Liberty 徽标"> </a> <button id="hamburger_toggle_button" onclick="$('#nav_bar').toggleClass('responsive');" aria-label="切换导航菜单"> <span id="hamburger_toggle_icon"></span> </button></div>
+        <div id="hamburger_menu">
+            <ul class="nav_list">
+                <li class="nav_link"><a href="/start">入门</a></li>
+                <li class="nav_link"><a href="/guides">指南</a></li>
+                <li class="nav_link"><a href="/docs">文档</a></li>
+                <li class="nav_link"><a href="/support">支持</a></li>
+                <li class="nav_link"><a href="/blog">博客</a></li>
+            </ul>
+            <div id="header_round_links_container"><a id="header_twitter_link" class="header_round_button" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener noreferrer" aria-label="&lt;"></a> <a id="header_stackoverflow_link" class="header_round_button" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener noreferrer" aria-label="Stack Overflow 上的 Open Liberty 问题"></a> <a id="header_groupsio_link" class="header_round_button" href="https://groups.io/g/openliberty" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Groups.io"></a> <a id="header_gitter_link" class="header_round_button" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Gitter"></a></div>
+        </div>
+    </nav>
+</header><div class="body">
+<div class="nav-container" data-component="docs" data-version="23.0.0.2">
+  <aside class="nav" aria-label="导航目录">
+    <div class="panels">
+      <div class="nav-panel-explore" data-panel="explore">
+    <div class="doc_select version_select">
+      <div class="context"><span class="title">V</span> <a class="version" href="#">23.0.0.2</a> <img src="../../_/img/chevron.svg" class="version_select_chevron"/></div>
+      <ul class="components">
+        <li class="component is-current"><ul class="versions">
+              <li class="version"><span class="title">V</span> <a href="../latest/troubleshooting.html" aria-label="版本 23.0.0.12">23.0.0.12</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.11/troubleshooting.html" aria-label="版本 23.0.0.11">23.0.0.11</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.10/troubleshooting.html" aria-label="版本 23.0.0.10">23.0.0.10</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.9/troubleshooting.html" aria-label="版本 23.0.0.9">23.0.0.9</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.8/troubleshooting.html" aria-label="版本 23.0.0.8">23.0.0.8</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.7/troubleshooting.html" aria-label="版本 23.0.0.7">23.0.0.7</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.6/troubleshooting.html" aria-label="版本 23.0.0.6">23.0.0.6</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.5/troubleshooting.html" aria-label="版本 23.0.0.5">23.0.0.5</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.4/troubleshooting.html" aria-label="版本 23.0.0.4">23.0.0.4</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.3/troubleshooting.html" aria-label="版本 23.0.0.3">23.0.0.3</a></li>
+              <li class="version is-current"><span class="title">V</span> <a href="troubleshooting.html" aria-label="版本 23.0.0.2">23.0.0.2</a></li>
+              <li class="version"><span class="title">V</span> <a href="../23.0.0.1/troubleshooting.html" aria-label="版本 23.0.0.1">23.0.0.1</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.13/troubleshooting.html" aria-label="版本 22.0.0.13">22.0.0.13</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.12/troubleshooting.html" aria-label="版本 22.0.0.12">22.0.0.12</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.11/troubleshooting.html" aria-label="版本 22.0.0.11">22.0.0.11</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.10/troubleshooting.html" aria-label="版本 22.0.0.10">22.0.0.10</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.9/troubleshooting.html" aria-label="版本 22.0.0.9">22.0.0.9</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.8/troubleshooting.html" aria-label="版本 22.0.0.8">22.0.0.8</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.7/troubleshooting.html" aria-label="版本 22.0.0.7">22.0.0.7</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.6/troubleshooting.html" aria-label="版本 22.0.0.6">22.0.0.6</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.5/troubleshooting.html" aria-label="版本 22.0.0.5">22.0.0.5</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.4/troubleshooting.html" aria-label="版本 22.0.0.4">22.0.0.4</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.3/troubleshooting.html" aria-label="版本 22.0.0.3">22.0.0.3</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.2/troubleshooting.html" aria-label="版本 22.0.0.2">22.0.0.2</a></li>
+              <li class="version"><span class="title">V</span> <a href="../22.0.0.1/troubleshooting.html" aria-label="版本 22.0.0.1">22.0.0.1</a></li>
+              <li class="version"><span class="title">V</span> <a href="../21.0.0.12/troubleshooting.html" aria-label="版本 21.0.0.12">21.0.0.12</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="doc_select language_select">
+      <div class="context lang_picker"><img src="../../_/img/filled_globe.svg" class="globe_icon"/> <a class="version" href="#"> </a> <img src="../../_/img/chevron.svg" class="version_select_chevron"/></div>
+        <ul class="components language_list">
+          <li class="component"><ul class="versions">
+                <li class="version is-current"><a href="/docs/23.0.0.2/troubleshooting.html" translate="no">English</a></li>
+                <li class="version"><a href="/ja/docs/23.0.0.2/troubleshooting.html" translate="no">日本語</a></li>
+                <li class="version"><a href="/zh-Hans/docs/23.0.0.2/troubleshooting.html" translate="no">中文（简体)</a></li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    
+</div>
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu" aria-label="Open Liberty 文档的导航菜单">
+    <h3 class="title"><a href="overview.html">文档概述</a></h3>
+    <ul class="nav-list">
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button><span class="nav-text" tabindex="0" role="button"> 基础</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="zero-migration-architecture.html">不需要迁移</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="development-mode.html">设备方式</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="java-se.html">Java SE 支持</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="installing-open-liberty-betas.html">安装 Open Liberty Beta 发行版</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="develop-liberty-tools.html">使用 Liberty 工具进行开发</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/getting-started.html">指南: Open Liberty</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <span class="nav-text" tabindex="0" role="button">开发</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="cloud-native-microservices.html">云原生微服务</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="microprofile.html">MicroProfile 概述</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-41-50-diff.html">MicroProfile 5.0 与 4.1 之间的差异</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-33-40-diff.html">MicroProfile 4.0 与 3.3 之间的差异</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-22-30-diff.html">MicroProfile 3.0 与 2.2 之间的差异</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-21-22-diff.html">MicroProfile 2.2 与 2.1 之间的差异</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="jakarta-ee.html">Jakarta EE 概述</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jakarta-ee9-feature-updates.html">Jakarta EE 9.1 功能部件更新</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jakarta-ee-diff.html">Jakarta EE 9.1 与 8.0 之间的差异</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="container-images.html">容器映像</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="rest-microservices.html">RESTful 服务</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="sync-async-rest-clients.html">同步和异步 REST 客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="rest-clients.html">REST 客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="json-p-b.html">JSON-P 和 JSON-B</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="send-receive-multipart-jaxrs.html">发送和接收 multipart/form-data 部件</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#restful_service">指南 :RESTful 服务</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#getting_started">指南: 入门</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="documentation-openapi.html">记录 API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/microprofile-openapi.html">指南: 记录 RESTful API</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="external-configuration.html">微服务的外部配置</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-config-properties.html">MicroProfile 配置属性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#configuration">指南: 配置</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="cdi-beans.html">上下文和依赖关系注入 Bean</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jaxrs-integration-cdi.html">RESTful Web Service 与 CDI 集成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/cdi-intro.html">指南: 将依赖关系注入到微服务中</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="data-persistence.html">数据持久性</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="relational-database-connections-JDBC.html">与 JDBC的关系数据库连接</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="kerberos-authentication-jdbc.html"> JDBC的Kerberos 认证</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="data-persistence-jpa.html">使用 JPA 的数据持久性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="access-nosql-databases.html">使用 CDI 访问 NoSQL 数据库</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="create-session-table.html">为会话持久性创建数据库表</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#persistence">指南: 持久性</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="transaction-service.html">事务恢复</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="distributed-caching-jcache.html">使用 JCache 的分布式高速缓存</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="distributed-session-caching.html">分布式会话高速缓存</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-infinispan-support.html">将 Infinispan 配置为 JCache 提供程序</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="microservice-observability-metrics.html">可观察性</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="health-check-microservices.html">微服务的运行状况检查</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#observability">指南: 可观察性</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="integration-testing.html">测试</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#test">指南: 测试</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="fault-tolerance.html">故障容错</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="async-programming-fault-tolerance.html">弹性异步编程</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#fault_tolerance">指南: 容错</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="concurrency.html">并行</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-context-propagation.html">与 MicroProfile 上下文传播并行</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="async-io.html">异步输入和输出</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="microprofile-graphql.html">构建 GraphQL 应用程序</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="grpc-services.html">提供和使用 gRPC 服务</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <span class="nav-text" tabindex="0" role="button">安全性</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="authentication.html">认证</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="authentication-filters.html">认证过滤器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="authentication-cache.html">认证缓存</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="user-registries-application-security.html">用户注册表</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="single-sign-on.html">单点登录</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="kerberos-authentication.html">Kerberos 认证</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="track-loggedout-sso.html">跟踪已注销的 SSO cookie</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-spnego-authentication.html">配置 SPNEGO 认证</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="authorization.html">权限</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="secure-communication-tls.html">使用 TLS 进行安全通信</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="acme-cert-management.html">使用 ACME 进行自动证书管理</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="security-hardening.html">安全性强化</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="server-configuration-hardening.html">服务器配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="network-hardening.html">网络</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="application-configuration-hardening.html">应用程序配置</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="password-encryption.html">密码加密限制</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="audit-logs.html">审计日志</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="verifying-package-signatures.html">验证发行版软件包特征符</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="enable-fips.html">运行符合 FIPS 的应用程序</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="security-vulnerabilities.html">安全漏洞列表</a></li>
+  <li class="nav-item is-current-page" data-depth="1"><a class="nav-link" tabindex="0" href="troubleshooting.html">安全性故障诊断</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#security">指南: 安全性</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <span class="nav-text" tabindex="0" role="button">部署</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="deployment-openshift.html">在 OpenShift</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="open-liberty-operator.html">Open Liberty 操作程序</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="container-images.html">容器映像</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="runnable-jar-files.html">可运行的 JAR 文件</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="class-loader-library-config.html">类装入器配置</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="virtual-hosts.html">虚拟主机</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="application-bindings.html">应用程序绑定</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#kubernetes">指南: Kubernetes</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#cloud_deployment">指南: 云部署</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button><span class="nav-text" tabindex="0" role="button"> 操作</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="log-trace-configuration.html">日志</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="log-management.html">日志管理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="access-logging.html">HTTP 访问日志记录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jdbc-tracing.html">JDBC 跟踪</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="json-log-events-list.html">JSON 日志事件参考列表</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="logstash-events-list.html">Logstash 事件引用列表</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="audit-log-events-list-cadf.html">审计日志事件 (CADF) 参考列表</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="analyzing-logs-elk.html">使用 Elastic Stack 分析 JSON 日志</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="forwarding-logs-logstash.html">使用 Logstash 收集器转发日志</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="introduction-monitoring-metrics.html">度量</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="metrics-list.html">度量参考列表</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-jmx-connection.html">配置 JMX 连接</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jmx-metrics-list.html">JMX 度量参考列表</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="slow-hung-request-detection.html">检测运行缓慢和挂起的请求</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="thread-pool-tuning.html">线程池调整</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="validating-server-connections.html">验证服务器连接</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="admin-center.html">管理中心 GUI</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="oidc-tools.html">管理中心 OIDC 工具</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="performance-tuning.html">性能调整</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="thread-pool-tuning.html">线程池调整</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <span class="nav-text" tabindex="0" role="button">参考</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/directory-locations-properties.html">目录位置和属性</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/default-environment-variables.html">缺省环境变量</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/default-port-numbers.html">缺省端口号</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/bootstrap-properties.html">引导属性</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/config/server-configuration-overview.html">服务器配置</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeCA.html">acmeCA</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeRevocationChecker.html">acmeRevocationChecker</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeTransportConfig.html">acmeTransport配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/activationSpec.html">activationSpec</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/activedLdapFilterProperties.html">activedLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/adminObject.html">adminObject</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/administrator-role.html">administrator-role</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/application.html">应用程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/applicationManager.html">applicationManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/applicationMonitor.html">applicationMonitor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/auditEvent.html">auditEvent</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/auditFileHandler.html">auditFile处理程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authCache.html">authCache</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authData.html">authData</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authFilter.html">authFilter</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authentication.html">认证</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authorization-roles.html">authorization-roles</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/basicRegistry.html">basicRegistry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsDispatcher.html">batchJms分派器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsEvents.html">batchJms事件</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsExecutor.html">batchJms执行程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJobLogging.html">batchJob日志记录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchPersistence.html">batchPersistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/bell.html">铃声</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cache.html">高速缓存</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cacheManager.html">cacheManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cachingProvider.html">cachingProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cdi12.html">cdi12</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/channelfw.html">channelfw</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/classloader.html">classloader</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/classloading.html">类加载</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cloudant.html">cloudant</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cloudantDatabase.html">cloudantDatabase</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/compression.html">compression</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/concurrencyPolicy.html">concurrencyPolicy</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/config.html">config</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/connectionFactory.html">connectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/connectionManager.html">connectionManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/constrainedDelegation.html">constrainedDelegation</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/contextService.html">contextService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cors.html">cors</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/couchdb.html">couchdb</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/customLdapFilterProperties.html">customLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/dataSource.html">dataSource</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/databaseStore.html">databaseStore</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/distributedMap.html">distributedMap</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/domainResolver.html">domainResolver</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/domino50LdapFilterProperties.html">domino50LdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/edirectoryLdapFilterProperties.html">edirectoryLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ejbApplication.html">ejbApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ejbContainer.html">ejbContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/enterpriseApplication.html">enterpriseApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/eventLogging.html">eventLogging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/executor.html">executor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/facebookLogin.html">facebookLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/featureManager.html">featureManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/federatedRepository.html">federatedRepository</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/fileset.html">fileset</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/githubLogin.html">githubLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/googleLogin.html">googleLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/grpc.html">gRPC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/grpcClient.html">grpcClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/headers.html">头</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpAccessLogging.html">httpAccessLogging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpDispatcher.html">httpDispatcher</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpEncoding.html">httpEncoding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpEndpoint.html">httpEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpOptions.html">httpOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpProxyRedirect.html">httpProxy重定向</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSession.html">httpSession</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSessionCache.html">httpSession高速缓存</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSessionDatabase.html">httpSessionDatabase</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/idsLdapFilterProperties.html">idsLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iiopEndpoint.html">iiopEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iiopServerPolicies.html">iiopServer策略</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/include.html">include</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iplanetLdapFilterProperties.html">iplanetLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jaasLoginContextEntry.html">jaasLoginContextEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jaasLoginModule.html">jaasLoginModule</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/javaPermission.html">javaPermission</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jdbcDriver.html">jdbcDriver</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsActivationSpec.html">jmsActivationSpec</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsConnectionFactory.html">jmsConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsDestination.html">jmsDestination</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsQueue.html">jmsQueue</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsQueueConnectionFactory.html">jmsQueueConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsTopic.html">jmsTopic</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsTopicConnectionFactory.html">jmsTopicConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiEntry.html">jndiEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiObjectFactory.html">jndiObjectFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiReferenceEntry.html">jndiReferenceEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiURLEntry.html">jndiURLEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jpa.html">jpa</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jspEngine.html">jspEngine</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtBuilder.html">jwtBuilder</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtConsumer.html">jwtConsumer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtSso.html">jwtSso</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/kerberos.html">kerberos</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/keyStore.html">keyStore</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ldapRegistry.html">ldapRegistry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/library.html">库</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/linkedinLogin.html">linkedinLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/logging.html">日志记录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/logstashCollector.html">logstashCollector</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ltpa.html">ltpa</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mailSession.html">mailSession</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedExecutorService.html">managedExecutorService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedScheduledExecutorService.html">managedScheduledExecutorService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedThreadFactory.html">managedThread工厂</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/messagingEngine.html">messagingEngine</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mimeTypes.html">mimeTypes</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mongo.html">mongo</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mongoDB.html">mongoDB</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/monitor.html">monitor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mpJwt.html">mpJwt</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mpMetrics.html">mpMetrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/netscapeLdapFilterProperties.html">netscapeLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauth-roles.html">oauth-roles</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauth2Login.html">oauth2Login</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauthProvider.html">oauthProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oidcClientWebapp.html">oidcClientWeb 应用程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oidcLogin.html">oidcLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/okdServiceLogin.html">okdService登录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openId.html">openId</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openidConnectClient.html">openidConnectClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openidConnectProvider.html">openidConnectProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/orb.html">ORB</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/persistentExecutor.html">persistentExecutor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/pluginConfiguration.html">pluginConfiguration</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/quickStartSecurity.html">quickStartSecurity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/reader-role.html">reader-role</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/remoteFileAccess.html">remoteFileAccess</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/remoteIp.html">remoteIp</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/requestTiming.html">requestTiming</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/resourceAdapter.html">resourceAdapter</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/samesite.html">Samesite</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/samlWebSso20.html">samlWebSso20</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/securewayLdapFilterProperties.html">securewayLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipApplicationRouter.html">sipApplication路由器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipContainer.html">sipContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipEndpoint.html">sipEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipStack.html">sipStack</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/socialLoginWebapp.html">socialLoginWeb 应用程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/spnego.html">SPNEGO</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/springBootApplication.html">springBoot应用程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ssl.html">SSL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sslDefault.html">sslDefault</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sslOptions.html">sslOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/tcpOptions.html">tcpOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/transaction.html">事务</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/trustAssociation.html">trustAssociation</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/twitterLogin.html">twitterLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/userInfo.html">userInfo</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/variable.html">variable</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/virtualHost.html">virtualHost</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wasJmsEndpoint.html">wasJmsEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wasJmsOutbound.html">wasJmsOutbound</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webAppSecurity.html">webAppSecurity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webApplication.html">webApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webContainer.html">webContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webTarget.html">webTarget</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsAtomicTransaction.html">wsAtomic事务</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsSecurityClient.html">wsSecurityClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsSecurityProvider.html">wsSecurityProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsocOutbound.html">wsocOutbound</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/feature/feature-overview.html">功能部件</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/adminCenter-1.0.html">管理中心</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/localConnector-1.0.html">管理本地连接器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restConnector-2.0.html">管理 REST 连接器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-1.0.html">Application Client Support for Server</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-1.0.html">应用程序安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-2.0.html">应用程序安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-3.0.html">应用程序安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-4.0.html">应用程序安全性 (Jakarta Security)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurityClient-1.0.html">客户机的应用程序安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/audit-1.0.html">审计</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/acmeCA-2.0.html">Automatic Certificate Management Environment (ACME) Support</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/bells-1.0.html">Basic Extensions using Liberty Libraries</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batch-1.0.html">批处理 API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batchManagement-1.0.html">Batch Management</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-1.1.html">Bean 验证</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-2.0.html">Bean 验证</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cloudant-1.0.html">Cloudant 集成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/concurrent-1.0.html"> Java EE</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-1.2.html">上下文和依赖关系注入</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-2.0.html">上下文和依赖关系注入</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/couchdb-1.0.html">CouchDB 集成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sessionDatabase-1.0.html">Database Session Persistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/distributedMap-1.0.html">Distributed Map interface for Dynamic Caching</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejb-3.2.html">Enterprise JavaBeans</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbHome-3.2.html">Enterprise JavaBeans 主接口</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbLite-3.2.html">Enterprise JavaBeans Lite</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbPersistentTimer-3.2.html">Enterprise JavaBeans 持久计时器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbRemote-3.2.html">Enterprise JavaBeans 远程</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/eventLogging-1.0.html">事件记录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/el-3.0.html">表达式语言</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/federatedRegistry-1.0.html">Federated User Registry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/grpc-1.0.html">gRPC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/grpcClient-1.0.html">gRPC 客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-2.0.html">Jakarta Application Client Server 支持</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthentication-2.0.html">Jakarta 认证</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthorization-2.0.html">Jakarta 授权</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batch-2.0.html">Jakarta 批处理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-3.0.html">Jakarta Bean 验证</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/concurrent-2.0.html">Jakarta 并发性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/connectors-2.0.html">Jakarta 连接器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/connectorsInboundSecurity-2.0.html">Jakarta Connectors 入站安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-3.0.html">Jakarta 上下文和依赖关系注入</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaeeClient-9.1.html">Jakarta EE 应用程序客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaee-8.0.html">Jakarta EE Platform</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaee-9.1.html">Jakarta EE Platform</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-9.1.html">Jakarta EE Web 概要文件</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeans-4.0.html">Jakarta 企业 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansHome-4.0.html">Jakarta Enterprise Beans Home 接口</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansLite-4.0.html">Jakarta 企业 Bean Lite</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mdb-4.0.html">Jakarta Enterprise Beans 消息驱动的 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansPersistentTimer-4.0.html">Jakarta 企业 Bean 持久计时器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansRemote-4.0.html">远程 Jakarta 企业 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/expressionLanguage-4.0.html">Jakarta 表达式语言</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonb-2.0.html">Jakarta JSON 绑定</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-2.0.html">Jakarta JSON 绑定容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-2.0.html">Jakarta JSON 处理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-2.0.html">Jakarta JSON 处理容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mail-2.0.html">Jakarta 邮件</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/managedBeans-2.0.html">Jakarta Managed Beans</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messaging-3.0.html">Jakarta 消息传递</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistence-3.0.html">Jakarta 持久性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistenceContainer-3.0.html">Jakarta 持久性容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWS-3.0.html">Jakarta RESTful Web Service</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWSClient-3.0.html">Jakarta RESTful Web Service 客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/faces-3.0.html">Jakarta Server Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/facesContainer-3.0.html">Jakarta Server Faces 容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/pages-3.0.html">Jakarta 服务器页面</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-5.0.html">Jakarta Servlet</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-2.0.html">Jakarta WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlBinding-3.0.html">Jakarta XML 绑定</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlWS-3.0.html">Jakarta XML Web Service</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaspic-1.1.html">Java 容器认证 SPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jacc-1.5.html">Java Authorization Contract for Containers</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jca-1.7.html">Java 连接器体系结构</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jcaInboundSecurity-1.0.html">Java Connector Architecture Security Inflow</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.0.html">Java 数据库连接</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.1.html">Java 数据库连接</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.2.html">Java 数据库连接</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.3.html">Java 数据库连接</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-7.0.html">Java EE 应用程序客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-8.0.html">Java EE 应用程序客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaee-7.0.html">Java EE 完整平台</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaee-8.0.html">Java EE 完整平台</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/managedBeans-1.0.html">Java EE 受管 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-7.0.html">Java EE Web 概要文件</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-8.0.html">Java EE Web 概要文件</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jms-2.0.html">Java 消息服务（Java Message Service）</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jndi-1.0.html">Java Naming and Directory Interface</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpa-2.1.html">Java 持久性 API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpa-2.2.html">Java 持久性 API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.1.html">Java 持久性 API 容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.2.html">Java 持久性 API 容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.0.html">Java RESTful 服务</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.1.html">Java RESTful 服务</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.0.html">Java RESTful 服务客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.1.html">Java RESTful 服务客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-3.1.html">Java Servlet</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-4.0.html">Java Servlet</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxws-2.2.html">Java Web Service</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-1.0.html">Java WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-1.1.html">Java WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxb-2.2.html">Java XML 绑定</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.5.html">JavaMail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.6.html">JavaMail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonb-1.0.html">JavaScript 对象表示法绑定</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-1.0.html">通过 Bell 进行 JavaScript 对象表示法绑定</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/json-1.0.html">JavaScript Object Notation for Java</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.0.html">JavaScript Object Notation Processing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.1.html">JavaScript Object Notation Processing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-1.1.html">通过 Bell 进行 JavaScript 对象表示法处理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsf-2.2.html">JavaServer Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsf-2.3.html">JavaServer Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.2.html">JavaServer Faces 容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.3.html">JavaServer Faces 容器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsp-2.2.html">JavaServer Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsp-2.3.html">JavaServer Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sessionCache-1.0.html">JCache 会话持久性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/j2eeManagement-1.1.html">JEE 管理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsClient-2.0.html">消息服务器的 JMS 客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jmsMdb-3.2.html">JMS 消息驱动的 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jwt-1.0.html">JSON Web 令牌</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jwtSso-1.0.html">JSON Web 令牌单点登录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/constrainedDelegation-1.0.html">用于 SPNEGO 的 Kerberos 约束委派</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ldapRegistry-3.0.html">LDAP 用户注册表</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/kernel.html">Liberty 内核</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/logstashCollector-1.0.html">Logstash 收集器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsServer-1.0.html">消息服务器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsSecurity-1.0.html">消息服务器安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mdb-3.2.html">消息驱动的 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingServer-3.0.html">消息传递服务器</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingClient-3.0.html">消息传递服务器客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingSecurity-3.0.html">消息传递服务器安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.3.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.4.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.1.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.3.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.1.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-5.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.1.html">MicroProfile 配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.2.html">MicroProfile 配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.3.html">MicroProfile 配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.4.html">MicroProfile 配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-2.0.html">MicroProfile 配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-3.0.html">MicroProfile 配置</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.0.html">MicroProfile 上下文传播</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.2.html">MicroProfile 上下文传播</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.3.html">MicroProfile 上下文传播</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.0.html">MicroProfile 容错</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.1.html">MicroProfile 容错</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.0.html">MicroProfile 容错</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.1.html">MicroProfile 容错</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-3.0.html">MicroProfile 容错</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-4.0.html">MicroProfile 容错</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-1.0.html">MicroProfile GraphQL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-2.0.html">MicroProfile GraphQL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-1.0.html">MicroProfile 运行状况</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.0.html">MicroProfile 运行状况</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.1.html">MicroProfile 运行状况</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.2.html">MicroProfile 运行状况</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.0.html">MicroProfile 运行状况</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.1.html">MicroProfile 运行状况</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-4.0.html">MicroProfile 运行状况</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.0.html">MicroProfile JSON Web 令牌</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.1.html">MicroProfile JSON Web 令牌</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.2.html">MicroProfile JSON Web 令牌</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-2.0.html">MicroProfile JSON Web 令牌</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.1.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.2.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.3.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-3.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-4.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.1.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-2.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-3.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.1.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.2.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.3.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-2.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-3.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpReactiveMessaging-1.0.html">MicroProfile 反应消息传递</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpReactiveStreams-1.0.html">MicroProfile 反应流</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.1.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.2.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.3.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.4.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-2.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-3.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mongodb-2.0.html">MongoDB 集成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/oauth-2.0.html">OAuth</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openapi-3.1.html">OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openid-2.0.html">OpenID</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openidConnectClient-1.0.html">OpenID Connect 客户机</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openidConnectServer-1.0.html">OpenID Connect 提供者</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.0.html">开放式跟踪</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.1.html">开放式跟踪</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.2.html">开放式跟踪</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.3.html">开放式跟踪</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-2.0.html">开放式跟踪</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/osgiConsole-1.0.html">OSGi Debug Console</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.0.html">密码实用程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.1.html">密码实用程序</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/monitor-1.0.html">性能监视</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/requestTiming-1.0.html">请求计时</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/samlWeb-2.0.html">SAML Web 单点登录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ssl-1.0.html">Secure Socket Layer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/spnego-1.0.html">Simple and Protected GSSAPI Negotiation Mechanism</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sipServlet-1.1.html">SIP Servlet</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/socialLogin-1.0.html">社交媒体登录</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/springBoot-1.5.html">Spring Boot 支持</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/springBoot-2.0.html">Spring Boot 支持</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/transportSecurity-1.0.html">Transport Security</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webCache-1.0.html">Web Response Cache</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsSecurity-1.1.html">Web Service 安全性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsAtomicTransaction-1.2.html">WS-AT 服务</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsSecuritySaml-1.1.html">WSSecurity SAML</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/command/command-overview.html">命令</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/auditUtility-auditReader.html">auditUtility auditReader</a></li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/command/featureUtility-commands.html">featureUtility 命令</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-find.html">查找</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-help.html">帮助</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-installFeature.html">installFeature</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-installServerFeatures.html">installServer功能部件</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-viewSettings.html">viewSettings</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/command/securityUtility-commands.html">securityUtility 命令</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-createLTPAKeys.html">createLTPAKeys</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-createSSLCertificate.html">createSSLCertificate</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-encode.html">encode</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-help.html">帮助</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/schemaGen.html">schemaGen</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/serverSchemaGen.html">serverSchema生成</a></li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/command/server-commands.html">服务器命令</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-create.html">创建</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-debug.html">debug</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-dump.html">转储</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-help.html">帮助</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-javadump.html">javadump</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-list.html">列表</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-package.html">package</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-pause.html">pause</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-resume.html">resume</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-run.html">运行</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-start.html">开始</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-status.html">状态</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-stop.html">停止</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-version.html">版本</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/command/springbootUtility-commands.html">springbootUtility 命令</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/springbootUtility-help.html">帮助</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/springbootUtility-thin.html">thin</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/jakarta-ee-api.html">Jakarta EE API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee9.1-javadoc.html">Jakarta EE 9.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee8-javadoc.html">Jakarta EE 8</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/java-ee-api.html">Java EE API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee8-javadoc.html">Java EE 8</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee7-javadoc.html">Java EE 7</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="展开此类别下的页面"></button> <a class="nav-link" tabindex="0" href="reference/microprofile-api.html">MicroProfile API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-5.0-javadoc.html">MicroProfile 5.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.1-javadoc.html">MicroProfile 4.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.0-javadoc.html">MicroProfile 4.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.3-javadoc.html">MicroProfile 3.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.2-javadoc.html">MicroProfile 3.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.0-javadoc.html">MicroProfile 3.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.2-javadoc.html">MicroProfile 2.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.1-javadoc.html">MicroProfile 2.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.0-javadoc.html">MicroProfile 2.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.4-javadoc.html">MicroProfile 1.4</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.3-javadoc.html">MicroProfile 1.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.2-javadoc.html">MicroProfile 1.2</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+
+    </div>
+  </aside>
+</div>
+<main role="main">
+<div class="toolbar" role="navigation" aria-label="此文档的工具栏"><button class="nav-toggle" aria-label="切换导航菜单"></button><nav class="breadcrumbs" aria-label="面包屑">
+  <ul>
+    <li><a href="overview.html">文档概述</a></li>
+    <li>安全性</li>
+    <li><a href="troubleshooting.html">安全性故障诊断</a></li>
+  </ul>
+</nav>
+    <div id="github_link"><img id="docs_github_logo" src="/img/docs_github_logo.svg" alt="GitHub 徽标"> <a id="open_issue_link" href="https://github.com/OpenLiberty/docs/issues/new?body=Document: Troubleshooting Security%0Ahttp://openliberty.io/docs/23.0.0.2/troubleshooting.html%0A%0A**Please describe the problem you are having with the documentation. Is information missing, inaccurate, or unclear? Tell us about the context where you encountered the problem so we can understand how to address it.**" target="_blank">打开问题</a> | <a id="edit_topic_link" href="https://github.com/OpenLiberty/docs/edit/v23.0.0.2/modules/ROOT/pages/troubleshooting.adoc" target="_blank" rel="noopener">编辑主题</a></div>
+</div>
+<article class="doc">   
+<h1 class="page">安全性故障诊断</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>如果要查找与安全性相关的问题的解决方案，那么以下信息可帮助确定常见问题的原因以及关联的错误消息。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><a href="#Troubleshooting_ACME">对 ACME 证书进行故障诊断</a></p>
+</li>
+<li><p><a href="#Troubleshooting_LDAP">LDAP 故障诊断</a></p>
+<div class="ulist">
+<ul>
+<li><p><a href="#Troubleshooting_Kerberos">对针对 LDAP 服务器的 Kerberos 认证进行故障诊断</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li><p><a href="#Troubleshooting_SSO">对 SSO 进行故障诊断</a></p>
+</li>
+<li><p><a href="#Troubleshooting_SSL">对 SSL 和 TLS 进行故障诊断</a></p>
+</li>
+<li><p><a href="#Other_troubleshooting">其他故障诊断问题</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Troubleshooting_ACME"><a class="anchor" href="#Troubleshooting_ACME"></a>对 ACME 证书进行故障诊断</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>如果迂到 ACME 认证中心 (CA) 证书问题，那么可以参考 Open Liberty 服务器中的错误消息或 HTTP 错误消息来调试问题。 以下信息可帮助确定与 ACME CA 证书关联的常见问题和错误消息的原因。</p>
+</div>
+<div class="paragraph">
+<p>要帮助对 ACME CA 证书的问题进行故障诊断，您可以使用以下跟踪规范来启用跟踪:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ACMECA=all</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下部分描述了使用 ACME CA 帐户和连接时可能迂到的常见问题。 有关更多信息，请参阅 <a href="acme-cert-management.html" class="xref page">使用 ACME 自动证书管理</a> 和 <a href="/docs/latest/reference/feature/acmeCA.html">ACME 支持</a> 功能。</p>
+</div>
+<div class="sect2">
+<h3 id="_the_certificate_request_times_out"><a class="anchor" href="#_the_certificate_request_times_out"></a>证书请求超时</h3>
+<div class="paragraph">
+<p>如果证书请求超时，那么可以使用 <code>challengePollTimeout</code> 和 <code>orderPollTimeout</code> 属性来设置较长的超时值。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_you_received_an_http_code_429_message_on_a_renew_request"><a class="anchor" href="#_you_received_an_http_code_429_message_on_a_renew_request"></a>您在更新请求中接收到 HTTP 代码 429 消息</h3>
+<div class="paragraph">
+<p>为了防止直接证书更新请求过多以及可能对服务器产生的负面影响，将在一小段时间内阻止证书更新请求。 此窗口到期后，可以发出新请求。 429 消息指示何时可以发出新请求。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_you_received_message_that_indicates_the_rate_limit_was_exceeded"><a class="anchor" href="#_you_received_message_that_indicates_the_rate_limit_was_exceeded"></a>您接收到指示超出速率限制的消息</h3>
+<div class="paragraph">
+<p>某些 CA (例如 LetsEncrypt) 对请求新证书实施速率限制。 如果要在短时间内测试并请求多个证书，请使用相应的测试服务器。 例如， <a href="https://letsencrypt.org/docs/staging-environment/">LetsEncrypt 提供了具有更高速率限制的登台服务器</a>。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_certificate_is_renewed_at_startup_when_it_isnt_expired"><a class="anchor" href="#_the_certificate_is_renewed_at_startup_when_it_isnt_expired"></a>当证书未到期时，将在启动时更新该证书</h3>
+<div class="paragraph">
+<p>以下条件可能会导致未到期的证书在启动时自动更新:</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p>证书标记为已撤销</p>
+</li>
+<li><p>证书到期日期在 <code>renewBeforeExpiration</code> 属性设置的窗口内。</p>
+</li>
+<li><p>目录 URI ，域或其他帐户信息已更改，需要新的证书。</p>
+</li>
+<li><p>已使用 <code>--clean</code> 选项启动服务器，并且已除去有关证书的历史信息。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_authorization_challenge_fails_with_a_cwpki2001e_message"><a class="anchor" href="#_the_authorization_challenge_fails_with_a_cwpki2001e_message"></a>授权质询失败，显示 CWPKI2001E 消息</h3>
+<div class="paragraph">
+<p>如果服务器未能访存证书，那么您可能会看到类似以下示例的错误消息:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWPKI0804E: SSL 证书创建错误。 错误为: CWPKI2001E: 位于 http://my-configured-ca.com/directory URI 的 ACME 认证中心响应 mydomainname.com 域的授权质询失败。 提问状态为 INVALID。  错误为 &quot;正在访存 http://mydomainname.com/.well-known/acme-challenge/FXCFcGCv4Ov2ofJ2i-PgMsO1kECwKB0XfTzsPjNIXBs: 连接已拒绝&quot;。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果看到此消息，请验证 CA 是否可访问所提供的域名。 查看日志并确认预期的域名或 IP 地址用于 <code>acme-challenge</code> Web 应用程序。 在日志中查找以下消息:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWWKT0016I: Web 应用程序可用 (default_host): http://mydomainname.com:80/.well-known/acme-challenge/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要配置用于 Web 应用程序的主机名，请在 <code>server.xml</code> 文件中添加或更新 <code>httpEndpoint</code> 配置的 <code>host</code> 属性。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_after_a_failure_to_fetch_the_certificate_the_keystore_produces_errors"><a class="anchor" href="#_after_a_failure_to_fetch_the_certificate_the_keystore_produces_errors"></a>访存证书失败后，密钥库会生成错误</h3>
+<div class="paragraph">
+<p>如果服务器无法访存证书，那么将创建空密钥库。 在较低版本的 Java 中，空密钥库可能会导致异常。 此错误的示例包括以下消息:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWPKI2030E: ACME 服务无法将缺省别名下的证书安装到 defaultKeyStore 密钥库中。 错误为 &quot;配置中不存在密钥库 [defaultKeyStore]&quot;。` `</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWWKS9582E: 未在 10 秒内解析具有 defaultOrb 标识的 orb 元素所需的 [defaultSSLConfig] sslRef 属性。 因此，将不会启动应用程序。 确保包含 keyStore 元素并且正确配置了安全套接字层 (SSL)。 如果 sslRef 为 defaultSSLConfig，请添加标识值为 `defaultKeyStore ` 的 keyStore 元素和密码。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要在访存初始证书失败后绕过此错误，请除去空密钥库。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_you_received_a_cwpki2058w_warning_message_during_a_revocation_check"><a class="anchor" href="#_you_received_a_cwpki2058w_warning_message_during_a_revocation_check"></a>在撤销检查期间接收到 CWPKI2058W 警告消息</h3>
+<div class="paragraph">
+<p>运行 ACME CA 服务器的容器化版本时，可能无法访问证书中定义的 OCSP 响应程序 URL。 您可以通过在 &quot;acmeRevocationChecker&quot; 元素中指定 &quot;ocspResponderUrl&quot; 属性来覆盖证书中的 OCSP 响应程序 URL。 如果未配置此 URL ，那么在撤销检查期间可能会发生以下警告:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWPKI2058W: 证书撤销状态检查已忽略的软故障。 撤销检查可能未完成。 失败的有: &quot;[java.security.cert.CertPathValidatorException: 由于网络错误无法确定撤销状态， java.security.cert.CertPathValidatorException: 由于网络错误无法确定撤销状态]&quot;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果看到此网络错误警告，并且您正在使用测试 CA 服务器运行，那么可以添加定制 <code>ocspResponderUrl</code> URL。 如果测试 CA 不支持撤销测试，那么可以通过在 <code>acmeRevocationChecker</code> 元素 <code>false</code>上设置 <code>enabled</code> 属性，如以下示例中所示:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;acmeCA>
+   ...
+   &lt;acmeRevocationChecker enabled=&quot;false&quot; />
+&lt;/acmeCA></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Troubleshooting_LDAP"><a class="anchor" href="#Troubleshooting_LDAP"></a>LDAP 故障诊断</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_you_received_an_ffdc1015i_error_message_that_the_configured_ldap_server_cannot_be_reached"><a class="anchor" href="#_you_received_an_ffdc1015i_error_message_that_the_configured_ldap_server_cannot_be_reached"></a>您收到一条 FFDC1015I 错误消息，指示无法访问已配置的 LDAP 服务器</h3>
+<div class="paragraph">
+<p>如果无法访问已配置的 LDAP 服务器，那么可能会在 <code>messages.log</code> 文件中看到类似于以下示例的错误消息:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>FFDC1015I: 已创建 FFDC 事件：javax.naming.ServiceUnavailableException：myldapserver.mycompany.com：636；套接字已关闭 com.ibm.ws.security.registry.ldap.internal.LdapRegistry 298</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果看到此消息，请检查 LDAP 服务器以验证其是否正在运行，以及是否可以在 Open Liberty 服务器的主机上访问 LDAP 服务器的 IP 地址。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connection_with_the_ldap_server_fails_with_an_ssl_handshake_error"><a class="anchor" href="#_connection_with_the_ldap_server_fails_with_an_ssl_handshake_error"></a>与 LDAP 服务器的连接失败，发生 SSL 握手错误。</h3>
+<div class="paragraph">
+<p>如果在 LDAP 服务器上启用 SSL 而不将 LDAP 服务器的签署者证书复制到信任库中，那么与 LDAP 服务器的连接将因 SSL 握手错误而失败。 信任库在 <code>server.xml</code> 文件的 <code>LDAPSSLSettings</code> 元素中引用。 您可能会看到以下消息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>javax.naming.CommunicationException：简单绑定失败：myldapserver.mycompany.com：636 [根异常是 javax.net.ssl.SSLHandshakeException：com.ibm.jsse2.util.g：PKIX 路径构建失败：java.security.cert.CertPathBuilderException：找不到所请求目标的有效认证路径]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>确保将签署者证书从 LDAP 服务器复制到信任库文件中。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_login_authentication_or_authorization_is_slow_for_ldap_or_a_federated_repository"><a class="anchor" href="#_login_authentication_or_authorization_is_slow_for_ldap_or_a_federated_repository"></a>对于 LDAP 或联合存储库，登录，认证或授权速度较慢。</h3>
+<div class="paragraph">
+<p>缓慢登录有多种原因。 请查看以下列表以了解一些常见原因。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p>如果将引荐的 LDAP 配置设置为 <code>follow</code>，那么将对 LDAP 请求执行任何对其他 LDAP 实例的引用。 此情况可能会导致联系一个或多个 LDAP 服务器，具体取决于您的 LDAP 配置，因此将花费更多时间。 例如， LDAP1 服务器可能遵循对 LDAP2 服务器的引用，这可能遵循对 LDAP3 服务器的引用。 如果不需要从其他 LDAP 服务器获取更多信息，请将引荐设置为 <code>ignore</code>。</p>
+</li>
+<li><p>一个 LDAP 服务器可能迂到可能未显示在 JVM 日志中的问题和错误。 当 LDAP 服务器与引用的 LDAP 服务器进行对话时，示例包括 TCP 读超时或 DNS 问题。 要诊断这些情况，您可以捕获包以了解正在进行的调用数，以及是否存在因 LDAP 服务器正遵循引荐而引起的任何延迟或错误。 防火墙或其他软件会关闭与 LDAP 的连接。</p>
+</li>
+<li><p>对于联合存储库，将检查所有存储库和注册表以确保唯一用户在域中。 如果存储库或注册表正在缓慢响应，那么即使用户不在运行缓慢的注册表中，每个调用也会缓慢。 确保联合存储库中的所有参与基本条目都在迅速响应。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_occasional_connection_exceptions_when_you_access_the_ldap_server_for_example_java_net_socketexception_connection_reset"><a class="anchor" href="#_occasional_connection_exceptions_when_you_access_the_ldap_server_for_example_java_net_socketexception_connection_reset"></a>访问 LDAP 服务器时偶尔发生连接异常。 例如：java.net.SocketException: Connection reset</h3>
+<div class="paragraph">
+<p>防火墙或其他软件会关闭与 LDAP 的连接。 缺省情况下，将维护 LDAP 连接池以提高性能。 如果以远程方式关闭已缓存的连接，那么会在上下文池中建立新的连接并将新连接重新放回其中。 此过程可能导致延迟，并可能导致在 JVM 日志中记录错误。 例如，您可能会收到以下错误:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>java.net.SocketException: Connection reset</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要避免这种情况，请将上下文池超时设置为小于远程连接关闭时间。 例如，如果防火墙在 10 分钟后关闭连接，那么可以将连接池超时设置为 9 分钟。 在遇到失败的连接时不会创建新的连接，而是检查池中连接是否到期，然后创建新的连接，跳过失败步骤。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Troubleshooting_Kerberos"><a class="anchor" href="#Troubleshooting_Kerberos"></a>对 LDAP 服务器的 Kerberos 认证进行故障诊断</h3>
+<div class="paragraph">
+<p>如果在向 LDAP 服务器进行 Kerberos 认证时迂到问题，请参阅来自 Open Liberty 服务器的错误消息或 HTTP 错误消息以调试问题。 以下信息可帮助确定与 LDAP 服务器的 Kerberos 认证相关联的常见问题和错误消息的原因。</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">为联合用户注册表配置 Kerberos 时，性能很慢</dt>
+<dd><p>如果联合用户注册表中的一个或多个用户注册表不可用，那么对 <code>federatedRepository</code> 元素启用 <code>allowOpIfRepoDown</code> 属性可帮助避免失败。 但是，如果在具有 <code>krb5TicketCache</code> 属性的 <code>ccache</code> 文件中指定了 Kerberos 凭证，那么此配置可能会导致整体性能降低。 当 Kerberos 凭证位于 <code>ccache</code> 文件中时， Open Liberty 会尝试自动更新接近到期时间或已到期的凭证。 此自动更新尝试可能会导致性能下降。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>要避免此问题，可以在具有 <code>kerberos</code> 元素的 <code>keytab</code> 文件中指定 Kerberos 凭证。 <code>keytab</code> 文件中的凭证不会到期，因此无需自动更新。 有关更多信息，请参阅 <a href="kerberos-authentication.html" class="xref page"> Open Liberty的Kerberos 认证</a>。</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">即使未启用Kerberos 的注册表可用，用户也无法登录</dt>
+<dd><p>如果为 Open Liberty 服务器配置了多个用户注册表，那么所有基本用户注册表，定制用户注册表和 LDAP 用户注册表都将组合到单个联合用户注册表中。 缺省情况下，服务器必须在所有参与用户注册表中成功搜索该用户，以验证该用户在联合用户注册表中是否唯一。 如果联合注册表中启用了 Kerberos的 LDAP 服务器使用 Kerberos 凭单高速缓存来保存用户凭证，并且凭证到期，那么 LDAP 注册表的搜索将失败。 要解决此问题，请更新 Kerberos 凭单高速缓存。 例如，您可以使用 <a href="https://docs.oracle.com/en/java/javase/11/tools/kinit.html#GUID-8AA6A058-419A-41D4-A61E-E5E1911E51E6">Java kinit 工具</a>来更新 Kerberos 凭单高速缓存。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>要避免在用户注册表不可用时发生故障，请在 <code>server.xml</code> 文件中配置 <code>allowOpIfRepoDown</code> 属性。 在 <code>federatedRepository</code> 元素的 <code>primaryRealm</code> 子元素上将 <code>allowOpIfRepoDown</code> 属性设置为 <code>true</code> ，如以下示例中所示:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;federatedRepository&gt;
+        &lt;primaryRealm name="FederatedRealm" allowOpIfRepoDown="true"&gt;
+            &lt;participatingBaseEntry name="o=SampleBasicRealm"/&gt;
+            &lt;participatingBaseEntry name="o=ibm,c=us"/&gt;
+        &lt;/primaryRealm&gt;
+&lt;/federatedRepository&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关更多信息，请参阅 <a href="/docs/latest/reference/feature/federatedRegistry.html">Federated User Registry 功能部件</a>。</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Kerberos 主体名称不在 Kerberos 凭单高速缓存文件中</dt>
+<dd><p>如果在 Kerberos 凭单高速缓存文件中找不到 Kerberos 主体名称，那么 Open Liberty 会记录 <code>CWIML</code> 消息类型。 由于以下原因，可能会出现缺少 Kerberos 主体名称的情况:</p>
+<div class="ulist">
+<ul>
+<li><p>没有为 Kerberos 主体名称生成凭证，这将导致不正确的 Kerberos 配置。</p>
+</li>
+<li><p>Kerberos 凭单高速缓存包含已到期的凭证。</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>在任一情况下，更新 Kerberos 凭单高速缓存以解决问题。 例如，您可以使用 <a href="https://docs.oracle.com/en/java/javase/11/tools/kinit.html#GUID-8AA6A058-419A-41D4-A61E-E5E1911E51E6">Java kinit 工具</a>来更新 Kerberos 凭单高速缓存。</p>
+</div>
+<div class="paragraph">
+<p>根据 Java SDK 的类型，您可以接收的消息类似于下列其中一个示例:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWIML4507E: Kerberos 登录失败，返回 user1@SAMPLE.COM Kerberos 主体和 C:\krb5\krb5-user1.cc Kerberos 凭证高速缓存 (ccache)。 javax.security.auth.login.LoginException: 无法从用户获取密码
+
+CWIML4520E: 无法完成 LDAP 操作。 处理期间发生 LDAP 命名异常 javax.naming.AuthenticationException: GSSAPI [Root 异常为 javax.security.sasl.SaslException: GSS 启动失败 [由 GSSException 导致: 未提供有效凭证 (机制级别: 凭单已到期 (32))]]。
+
+CWIML4520E: 无法完成 LDAP 操作。 LDAP 命名异常 javax.naming.NamingException: CWIML4507E: Kerberos 登录失败，返回 user1@SAMPLE.COM Kerberos 主体和 C:\krb5\krb5-user1.cc Kerberos 凭证高速缓存 (ccache)。 javax.security.auth.login.LoginException: 无法从用户获取密码</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要查看 Kerberos 主体用户的到期时间，请运行 <a href="https://docs.oracle.com/en/java/javase/11/tools/klist.html#GUID-205BCE0D-F5D4-4A9C-ACBC-46423BAF616F">Java klist 工具</a>。</p>
+</div>
+<div class="paragraph">
+<p>有关更多信息，请参阅 <a href="/docs/latest/reference/feature/ldapRegistry-3.0.html#krb5">为 LDAP 服务器配置 Kerberos 认证</a>。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Troubleshooting_SSO"><a class="anchor" href="#Troubleshooting_SSO"></a>对 SSO 进行故障诊断</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_single_sign_on_sso_does_not_work_as_servers_dont_share_the_coordinated_universal_time_and_user_registry"><a class="anchor" href="#_single_sign_on_sso_does_not_work_as_servers_dont_share_the_coordinated_universal_time_and_user_registry"></a>单点登录 (SSO) 不起作用，因为服务器不共享全球标准时间和用户注册表</h3>
+<div class="paragraph">
+<p>不同的 Open Liberty 服务器共享 <code>webAppSecurity</code> 元素的 LTPA 密钥，密码和 <code>ssoCookieName</code> 属性。 如果这些服务器不共享全球标准时间和用户注册表，那么 SSO 可能无法工作。 确保这些服务器共享全球标准时间和用户注册表。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_you_are_prompted_to_enter_the_credential_information_again"><a class="anchor" href="#_you_are_prompted_to_enter_the_credential_information_again"></a>系统会提示您再次输入凭证信息</h3>
+<div class="paragraph">
+<p>如果令牌到期，那么 SSO 可能不起作用。 此外，如果在您以不一致的方式更改用户注册表之后从 Web 浏览器发送 cookie ，那么 SSO 可能会失败。 例如，修改域或除去 cookie 表示的用户。 系统可能会提示您再次输入凭证信息。 确保令牌未到期，并且您对用户注册表进行一致的更改。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Troubleshooting_SSL"><a class="anchor" href="#Troubleshooting_SSL"></a>对 SSL 和 TLS 进行故障诊断</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在广泛采用 TLS 协议之前， SSL 是保护 Web 通信的标准协议。 随着时间的推移，针对 SSL 识别了许多安全漏洞，并且该漏洞不再被广泛使用。 但是，由于历史原因，术语 &quot;SSL&quot; 通常用于引用加密网络连接，即使在使用 TLS 时也是如此。 在 Open Liberty中，在功能部件和配置名称中仍使用术语 SSL ，即使 TLS 是底层协议也是如此。 实际上， SSL 现在是 TLS 的同义词。</p>
+</div>
+<div class="sect2">
+<h3 id="_you_receive_the_cwwks9105e_message_that_the_tls_port_cant_be_determined_for_redirection"><a class="anchor" href="#_you_receive_the_cwwks9105e_message_that_the_tls_port_cant_be_determined_for_redirection"></a>您收到 CWWKS9105E 消息，指示无法确定 TLS 端口以进行重定向</h3>
+<div class="paragraph">
+<p>如果尝试访问重定向到不可用的 TLS 端口的应用程序，那么可能会看到以下消息</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> CWWKS9105E: 无法确定用于自动重定向的 TLS 端口。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>由于缺少 TLS 配置或 TLS 配置定义中存在一些错误，因此端口可能不可用。 请检查 TLS 配置是否存在于 <code>server.xml</code> 文件中并且是否正确。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_keystore_element_exists_in_the_configuration_without_an_id_field_and_gives_you_an_ffdc1015i_error"><a class="anchor" href="#_a_keystore_element_exists_in_the_configuration_without_an_id_field_and_gives_you_an_ffdc1015i_error"></a>在没有标识字段的配置中存在密钥库元素，并为您提供 FFDC1015I 错误</h3>
+<div class="paragraph">
+<p>当配置中存在没有标识字段的密钥库元素时，您可能会收到以下错误</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>FFDC1015I: 在 ffdc_12.04.18_16.09.42.0.log 中创建了 FFDC 事件：“java.lang.IllegalArgumentException：配置未知、不完整：缺少标识字段 com.ibm.ws.config.internal.cm.ManagedServiceFactoryTracker aSyncReadNupdate。</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>尝试读取配置并更新 ManagedServiceFactory 时抛出异常。 异常 = java.lang.IllegalArgumentException：配置未知、不完整：缺少标识字段”</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当配置中存在没有标识字段的密钥库元素时，会发生此错误。 如果使用最低 TLS 配置，请将 <code>ID</code> 字段设置为 <code>defaultKeyStore</code>。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Other_troubleshooting"><a class="anchor" href="#Other_troubleshooting"></a>其他故障诊断问题</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_you_receive_a_sesn0008e_message_that_an_anonymous_user_attempted_to_access_a_session_owned_by_an_authenticated_user"><a class="anchor" href="#_you_receive_a_sesn0008e_message_that_an_anonymous_user_attempted_to_access_a_session_owned_by_an_authenticated_user"></a>您收到一条 SESN0008E 消息，表明匿名用户尝试访问已认证用户拥有的会话。</h3>
+<div class="paragraph">
+<p>当未经认证的用户尝试访问由已认证的用户创建的会话时，您可能会看到以下消息:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SESN0008E: 已认证为匿名的用户尝试访问由其拥有的会话
+用户:LdapRegistry/cn=steven ， o=myCompany， c = US。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当您使用 JSP (Jakarta Server Page) (例如 <code>login.jsp</code> 文件) 进行表单登录并且浏览器发送的 SSO 令牌到期时，可能会发生此错误。 然后，系统会提示用户使用为 form-login 配置的 <code>login.jsp</code> 页面重新登录。 缺省情况下， JSP 页面尝试获取最初由令牌已到期的用户创建的会话。 因此，当您访问此会话时，不会认证用户，也不会建立凭证，这将导致此错误。</p>
+</div>
+<div class="paragraph">
+<p>要避免此错误，请重新启动那个启动新会话的浏览器，或者将 <code>login.jsp</code> 文件配置成缺省情况下不创建会话。 如果选择更新 <code>login.jsp</code> 文件，请设置 <code>&lt;%@
+page session="false" %&gt;</code>。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_you_receive_a_cwwks9104a_message_that_the_user_is_not_granted_access_to_any_of_the_required_roles"><a class="anchor" href="#_you_receive_a_cwwks9104a_message_that_the_user_is_not_granted_access_to_any_of_the_required_roles"></a>您收到 CWWKS9104A 消息，指示未授予用户对任何必需角色的访问权</h3>
+<div class="paragraph">
+<p>当用户无权访问应用程序所需的角色时，您可能会看到以下消息:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWWKS9104A: 对 {2} 调用 {1} 时，授权用户 {0} 失败。 用户不是
+已授予对任何必需角色的访问权: {3}。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>确保将该用户或该用户所属的组映射到错误消息中提及的至少一个角色。 <code>ibm-application-bnd.xmi/xml</code> 文件中所定义的用户到角色映射优先于 <code>server.xml</code> 文件中所定义的映射。 检查两个资源以确保定义了正确的映射。 有关更多信息，请参阅 <a href="authorization.html" class="xref page">授权</a>。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_authorization_fails_for_the_user"><a class="anchor" href="#_authorization_fails_for_the_user"></a>用户授权失败</h3>
+<div class="paragraph">
+<p>如果用户授权失败，您可能会看到以下消息:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWWKS9104A: 对用户 {0} 授权失败。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果对同一上下文根指定了 <code>application</code> 和 <code>webApplication</code>，那么可能发生此错误。 如果发生冲突，那么所定义的最新配置被忽略，并导致意外错误，例如，CWWKS9104A。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_application_installation_causes_unexpected_security_behavior"><a class="anchor" href="#_application_installation_causes_unexpected_security_behavior"></a>应用程序安装导致意外的安全行为</h3>
+<div class="paragraph">
+<p>如果使用应用程序元素和 dropins 文件夹在 <code>server.xml</code> 文件中指定应用程序，那么将尝试安装应用程序两次，并且 <code>server.xml</code> 文件中的安全性配置可能生效，也可能不生效。</p>
+</div>
+<div class="paragraph">
+<p>您可能会看到以下消息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CWWKZ0013E: 无法启动名为 {0} 的两个应用程序。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>此消息可能后跟意外的安全行为和错误消息，例如 CWWKS9104A。 要解决此问题，必须从 dropins 文件夹中除去应用程序并将其复制到另一个目录。 如果必须将其保留在 dropins 文件夹中，那么必须在 <code>server.xml</code> 文件中使用以下代码来禁用应用程序监视:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;applicationMonitor dropinsEnabled=&quot;false&quot;/></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+ <footer>
+    <div id="footer_gray_background">
+        <div id="footer_top_container" class="footer_container container-fluid">
+            <div id="footer_project_container"><span id="footer_open_liberty"></span><p id="footer_project">IBM 开放式源代码</p>
+            </div>
+            <div id="footer_round_links_container"><a id="footer_github_link" class="footer_round_btn" href="https://github.com/OpenLiberty/" target="_blank" rel="noopener" aria-label="Github"></a> <a id="footer_twitter_link" class="footer_round_btn" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener" aria-label="&lt;"></a> <a id="footer_stackoverflow_link" class="footer_round_btn" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener" aria-label="Stack Overflow 上的 Open Liberty 问题"></a> <a id="footer_groupsio_link" class="footer_round_btn" href="https://groups.io/g/openliberty" target="_blank" rel="noopener" aria-label="Open Liberty Groups.io"></a> <a id="footer_gitter_link" class="footer_round_btn" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener" aria-label="Open Liberty Gitter"></a></div>
+        </div>         
+    </div>
+
+    <div id="footer_bottom_container" class="footer_container container-fluid">
+        <div id="footer_bottom_left_section">
+            <p id="footer_copyright">© Copyright IBM Corp. 2017 ， 2023</p>
+            <p class="vertical_bar">|</p><a id="footer_privacy_policy_link" href="https://www.ibm.com/privacy/" target="_blank" rel="noopener" class="left_footer_link">隐私策略</a><p class="vertical_bar">|</p><a id="footer_license_link" href="https://github.com/OpenLiberty/open-liberty/blob/release/LICENSE" target="_blank" rel="noopener" class="left_footer_link">许可</a><p class="vertical_bar">|</p><a id="footer_logos_link" href="https://github.com/OpenLiberty/logos" target="_blank" rel="noopener" class="left_footer_link">徽标</a></div>      
+        <div id="footer_bottom_right_section"><a id="footer_docs_link" href="/docs" aria-label="Open Liberty 文档" class="right_footer_link blue_link_light_background">文档</a> <a id="footer_blog_link" href="/blog" aria-label="Open Liberty 博客" class="right_footer_link blue_link_light_background">博客</a> <a id="footer_support_link" href="/support" aria-label="Open Liberty 支持" class="right_footer_link blue_link_light_background">支持</a></div>
+    </div>
+</footer>
+
+<!-- PRE-LOADED IMAGES FOR ON HOVER BEHAVIOR -->
+<div class="d-none hidden"><img src="../../_/img/Footer_GitCat_Hover.svg" alt="OpenLiberty Github 链接"> <img src="../../_/img/Footer_TwitterBird_Hover.svg" alt="OpenLibertyIO Twitter 链接"> <img src="../../_/img/Footer_StackO_Hover.svg" alt="Open-liberty 堆栈溢出链接"> <img src="../../_/img/Footer_GroupsIO_Hover.svg" alt="Openliberty 组 IO 链接"> <img src="../../_/img/footer_gitter_hover.svg" alt="Openliberty Gitter 链接"></div>
+<script src="../../_/js/01-nav.js"></script>
+<script src="../../_/js/02-fragment-jumper.js"></script>
+<script src="../../_/js/03-mobile-navbar.js"></script>
+<script src="../../_/js/07-tabs.js"></script>
+<script src="../../_/js/08-links.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/10-navscroll.js"></script>
+<script src="../../_/js/11-copy-to-clipboard.js"></script>
+  </body>
+</html>
+
+<!-- v2.0.64 : caits-prod-app-gp_openliberty_20240126T174915-2_en_zh-Hans -->

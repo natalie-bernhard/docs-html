@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MicroProfile Config properties :: Open Liberty 資料</title>
+    <link rel="canonical" href="https://openliberty.io/docs/latest/microprofile-config-properties.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Asap:400,500" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/default.min.css">
+<link rel="stylesheet" href="../../_/css/site.css">
+<meta name="robots" content="noindex" />
+<meta name="description" content="MicroProfile Config は、構成をマイクロサービスから外部化し、ソース・コードから分離して保持する API です。 MicroProfile Config は、さまざまなソースから構成情報を取得できる単一の API としてアプリケーションで使用できます。">
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@OpenLibertyIO" />
+<meta name="twitter:title" content="Open Liberty 資料" />
+<meta name="twitter:description" content="MicroProfile Config は、構成をマイクロサービスから外部化し、ソース・コードから分離して保持する API です。 MicroProfile Config は、さまざまなソースから構成情報を取得できる単一の API としてアプリケーションで使用できます。" />
+<meta name="twitter:image" content="https://openliberty.io/img/twitter_card.jpg" />
+
+
+<meta property="og:title" content="Open Liberty Docs" />
+<meta property="og:description" content="MicroProfile Config is an API that externalizes the configuration from microservices, keeping it separate from the source code. MicroProfile Config can be used by applications as a single API that can retrieve configuration information from different sources." />
+<meta property="og:image" content="https://openliberty.io/img/twitter_card.jpg" />
+<meta property='og:type' content="website" />
+<meta property='og:url' content="https://openliberty.io/docs/23.0.0.1/microprofile-config-properties.html" />
+
+    <script async src="../../_/js/vendor/highlight.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  </head>
+  <body class="article">
+<header>
+    <nav id="nav_bar" aria-label="ナビゲーション・ヘッダー・リンク">
+        <div id="nav_header"><a id="home_link" href="/" aria-label="Open Liberty ホーム"> <img id="ol_logo" src="../../_/img/docs_openliberty_logo.png" alt="Open Liberty ロゴ"> </a> <button id="hamburger_toggle_button" onclick="$('#nav_bar').toggleClass('responsive');" aria-label="ナビゲーション・メニューの切り替え"> <span id="hamburger_toggle_icon"></span> </button></div>
+        <div id="hamburger_menu">
+            <ul class="nav_list">
+                <li class="nav_link"><a href="/start">ゲット・スタート</a></li>
+                <li class="nav_link"><a href="/guides">ガイド</a></li>
+                <li class="nav_link"><a href="/docs">資料</a></li>
+                <li class="nav_link"><a href="/support">サポート</a></li>
+                <li class="nav_link"><a href="/blog">ブログ</a></li>
+            </ul>
+            <div id="header_round_links_container"><a id="header_twitter_link" class="header_round_button" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener noreferrer" aria-label="&lt;"></a> <a id="header_stackoverflow_link" class="header_round_button" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener noreferrer" aria-label="Stack Overflow での Open Liberty に関する質問"></a> <a id="header_groupsio_link" class="header_round_button" href="https://groups.io/g/openliberty" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Groups.io"></a> <a id="header_gitter_link" class="header_round_button" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Gitter"></a></div>
+        </div>
+    </nav>
+</header><div class="body">
+<div class="nav-container" data-component="docs" data-version="23.0.0.1">
+  <aside class="nav" aria-label="ナビゲーションの目次">
+    <div class="panels">
+      <div class="nav-panel-explore" data-panel="explore">
+    <div class="doc_select version_select">
+      <div class="context"><span class="title">バージョン</span> <a class="version" href="#">23.0.0.1</a> <img src="../../_/img/chevron.svg" class="version_select_chevron"/></div>
+      <ul class="components">
+        <li class="component is-current"><ul class="versions">
+              <li class="version"><span class="title">バージョン</span> <a href="../latest/microprofile-config-properties.html" aria-label="バージョン 23.0.0.12">23.0.0.12</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.11/microprofile-config-properties.html" aria-label="バージョン 23.0.0.11">23.0.0.11</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.10/microprofile-config-properties.html" aria-label="バージョン 23.0.0.10">23.0.0.10</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.9/microprofile-config-properties.html" aria-label="バージョン 23.0.0.9">23.0.0.9</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.8/microprofile-config-properties.html" aria-label="バージョン 23.0.0.8">23.0.0.8</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.7/microprofile-config-properties.html" aria-label="バージョン 23.0.0.7">23.0.0.7</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.6/microprofile-config-properties.html" aria-label="バージョン 23.0.0.6">23.0.0.6</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.5/microprofile-config-properties.html" aria-label="バージョン 23.0.0.5">23.0.0.5</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.4/microprofile-config-properties.html" aria-label="バージョン 23.0.0.4">23.0.0.4</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.3/microprofile-config-properties.html" aria-label="バージョン 23.0.0.3">23.0.0.3</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../23.0.0.2/microprofile-config-properties.html" aria-label="バージョン 23.0.0.2">23.0.0.2</a></li>
+              <li class="version is-current"><span class="title">バージョン</span> <a href="microprofile-config-properties.html" aria-label="バージョン 23.0.0.1">23.0.0.1</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../22.0.0.13/microprofile-config-properties.html" aria-label="バージョン 22.0.0.13">22.0.0.13</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../22.0.0.12/microprofile-config-properties.html" aria-label="バージョン 22.0.0.12">22.0.0.12</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../22.0.0.11/microprofile-config-properties.html" aria-label="バージョン 22.0.0.11">22.0.0.11</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="../22.0.0.10/microprofile-config-properties.html" aria-label="バージョン 22.0.0.10">22.0.0.10</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.9/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.9">22.0.0.9</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.8/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.8">22.0.0.8</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.7/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.7">22.0.0.7</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.6/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.6">22.0.0.6</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.5/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.5">22.0.0.5</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.4/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.4">22.0.0.4</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.3/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.3">22.0.0.3</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.2/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.2">22.0.0.2</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/22.0.0.1/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 22.0.0.1">22.0.0.1</a></li>
+              <li class="version"><span class="title">バージョン</span> <a href="/docs/21.0.0.12/noversion.html?ref=/docs/23.0.0.1/microprofile-config-properties.html" aria-label="バージョン 21.0.0.12">21.0.0.12</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="doc_select language_select">
+      <div class="context lang_picker"><img src="../../_/img/filled_globe.svg" class="globe_icon"/> <a class="version" href="#"> </a> <img src="../../_/img/chevron.svg" class="version_select_chevron"/></div>
+        <ul class="components language_list">
+          <li class="component"><ul class="versions">
+                <li class="version is-current"><a href="/docs/23.0.0.1/microprofile-config-properties.html" translate="no">English</a></li>
+                <li class="version"><a href="/ja/docs/23.0.0.1/microprofile-config-properties.html" translate="no">日本語</a></li>
+                <li class="version"><a href="/zh-Hans/docs/23.0.0.1/microprofile-config-properties.html" translate="no">中文（简体)</a></li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    
+</div>
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu" aria-label="Open Liberty 資料のナビゲーション・メニュー">
+    <h3 class="title"><a href="overview.html">資料の概要</a></h3>
+    <ul class="nav-list">
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button><span class="nav-text" tabindex="0" role="button"> の基本</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="zero-migration-architecture.html">マイグレーションなし</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="development-mode.html">開発モード</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="java-se.html">Java SEサポート</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="installing-open-liberty-betas.html"> Open Liberty ベータ・リリースのインストール</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="develop-liberty-tools.html">Liberty ツールを使用した開発</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/getting-started.html">ガイド: Open Liberty</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">開発</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="cloud-native-microservices.html">クラウド・ネイティブ・マイクロサービス</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="microprofile.html">MicroProfile の概要</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-41-50-diff.html"> MicroProfile 5.0 と 4.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-33-40-diff.html"> MicroProfile 4.0 と 3.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-22-30-diff.html"> MicroProfile 3.0 と 2.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="mp-21-22-diff.html"> MicroProfile 2.2 と 2.1</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="jakarta-ee.html">Jakarta EE の概要</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jakarta-ee9-feature-updates.html">Jakarta EE 9.1 フィーチャーの更新</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jakarta-ee-diff.html">Jakarta EE 9.1 と 8.0</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="container-images.html">コンテナー・イメージ</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="rest-microservices.html">RESTful サービス</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="sync-async-rest-clients.html">同期および非同期 REST クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="rest-clients.html">REST クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="json-p-b.html">JSON-P および JSON-B</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="send-receive-multipart-jaxrs.html">multipart/form-data パーツの送受信</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#restful_service">ガイド: RESTful サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#getting_started">ガイド: 始めに</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="documentation-openapi.html">API の文書化</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/microprofile-openapi.html">ガイド: RESTful API の文書化</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="external-configuration.html">マイクロサービスの外部構成</a><ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-config-properties.html">MicroProfile Config プロパティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#configuration">ガイド: 構成</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="cdi-beans.html">Context and Dependency Injection Bean</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jaxrs-integration-cdi.html">RESTful Web Services と CDI の統合</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/cdi-intro.html">ガイド: マイクロサービスへの依存関係の注入</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="data-persistence.html">データ・パーシスタンス</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="relational-database-connections-JDBC.html"> JDBC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="kerberos-authentication-jdbc.html">JDBC の Kerberos 認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="data-persistence-jpa.html">JPA によるデータ・パーシスタンス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="access-nosql-databases.html">CDI を使用した NoSQL データベースへのアクセス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="create-session-table.html">セッション・パーシスタンス用のデータベース表の作成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#persistence">ガイド: パーシスタンス</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="transaction-service.html">トランザクション・リカバリー</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="distributed-caching-jcache.html">JCache を使用した分散キャッシング</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="distributed-session-caching.html">分散セッション・キャッシング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-infinispan-support.html"> Infinispan を JCache プロバイダーとして構成する</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="microservice-observability-metrics.html">プログラム識別情報</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="health-check-microservices.html">マイクロサービスのヘルス・チェック</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#observability">ガイド: プログラム識別情報</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="integration-testing.html">テスト</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#test">ガイド: テスト</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="fault-tolerance.html">フォールト・トレランス</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="async-programming-fault-tolerance.html">Resilient 非同期プログラミング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#fault_tolerance">ガイド: フォールト・トレランス</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="concurrency.html">並行性</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="microprofile-context-propagation.html"> MicroProfile コンテキスト伝搬との並行性</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="async-io.html">非同期入出力</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="microprofile-graphql.html"> GraphQL アプリケーションのビルド</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="grpc-services.html"> gRPC サービスの提供と取り込み</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">セキュリティー</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="authentication.html">認証</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="authentication-filters.html">認証フィルター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="authentication-cache.html">認証キャッシュ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="user-registries-application-security.html">ユーザー・レジストリー</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="single-sign-on.html">シングル・サインオン</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="kerberos-authentication.html">Kerberos 認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="track-loggedout-sso.html">ログアウト SSO Cookie の追跡</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-spnego-authentication.html">SPNEGO 認証の構成</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="authorization.html">許可</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="secure-communication-tls.html">TLS を使用したセキュア通信</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="acme-cert-management.html">ACME による自動証明書管理</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="security-hardening.html">セキュリティー強化</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="server-configuration-hardening.html">サーバー構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="network-hardening.html">ネットワーク</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="application-configuration-hardening.html">アプリケーション構成</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="password-encryption.html">パスワード暗号化の制限</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="audit-logs.html">監査ログ</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="verifying-package-signatures.html">リリース・パッケージの署名の検証</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="enable-fips.html">FIPS 準拠アプリケーションの実行</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="security-vulnerabilities.html">セキュリティー脆弱性リスト</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="troubleshooting.html">セキュリティーのトラブルシューティング</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#security">ガイド: セキュリティー</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <span class="nav-text" tabindex="0" role="button">デプロイメント</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="deployment-openshift.html"> OpenShift</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="open-liberty-operator.html">Open Liberty オペレーター</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="container-images.html">コンテナー・イメージ</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="runnable-jar-files.html">実行可能 JAR ファイル</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="class-loader-library-config.html">クラス・ローダー構成</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="virtual-hosts.html">仮想ホスト</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="application-bindings.html">アプリケーションのバインディング</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#kubernetes">ガイド: Kubernetes</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#cloud_deployment">ガイド: クラウド・デプロイメント</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button><span class="nav-text" tabindex="0" role="button"> 操作</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="log-trace-configuration.html">ログ</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="log-management.html">ログ管理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="access-logging.html">HTTP アクセスのロギング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jdbc-tracing.html">JDBC トレース</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="json-log-events-list.html">JSON ログ・イベントの参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="logstash-events-list.html">Logstash イベントの参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="audit-log-events-list-cadf.html">監査ログ・イベント (CADF) 参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="analyzing-logs-elk.html">Elastic Stack を使用した JSON ログの分析</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="forwarding-logs-logstash.html">Logstash コレクターを使用したログの転送</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="introduction-monitoring-metrics.html">メトリック</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="metrics-list.html">メトリックの参照リスト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="configuring-jmx-connection.html">JMX 接続の構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="jmx-metrics-list.html">JMX メトリックのリファレンス・リスト</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="slow-hung-request-detection.html">遅い要求およびハング要求の検出</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="thread-pool-tuning.html">スレッド・プールのチューニング</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="validating-server-connections.html">サーバー接続の検証</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="admin-center.html">Admin Center GUI</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="oidc-tools.html">Admin Center OIDC ツール</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="performance-tuning.html">パフォーマンス・チューニング</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="thread-pool-tuning.html">スレッド・プールのチューニング</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button>
+                                        <span class="nav-text" tabindex="0" role="button">参照</span><ul class="nav-list">
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/directory-locations-properties.html">ディレクトリーのロケーションおよびプロパティー</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/default-environment-variables.html">デフォルトの環境変数</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/default-port-numbers.html">デフォルトのポート番号</a></li>
+  <li class="nav-item" data-depth="1"><a class="nav-link" tabindex="0" href="reference/bootstrap-properties.html">ブートストラップ・プロパティー</a></li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/config/server-configuration-overview.html">サーバー構成</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeCA.html">acmeCA</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeRevocationChecker.html">acmeRevocationチェッカー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/acmeTransportConfig.html">acmeTransport構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/activationSpec.html">activationSpec</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/activedLdapFilterProperties.html">activedLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/adminObject.html">adminObject</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/administrator-role.html">administrator-role</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/application.html">アプリケーション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/applicationManager.html">applicationManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/applicationMonitor.html">applicationMonitor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/auditEvent.html">auditEvent</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/auditFileHandler.html">auditFileハンドラー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authCache.html">authCache</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authData.html">authData</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authFilter.html">authFilter</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authentication.html">認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/authorization-roles.html">authorization-roles</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/basicRegistry.html">basicRegistry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsDispatcher.html">batchJmsディスパッチャー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsEvents.html">batchJmsイベント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJmsExecutor.html">batchJms実行プログラム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchJobLogging.html">batchJobロギング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/batchPersistence.html">batchPersistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/bell.html">ベル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cache.html">キャッシュ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cacheManager.html">cacheManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cachingProvider.html">cachingProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cdi12.html">cdi12</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/channelfw.html">channelfw</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/classloader.html">classloader</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/classloading.html">クラス・ロード</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cloudant.html">Cloudant</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cloudantDatabase.html">cloudantDatabase</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/compression.html">compression</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/concurrencyPolicy.html">concurrencyPolicy</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/config.html">構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/connectionFactory.html">connectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/connectionManager.html">connectionManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/constrainedDelegation.html">constrainedDelegation</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/contextService.html">contextService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/cors.html">CORS</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/couchdb.html">couchdb</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/customLdapFilterProperties.html">customLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/dataSource.html">dataSource</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/databaseStore.html">databaseStore</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/distributedMap.html">distributedMap</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/domainResolver.html">domainResolver</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/domino50LdapFilterProperties.html">domino50LdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/edirectoryLdapFilterProperties.html">edirectoryLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ejbApplication.html">ejbApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ejbContainer.html">ejbContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/enterpriseApplication.html">enterpriseApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/eventLogging.html">eventLogging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/executor.html">executor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/facebookLogin.html">facebookLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/featureManager.html">featureManager</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/federatedRepository.html">federatedRepository</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/fileset.html">FILESET</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/githubLogin.html">githubLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/googleLogin.html">googleLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/grpc.html">gRPC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/grpcClient.html">grpcClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/headers.html">ヘッダー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpAccessLogging.html">httpAccessLogging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpDispatcher.html">httpDispatcher</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpEncoding.html">httpEncoding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpEndpoint.html">httpEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpOptions.html">httpOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpProxyRedirect.html">httpProxyリダイレクト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSession.html">httpSession</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSessionCache.html">httpSessionキャッシュ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/httpSessionDatabase.html">httpSessionDatabase</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/idsLdapFilterProperties.html">idsLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iiopEndpoint.html">iiopEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iiopServerPolicies.html">iiopServerポリシー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/include.html">include</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/iplanetLdapFilterProperties.html">iplanetLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jaasLoginContextEntry.html">jaasLoginContextEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jaasLoginModule.html">jaasLoginModule</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/javaPermission.html">javaPermission</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jdbcDriver.html">jdbcDriver</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsActivationSpec.html">jmsActivationSpec</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsConnectionFactory.html">jmsConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsDestination.html">jmsDestination</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsQueue.html">jmsQueue</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsQueueConnectionFactory.html">jmsQueueConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsTopic.html">jmsTopic</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jmsTopicConnectionFactory.html">jmsTopicConnectionFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiEntry.html">jndiEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiObjectFactory.html">jndiObjectFactory</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiReferenceEntry.html">jndiReferenceEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jndiURLEntry.html">jndiURLEntry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jpa.html">jpa</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jspEngine.html">jspEngine</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtBuilder.html">jwtBuilder</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtConsumer.html">jwtConsumer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/jwtSso.html">jwtSso</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/kerberos.html">Kerberos</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/keyStore.html">keyStore</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ldapRegistry.html">ldapRegistry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/library.html">ライブラリー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/linkedinLogin.html">linkedinLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/logging.html">ロギング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/logstashCollector.html">logstashCollector</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ltpa.html">ltpa</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mailSession.html">mailSession</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedExecutorService.html">managedExecutorService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedScheduledExecutorService.html">managedScheduledExecutorService</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/managedThreadFactory.html">managedThreadファクトリー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/messagingEngine.html">messagingEngine</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mimeTypes.html">mimeTypes</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mongo.html">mongo</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mongoDB.html">mongoDB</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/monitor.html">監視</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mpJwt.html">mpJwt</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/mpMetrics.html">mpMetrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/netscapeLdapFilterProperties.html">netscapeLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauth-roles.html">oauth-roles</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauth2Login.html">oauth2Login</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oauthProvider.html">oauthProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oidcClientWebapp.html">oidcClientWeb アプリケーション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/oidcLogin.html">oidcLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/okdServiceLogin.html">okdServiceログイン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openId.html">openId</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openidConnectClient.html">openidConnectClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/openidConnectProvider.html">openidConnectProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/orb.html">ORB</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/persistentExecutor.html">persistentExecutor</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/pluginConfiguration.html">pluginConfiguration</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/quickStartSecurity.html">quickStartSecurity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/reader-role.html">リーダー・ロール (reader-role)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/remoteFileAccess.html">remoteFileAccess</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/remoteIp.html">remoteIp</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/requestTiming.html">requestTiming</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/resourceAdapter.html">resourceAdapter</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/samesite.html">Samesite</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/samlWebSso20.html">samlWebSso20</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/securewayLdapFilterProperties.html">securewayLdapFilterProperties</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipApplicationRouter.html">sipApplicationルーター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipContainer.html">sipContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipEndpoint.html">sipEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sipStack.html">sipStack</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/socialLoginWebapp.html">socialLoginWeb アプリ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/spnego.html">SPNEGO</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/springBootApplication.html">springBootアプリケーション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/ssl.html">SSL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sslDefault.html">sslDefault</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/sslOptions.html">sslOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/tcpOptions.html">tcpOptions</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/transaction.html">トランザクション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/trustAssociation.html">trustAssociation</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/twitterLogin.html">twitterLogin</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/userInfo.html">userInfo</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/variable.html">変数</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/virtualHost.html">virtualHost</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wasJmsEndpoint.html">wasJmsEndpoint</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wasJmsOutbound.html">wasJmsOutbound</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webAppSecurity.html">webAppSecurity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webApplication.html">webApplication</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webContainer.html">webContainer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/webTarget.html">webTarget</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsAtomicTransaction.html">wsAtomicトランザクション</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsSecurityClient.html">wsSecurityClient</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsSecurityProvider.html">wsSecurityProvider</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/config/wsocOutbound.html">wsocOutbound</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/feature/feature-overview.html">の機能</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/adminCenter-1.0.html">Admin Center</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/localConnector-1.0.html">管理ローカル・コネクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restConnector-2.0.html">管理 REST コネクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-1.0.html">Application Client Support for Server</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-1.0.html">アプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-2.0.html">アプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-3.0.html">アプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurity-4.0.html">アプリケーション・セキュリティー (Jakarta Security)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appSecurityClient-1.0.html">クライアントのアプリケーション・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/audit-1.0.html">監査</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/acmeCA-2.0.html">Automatic Certificate Management Environment (ACME) のサポート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/bells-1.0.html">Basic Extensions using Liberty Libraries</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batch-1.0.html">バッチ API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batchManagement-1.0.html">Batch Management</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-1.1.html">Bean 検証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-2.0.html">Bean 検証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cloudant-1.0.html">Cloudant 組み込み</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/concurrent-1.0.html">Concurrency Utilities for Java EE</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-1.2.html">コンテキストと依存関係の注入</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-2.0.html">コンテキストと依存関係の注入</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/couchdb-1.0.html">CouchDB 統合</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sessionDatabase-1.0.html">Database Session Persistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/distributedMap-1.0.html">Distributed Map interface for Dynamic Caching</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejb-3.2.html">Enterprise JavaBeans</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbHome-3.2.html">Enterprise JavaBeans ホーム・インターフェース</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbLite-3.2.html">Enterprise JavaBeans ライト</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbPersistentTimer-3.2.html">Enterprise JavaBeans パーシスタント・タイマー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ejbRemote-3.2.html">Enterprise JavaBeans リモート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/eventLogging-1.0.html">イベント・ログ</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/el-3.0.html">式の言語</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/federatedRegistry-1.0.html">Federated User Registry</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/grpc-1.0.html">gRPC</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/grpcClient-1.0.html">gRPC Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-2.0.html">Jakarta Application Client Support for Server</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthentication-2.0.html">Jakarta 認証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/appAuthorization-2.0.html">Jakarta 許可</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/batch-2.0.html">Jakarta Batch (ジャカルタ・バッチ)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/beanValidation-3.0.html">Jakarta Bean 検証</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/concurrent-2.0.html">ジャカルタ並行性</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/connectors-2.0.html">Jakarta コネクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/connectorsInboundSecurity-2.0.html">Jakarta Connectors インバウンド・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/cdi-3.0.html">Jakarta Contexts and Dependency Injection</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaeeClient-9.1.html">Jakarta EE アプリケーション・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaee-8.0.html">Jakarta EE Platform</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jakartaee-9.1.html">Jakarta EE Platform</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-9.1.html">Jakarta EE Web プロファイル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeans-4.0.html">Jakarta Enterprise Beans</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansHome-4.0.html">Jakarta Enterprise Beans ホーム・インターフェース</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansLite-4.0.html">Jakarta Enterprise Beans Lite</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mdb-4.0.html">Jakarta Enterprise Beans メッセージ駆動型 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansPersistentTimer-4.0.html">Jakarta Enterprise Beans Persistent Timers</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansRemote-4.0.html">Jakarta Enterprise Beans Remote</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/expressionLanguage-4.0.html">Jakarta Expression Language (Jakarta 式言語)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonb-2.0.html">Jakarta JSON バインディング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-2.0.html">Jakarta JSON Binding Container (Jakarta JSON バインディング・コンテナー)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-2.0.html">Jakarta JSON 処理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-2.0.html">Jakarta JSON Processing Container (Jakarta JSON 処理コンテナー)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mail-2.0.html">Jakarta Mail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/managedBeans-2.0.html">Jakarta Managed Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messaging-3.0.html">Jakarta Messaging</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistence-3.0.html">Jakarta Persistence</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/persistenceContainer-3.0.html">Jakarta Persistence コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWS-3.0.html">Jakarta RESTful Web Services</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/restfulWSClient-3.0.html">Jakarta RESTful Web Services Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/faces-3.0.html">Jakarta Server Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/facesContainer-3.0.html">Jakarta Server Faces コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/pages-3.0.html">Jakarta Server Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-5.0.html">Jakarta Servlet</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-2.0.html">Jakarta WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlBinding-3.0.html">Jakarta XML Binding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/xmlWS-3.0.html">Jakarta XML Web Services</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaspic-1.1.html">コンテナー用 Java 認証 SPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jacc-1.5.html">Java Authorization Contract for Containers</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jca-1.7.html">Java コネクター・アーキテクチャー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jcaInboundSecurity-1.0.html">Java コネクター・アーキテクチャーのセキュリティー・インフロー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.0.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.1.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.2.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.3.html">Java Database Connectivity</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-7.0.html">Java EE アプリケーション・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-8.0.html">Java EE アプリケーション・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaee-7.0.html">Java EE フル・プラットフォーム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaee-8.0.html">Java EE フル・プラットフォーム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/managedBeans-1.0.html">Java EE 管理 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-7.0.html">Java EE Web プロファイル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webProfile-8.0.html">Java EE Web プロファイル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jms-2.0.html">Java Message Service</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jndi-1.0.html">Java Naming and Directory Interface</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpa-2.1.html">Java Persistence API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpa-2.2.html">Java Persistence API</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.1.html">Java Persistence API コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.2.html">Java Persistence API コンテナー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.0.html">Java RESTful サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.1.html">Java RESTful サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.0.html">Java RESTful サービス・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.1.html">Java RESTful サービス・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-3.1.html">Java サーブレット</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/servlet-4.0.html">Java サーブレット</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxws-2.2.html">Java Web サービス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-1.0.html">Java WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/websocket-1.1.html">Java WebSocket</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jaxb-2.2.html">Java XML バインディング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.5.html">JavaMail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.6.html">JavaMail</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonb-1.0.html">JavaScript Object Notation Binding</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-1.0.html">JavaScript Object Notation Binding via Bells</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/json-1.0.html">JavaScript Object Notation for Java</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.0.html">JavaScript Object Notation Processing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.1.html">JavaScript Object Notation Processing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-1.1.html">JavaScript Object Notation Processing via Bells</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsf-2.2.html">JavaServer Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsf-2.3.html">JavaServer Faces</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.2.html">JavaServer Faces Container</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.3.html">JavaServer Faces Container</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsp-2.2.html">JavaServer Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jsp-2.3.html">JavaServer Pages</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sessionCache-1.0.html">JCache セッション・パーシスタンス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/j2eeManagement-1.1.html">JEE 管理</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsClient-2.0.html">JMS クライアント (メッセージ・サーバー用)</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jmsMdb-3.2.html">JMS メッセージ駆動型 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jwt-1.0.html">JSON Web Token</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/jwtSso-1.0.html">JSON Web トークン・シングル・サインオン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/constrainedDelegation-1.0.html">Kerberos Constrained Delegation for SPNEGO</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ldapRegistry-3.0.html">LDAP ユーザー・レジストリー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/kernel.html">Liberty カーネル</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/logstashCollector-1.0.html">Logstash コレクター</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsServer-1.0.html">メッセージ・サーバー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wasJmsSecurity-1.0.html">メッセージ・サーバー・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mdb-3.2.html">メッセージ駆動型 Bean</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingServer-3.0.html">メッセージング・サーバー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingClient-3.0.html">メッセージング・サーバー・クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/messagingSecurity-3.0.html">メッセージング・サーバー・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.3.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.4.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.1.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.2.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.3.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.1.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/microProfile-5.0.html">MicroProfile</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.1.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.2.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.3.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.4.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-2.0.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpConfig-3.0.html">MicroProfile 構成</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.0.html">MicroProfile コンテキストの伝搬</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.2.html">MicroProfile コンテキストの伝搬</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.3.html">MicroProfile コンテキストの伝搬</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.1.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.1.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-3.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-4.0.html">MicroProfile のフォールト・トレランス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-1.0.html">MicroProfile GraphQL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-2.0.html">MicroProfile GraphQL</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-1.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.1.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.2.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.1.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpHealth-4.0.html">MicroProfile ヘルス</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.0.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.1.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.2.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpJwt-2.0.html">MicroProfile JSON Web トークン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.1.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.2.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.3.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-3.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-4.0.html">MicroProfile Metrics</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.1.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-2.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-3.0.html">MicroProfile OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.1.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.2.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.3.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-2.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-3.0.html">MicroProfile OpenTracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpReactiveMessaging-1.0.html">MicroProfile リアクティブ・メッセージング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpReactiveStreams-1.0.html">MicroProfile リアクティブ・ストリーム</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.1.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.2.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.3.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.4.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-2.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-3.0.html">MicroProfile REST Client</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/mongodb-2.0.html">MongoDB 統合</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/oauth-2.0.html">OAuth</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openapi-3.1.html">OpenAPI</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openid-2.0.html">OpenID</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openidConnectClient-1.0.html">OpenID Connect クライアント</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/openidConnectServer-1.0.html">OpenID Connect プロバイダー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.0.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.1.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.2.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.3.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/opentracing-2.0.html">Opentracing</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/osgiConsole-1.0.html">OSGi Debug Console</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.0.html">パスワード・ユーティリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.1.html">パスワード・ユーティリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/monitor-1.0.html">Performance Monitoring</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/requestTiming-1.0.html">要求についての通知タイミング</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/samlWeb-2.0.html">SAML Web シングル・サインオン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/ssl-1.0.html">Secure Socket Layer</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/spnego-1.0.html">Simple and Protected GSSAPI Negotiation Mechanism</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/sipServlet-1.1.html">SIP サーブレット</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/socialLogin-1.0.html">ソーシャル・メディア・ログイン</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/springBoot-1.5.html">Spring Boot サポート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/springBoot-2.0.html">Spring Boot サポート</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/transportSecurity-1.0.html">トランスポート・セキュリティー</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/webCache-1.0.html">Web Response Cache</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsSecurity-1.1.html">Web Service Security</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsAtomicTransaction-1.2.html">WS-AT Service</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/feature/wsSecuritySaml-1.1.html">WSSecurity SAML</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/command-overview.html">コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/auditUtility-auditReader.html">auditUtility auditReader</a></li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/featureUtility-commands.html">featureUtility コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-find.html">検索</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-help.html">ヘルプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-installFeature.html">installFeature</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-installServerFeatures.html">installServerの機能</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/featureUtility-viewSettings.html">viewSettings</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/securityUtility-commands.html">securityUtility コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-createLTPAKeys.html">createLTPAKeys</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-createSSLCertificate.html">createSSLCertificate</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-encode.html">encode</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/securityUtility-help.html">ヘルプ</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/schemaGen.html">schemaGen</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/command/serverSchemaGen.html">serverSchema世代</a></li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/server-commands.html">サーバー・コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-create.html">作成</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-debug.html">デバッグ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-dump.html">ダンプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-help.html">ヘルプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-javadump.html">javadump</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-list.html">リスト</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-package.html">パッケージ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-pause.html">一時停止</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-resume.html">resume</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-run.html">実行</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-start.html">開始</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-status.html">状況</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-stop.html">停止</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/server-version.html">version</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/command/springbootUtility-commands.html">springbootUtility コマンド</a><ul class="nav-list">
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/springbootUtility-help.html">ヘルプ</a></li>
+  <li class="nav-item" data-depth="3"><a class="nav-link" tabindex="0" href="reference/command/springbootUtility-thin.html">thin</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/jakarta-ee-api.html">Jakarta EE API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee9.1-javadoc.html">Jakarta EE 9.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee8-javadoc.html">Jakarta EE 8 (Jakarta EE 8)</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/java-ee-api.html">Java EE API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee8-javadoc.html">Java EE 8</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee7-javadoc.html">Java EE 7</a></li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1"><button class="nav-item-toggle" aria-label="このカテゴリーの下のページを展開"></button> <a class="nav-link" tabindex="0" href="reference/microprofile-api.html">MicroProfile API</a><ul class="nav-list">
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-5.0-javadoc.html">MicroProfile 5.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.1-javadoc.html">MicroProfile 4.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.0-javadoc.html">MicroProfile 4.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.3-javadoc.html">MicroProfile 3.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.2-javadoc.html">MicroProfile 3.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.0-javadoc.html">MicroProfile 3.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.2-javadoc.html">MicroProfile 2.2</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.1-javadoc.html">MicroProfile 2.1</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.0-javadoc.html">MicroProfile 2.0</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.4-javadoc.html">MicroProfile 1.4</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.3-javadoc.html">MicroProfile 1.3</a></li>
+  <li class="nav-item" data-depth="2"><a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.2-javadoc.html">MicroProfile 1.2</a></li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+
+    </div>
+  </aside>
+</div>
+<main role="main">
+<div class="toolbar" role="navigation" aria-label="この文書のツールバー"><button class="nav-toggle" aria-label="ナビゲーション・メニューの切り替え"></button><nav class="breadcrumbs" aria-label="パンくずリスト">
+  <ul>
+    <li><a href="overview.html">資料の概要</a></li>
+    <li>開発</li>
+    <li><a href="external-configuration.html">マイクロサービスの外部構成</a></li>
+    <li><a href="microprofile-config-properties.html">MicroProfile Config プロパティー</a></li>
+  </ul>
+</nav>
+    <div id="github_link"><img id="docs_github_logo" src="/img/docs_github_logo.svg" alt="GitHub ロゴ"> <a id="open_issue_link" href="https://github.com/OpenLiberty/docs/issues/new?body=Document: MicroProfile Config properties%0Ahttp://openliberty.io/docs/23.0.0.1/microprofile-config-properties.html%0A%0A**Please describe the problem you are having with the documentation. Is information missing, inaccurate, or unclear? Tell us about the context where you encountered the problem so we can understand how to address it.**" target="_blank">問題を開く</a> | <a id="edit_topic_link" href="https://github.com/OpenLiberty/docs/edit/v23.0.0.1/modules/ROOT/pages/microprofile-config-properties.adoc" target="_blank" rel="noopener">トピックの編集</a></div>
+</div>
+<article class="doc">   
+<h1 class="page">MicroProfile Config プロパティー</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>MicroProfile Config は、コンテキストおよび依存関係の注入 (CDI) を使用して、構成プロパティー値をアプリケーションに直接注入する API です。アプリケーション・コードで取得する必要はありません。 MicroProfile Config プロパティーを使用して、他の MicroProfile API の構成値を指定することができます。</p>
+</div>
+<div class="paragraph">
+<p>MicroProfile Config について詳しくは、 <a href="external-configuration.html" class="xref page">マイクロサービスの外部構成</a> および Open Liberty <a href="https://openliberty.io/guides/#configuration">MicroProfile Config のガイド</a>を参照してください。</p>
+</div>
+<div class="paragraph">
+<p>以下のセクションでは、さまざまな MicroProfile API で使用可能な MicroProfile Config プロパティーをリストして説明している表を示します。</p>
+</div>
+<div class="ulist">
+<ul>
+<li><p><a href="#context">MicroProfile コンテキストの伝搬</a></p>
+</li>
+<li><p><a href="#ft">MicroProfile のフォールト・トレランス</a></p>
+</li>
+<li><p><a href="#gql">MicroProfile GraphQL</a></p>
+</li>
+<li><p><a href="#health">MicroProfile ヘルス</a></p>
+</li>
+<li><p><a href="#jwt">MicroProfile JSON Web トークン</a></p>
+</li>
+<li><p><a href="#metrics">MicroProfile Metrics</a></p>
+</li>
+<li><p><a href="#openapi">MicroProfile OpenAPI</a></p>
+</li>
+<li><p><a href="#react">MicroProfile リアクティブ・メッセージング</a></p>
+</li>
+<li><p><a href="#rest">MicroProfile REST Client</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="context"><a class="anchor" href="#context"></a>MicroProfile コンテキスト伝搬</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile 構成プロパティーは、 MicroProfile コンテキスト伝搬が有効な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-context-propagation-1.3-RC1/microprofile-context-propagation-spec-1.3-RC1.html#mpconfig">MicroProfile Context Propagation specification</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile コンテキスト伝搬の構成プロパティー</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.cleared</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagedExecutor</code> クラスの <code>cleared</code> パラメーターのデフォルト値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagerExecutor.builder()</code> クラスが <code>ManagedExecutor</code> インスタンスの作成に使用され、ビルダーがクリアされたコンテキスト・タイプのセットを指定していない場合。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.cleared=Remaining</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.maxAsync</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagedExecutor</code> クラスの <code>maxAsync</code> パラメーターのデフォルト値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagedExecutor</code> インスタンスの作成に <code>ManagerExecutor.builder()</code> クラスが使用され、ビルダーが <code>maxAsync</code> 属性を指定していない場合。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.maxAsync=10</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.maxQueued</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagedExecutor</code> クラスの <code>maxQueued</code> パラメーターのデフォルト値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagedExecutor</code> インスタンスの作成に <code>ManagerExecutor.builder()</code> クラスが使用され、ビルダーが <code>maxQueued</code> 属性を指定していない場合。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.maxQueued=1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.propagated</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagedExecutor</code> クラスの <code>propagated</code> パラメーターのデフォルト値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ManagerExecutor.builder()</code> クラスが <code>ManagedExecutor</code> インスタンスのビルドに使用され、ビルダーが伝搬されたコンテキスト・タイプのセットを指定していない場合。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.propagated=Security,Application</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ThreadContext.cleared</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ThreadContext</code> クラスの <code>cleared</code> パラメーターのデフォルト値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ThreadContext.builder()</code> クラスが <code>ThreadContext</code> インスタンスの作成に使用され、ビルダーがクリアされたコンテキスト・タイプのセットを指定していない場合。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.cleared=Security,Transaction</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ThreadContext.propagated</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ThreadContext</code> クラスの <code>propagated</code> パラメーターのデフォルト値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ThreadContext.builder()</code> クラスが <code>ThreadContext</code> インスタンスのビルドに使用され、ビルダーが伝搬されたコンテキスト・タイプのセットを指定していない場合。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ThreadContext.propagated=None</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ThreadContext.unchanged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ThreadContext</code> クラスの <code>unchanged</code> パラメーターのデフォルト値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ThreadContext.unchanged()</code> クラスが <code>ThreadContext</code> インスタンスのビルドに使用され、ビルダーがクリアされた未変更タイプのセットを指定していない場合。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.context.ManagedExecutor.unchanged=Remaining</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ft"><a class="anchor" href="#ft"></a>MicroProfile フォールト・トレランス</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile フォールト・トレランスが有効な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#configuration">MicroProfile Fault Tolerance specification</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile フォールト・トレランスの構成プロパティー</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>classname</em>/<em>methodname</em>/<em>annotationname</em>/<em>parametername</em>=<em>newvalue</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">フォールト・トレランス・アノテーションに設定されている値をメソッド・レベルでオーバーライドします。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MicroProfile Fault Tolerance バージョン 3.0 以降では、このプロパティーは、メソッドの初回実行時に、Bean クラスごとにメソッドごとに 1 回読み取られます。 MicroProfile Fault Tolerance バージョン 2.1 以前では、メソッドの初回実行時に、Bean インスタンスごとにメソッドごとに 1 回読み取られます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>com.acme.ClassA/methodB/Retry/maxRetries=5</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>classname</em>/<em>annotationname</em>/<em>parametername</em>=<em>newvalue</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">フォールト・トレランス・アノテーションに設定されている値をアノテーション・レベルでオーバーライドします。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MicroProfile Fault Tolerance バージョン 3.0 以降では、このプロパティーは、メソッドの初回実行時に、Bean クラスごとにメソッドごとに 1 回読み取られます。 MicroProfile Fault Tolerance バージョン 2.1 以前では、メソッドの初回実行時に、Bean インスタンスごとにメソッドごとに 1 回読み取られます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>com.acme.ClassA/Retry/maxRetries=5</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.fault.tolerance.interceptor.priority</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fault Tolerance インターセプターの基本優先度を構成します。 このプロパティーは、 MicroProfile Fault Tolerance バージョン 2.0 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.fault.tolerance.interceptor.priority=1000</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MP_Fault_Tolerance_Metrics_Enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">フォールト・トレランスによって生成されるすべてのメトリックを無効または有効にします。 デフォルトは <code>true</code> です。 このプロパティーは、 MicroProfile Fault Tolerance バージョン 1.1 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MP_Fault_Tolerance_Metrics_Enabled=false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MP_Fault_Tolerance_NonFallback_Enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Fallback</code>を除くすべてのフォールト・トレランス・アノテーションを使用不可または使用可能にします。 デフォルトは <code>true</code> です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MicroProfile Fault Tolerance バージョン 3.0 以降では、このプロパティーは、メソッドの初回実行時に、Bean クラスごとにメソッドごとに 1 回読み取られます。 MicroProfile Fault Tolerance バージョン 2.1 以前では、メソッドの初回実行時に、Bean インスタンスごとにメソッドごとに 1 回読み取られます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MP_Fault_Tolerance_NonFallback_Enabled=false</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gql"><a class="anchor" href="#gql"></a>MicroProfile GraphQL</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile GraphQL が有効な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-graphql-2.0/microprofile-graphql-spec-2.0.html">MicroProfile GraphQL 仕様</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile GraphQL</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.graphql.defaultErrorMessage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">デフォルトのエラー・メッセージを設定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションがチェックなし例外をスローしたとき。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.graphql.defaultErrorMessage=Unexpected failure in the system. Jarvis is working to fix it.</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.graphql.exceptionsWhiteList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">組み込まれるチェックなし例外メッセージのコンマ区切りの許可リストを指定します。 デフォルトでは、チェックされていないすべての例外が不許可リストに表示されます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションがチェックなし例外をスローしたとき。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.graphql.exceptionsWhiteList=org.eclipse.microprofile.graphql.tck.apps.superhero.api.WeaknessNotFoundException</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.graphql.exceptionsBlackList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">チェック例外のメッセージを非表示にします。 デフォルトでは、すべてのチェック例外が許可リストに含まれています。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションがチェック例外をスローしたとき。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.graphql.exceptionsBlackList=java.io.IOException,java.util.concurrent.TimeoutException</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="health"><a class="anchor" href="#health"></a>MicroProfile の正常性</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile Health が有効な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-health-4.0/microprofile-health-spec-4.0.html">MicroProfile Health specification</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile Health の構成プロパティー</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.health.default.readiness.empty.response</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">このプロパティーを <code>UP</code> に設定すると、デプロイされたアプリケーションの始動中に、全体的なデフォルトの作動可能状況が UP に変更されます。 このプロパティーは、 MicroProfile Health 3.0 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.health.default.readiness.empty.response=UP</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.health.default.startup.empty.response</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">このプロパティーを <code>UP</code> に設定すると、デプロイされたアプリケーションの始動中に、全体のデフォルトの始動状況が UP に変更されます。 このプロパティーは、 MicroProfile Health 3.1 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.health.default.startup.empty.response=UP</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jwt"><a class="anchor" href="#jwt"></a>MicroProfile JSON Web トークン</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile JSON Web Token (JWT) が使用可能な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-jwt-auth-2.0/microprofile-jwt-auth-spec-2.0.html">MicroProfile JSON Web Token 仕様</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile JSON Web トークンの構成プロパティー</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.decrypt.key.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">鍵管理鍵の場所を指定します。これは、コンテンツ暗号鍵の暗号化解除に使用される秘密鍵です。 その後、コンテンツ暗号鍵を使用して JSON Web 暗号化 (JWE) 暗号化テキストが暗号化解除されます。 この秘密鍵は、コンテンツ暗号鍵の暗号化に使用される公開鍵に対応している必要があります。 このプロパティーは、 MicroProfile JSON Web Token 1.2 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.decrypt.key.location=privateKey.pem</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.token.cookie</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT トークンを含むことが予期される Cookie の名前を指定します。 デフォルト値は <code>Bearer</code>です。 このプロパティーは、 MicroProfile JSON Web Token 1.2 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.token.cookie=myToken</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.token.header</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT トークンを含むことが予期される HTTP 要求ヘッダーを制御します。 有効な値は、 <code>Authorization</code>(デフォルト) または <code>Cookie</code>のいずれかです。 このプロパティーは、 MicroProfile JSON Web Token 1.2 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.token.header=Cookie</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.audiences</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">許容される <code>aud</code> 値のリストを指定します。 これらの値の少なくとも 1 つがクレーム内で検出される必要があります。 このプロパティーは、 MicroProfile JSON Web Token 1.2 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.audiences=conferenceService</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.issuer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MicroProfile JWT に対して妥当性検査を行うために予期される <code>iss</code> クレーム値を指定します。 このプロパティーは、 MicroProfile JSON Web Token 1.1 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.issuer=https://example.com/issuer</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.publickey</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MicroProfile JWT 署名者の公開鍵の組み込み鍵素材を PKCS8、PEM、または JWK (S) 形式で指定します。 値が見つからない場合は、 <code>mp.jwt.verify.publickey.location</code> 値が検査されます。 このプロパティーは、 MicroProfile JSON Web Token 1.1 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.publickey=MIIEvgIBADANBgkqh&#8230;&#8203;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.publickey.algorithm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MicroProfile JWT エンドポイントでサポートされる公開鍵署名アルゴリズムを指定します。 デフォルト値は <code>RSA256</code>です。 このプロパティーは、 MicroProfile JSON Web Token 1.2 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.publickey.algorithm=ES256</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.publickey.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">公開鍵の相対パスまたは完全 URL を指定します。 すべての相対パスは、 <code>ClassLoader.getResource</code> メソッドを使用するアーカイブ内で解決されます。 値が URL の場合、新しい <code>URL(“…”).openStream()</code> メソッドを使用して解決されます。 このプロパティーは、 MicroProfile JSON Web Token 1.1 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保護リソースに対する各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.jwt.verify.publickey.location=publicKey.pem</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="metrics"><a class="anchor" href="#metrics"></a>MicroProfile メトリック</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile Metrics が有効な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-metrics-4.0/microprofile-metrics-spec-4.0.html">MicroProfile Metrics specification</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile Metrics の構成プロパティー</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.metrics.appName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_app</code> タグの値をアプリケーション・サーバーからアプリケーションに渡します。 このプロパティーは、複数のアプリケーションがランタイムにデプロイされている場合に、メトリック名の競合を回避するために使用されます。 これは、アプリケーションの <code>META-INF</code> ディレクトリーにある <code>microprofile-config.properties</code> ファイルによって定義されます。 このタグの値は、そのアプリケーションから発生する各メトリックの出力に付加されます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">この値は、実行時に読み取られて評価されます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.metrics.appName=myApp</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.metrics.tags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">メトリックのタグを指定します。 このプロパティーを使用して設定されるタグ値は、等号 (<code>=</code>) とコンマ (<code>,</code>) を円記号 (<code>\</code>) でエスケープする必要があります。 これらのタグの値は、各メトリックの出力に追加されます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">サーバーの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.metrics.tags=app=shop,tier=integration,special=deli\=ver\,y</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="openapi"><a class="anchor" href="#openapi"></a>MicroProfile OpenAPI</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile OpenAPI が有効な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-open-api-3.0/microprofile-openapi-spec-3.0.html">MicroProfile OpenAPI 仕様</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile OpenAPI</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.extensions.liberty.merged.exclude</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.extensions.liberty.merged.include</code> プロパティーをオーバーライドして、生成された OpenAPI 文書から除外するアプリケーションまたは Web モジュールを指定します。 デフォルト値は <code>none</code>です。 このプロパティーは、 MicroProfile OpenAPI 2.0 以降で使用可能です。 詳しくは、 <a href="documentation-openapi.html#multi-module" class="xref page"> MicroProfile OpenAPI</a>を参照してください。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">サーバーの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.extensions.liberty.merged.exclude=app1,app2</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.extensions.liberty.merged.include</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">生成された OpenAPI 文書に含めるモジュールまたはアプリケーションを指定します。 デフォルト値は <code>first</code>です。 このプロパティーは、 MicroProfile OpenAPI 2.0 以降で使用可能です。 詳しくは、 <a href="documentation-openapi.html#multi-module" class="xref page"> MicroProfile OpenAPI</a>を参照してください。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">サーバーの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.extensions.liberty.merged.exclude=app1/module2,app2</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.extensions.liberty.merged.info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">最後の Open API 文書の <code>info</code> セクションを設定します。 このプロパティーを設定すると、最後の OpenAPI 文書の <code>info</code> セクションがプロパティーの値に置き換えられます。 この置換は、マージが完了した後に行われます。 値は、JSON 形式の <a href="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#infoObject">有効な OpenAPI 情報セクション</a> でなければなりません。 このプロパティーは、 MicroProfile OpenAPI 2.0 以降で使用可能です。 詳しくは、 <a href="documentation-openapi.html#multi-module" class="xref page"> MicroProfile OpenAPI</a>を参照してください。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/openapi</code> エンドポイントへの各要求時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.extensions.liberty.merged.info= <em>valid OpenAPI info section in JSON format</em></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.filter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/eclipse/microprofile-open-api/blob/master/spec/src/main/asciidoc/microprofile-openapi-spec.asciidoc#oasfilter">OASFilter</a> 実装の完全修飾名を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.filter=com.mypackage.MyFilter</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.model.reader</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/eclipse/microprofile-open-api/blob/master/spec/src/main/asciidoc/microprofile-openapi-spec.asciidoc#oasmodelreader">OASModelReader</a> 実装の完全修飾名を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.model.reader=com.mypackage.MyModelReader</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">スキャンするクラスのリストを指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.classes=com.xyz.MyClassA,com.xyz.MyClassB</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.exclude.classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">スキャンから除外するクラスのリストを指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.exclude.classes=com.xyz.MyClassC,com.xyz.MyClassD</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.exclude.packages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">スキャンから除外するパッケージのリストを指定します。 パッケージ内のクラスおよびすべてのサブパッケージは、スキャンから除外されます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.exclude.packages=com.xyz.packageC,com.xyz.packageD</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.packages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">スキャンするパッケージのリストを指定します。 パッケージ内のクラスおよびすべてのサブパッケージでアノテーションがスキャンされます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.scan.packages=com.xyz.packageA,com.xyz.packageB</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.schema</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">特定のクラスのスキーマを JSON 形式で指定します。 プロパティー・キーの残りの部分は、完全修飾クラス名でなければなりません。 値は、JSON 形式で指定された有効な OpenAPI スキーマ・オブジェクトでなければなりません。 このプロパティーは、Java クラスの @Schema アノテーションと機能的に同等です。 ただし、アプリケーション開発者がクラスのソース・コードにアクセスできない場合には、これを使用することができます。 このプロパティーは、 MicroProfile OpenAPI 2.0 以降で使用可能です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.schema.java.util.Date= <em>valid OpenAPI schema in JSON format</em></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.servers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">接続情報を提供するグローバル・サーバーのリストを指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.servers=https://xyz.com/v1,https://abc.com/v1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.servers.operation.<em>operationID</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">操作を処理するサーバーの代替リストを指定します。 サーバーの代替リストを指定する操作では、 <code>operationId</code>を定義する必要があります。これは、操作を識別する固有のストリングです。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.servers.operation.getBooking=https://abc.io/v1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.servers.path.<em>some</em>/<em>path</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">パス内のすべての操作を処理するためのサーバーの代替リストを指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.openapi.servers.path./airlines/bookings/{id}=https://xyz.io/v1</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="react"><a class="anchor" href="#react"></a>MicroProfile リアクティブ・メッセージング</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile Reactive Messaging が有効になっている場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-reactive-messaging-1.0/microprofile-reactive-messaging-spec.html">MicroProfile Reactive Messaging specification</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile Reactive Messaging の構成プロパティー</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.messaging.incoming.<em>channel-name</em>.<em>attribute</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">着信チャネル属性値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.messaging.incoming.my-channel.topic=my-topic</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.messaging.outgoing.<em>channel-name</em>.<em>attribute</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">発信チャネル属性値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.messaging.outgoing.my-channel.connector=io.openliberty.kafka</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.messaging.connector.<em>connector-id</em>.<em>attributename</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">コネクター属性値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">アプリケーションの始動</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mp.messaging.connector.io.openliberty.kafka.bootstrap.servers=mybrokerhostname</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rest"><a class="anchor" href="#rest"></a>MicroProfile Rest クライアント</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下の MicroProfile Config プロパティーは、 MicroProfile Rest Client が使用可能な場合に指定できます。 詳しくは、 <a href="https://download.eclipse.org/microprofile/microprofile-rest-client-3.0/microprofile-rest-client-spec-3.0.html">MicroProfile Rest Client specification</a>を参照してください。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">MicroProfile MicroProfile Rest クライアントの構成プロパティー</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名前</th>
+<th class="tableblock halign-left valign-top">説明</th>
+<th class="tableblock halign-left valign-top">ランタイムがプロパティーを読み取るとき</th>
+<th class="tableblock halign-left valign-top">例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/connectTimeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">リモート・エンドポイントへの接続を待機するタイムアウト値をミリ秒単位で指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/connectTimeout=25</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/hostnameVerifier</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL ホスト名とサーバー ID のホスト名の不一致で失敗した SSL 接続が許可されるかどうかを判別するためのカスタム <code>HostnameVerifier</code> インスタンスを指定します。 このクラスには引数なしの public コンストラクターがなければなりません。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/hostnameVerifier=myVerifierClass</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/followRedirects</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">クライアントが HTTP リダイレクト応答に従うかどうかを決定するブール値を指定します。 <code>true</code> 以外の値は、 <code>false</code>として解釈されます。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/followRedirects=true</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/keyStore</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">鍵ストアの場所を指定します。これは、クラスパスまたはファイルのいずれかです。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/keyStore=file:/home/user/client-keystore.p12</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/keyStorePassword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">鍵ストアのパスワードを指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/keyStorePassword=myPassword</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/keyStoreType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">鍵ストア・タイプを指定します。 デフォルト値は <code>JKS</code>です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/keyStoreType=pcks12</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/providers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">クライアントに含める完全修飾プロバイダー・クラス名のコンマ区切りリストを指定します。これは、 <code>register</code> メソッドまたは <code>@RegisterProvider</code> アノテーションに相当します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/providers=myClass1,myClass2</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mprest/providers/<em>interface name</em>/priority</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">指定されたインターフェースのプロバイダーの優先順位をオーバーライドします。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/providers/com.mycompany.MyProvider/priority=3</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>`<em>client interface name</em>/mp-rest/proxyAddress</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">このクライアントに対する要求で使用する HTTP プロキシー・サーバーのホスト名または IP アドレスとポートを定義する、 <em>proxy</em> : <em>port</em> の形式のストリング値を指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/proxyAddress=http://exampleproxy:9041</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/queryParamStyle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">同じ照会パラメーターに対して複数の値が使用される形式を決定する、列挙型 23 ストリング値を指定します。 可能な値は、 <code>MULTI_PAIRS</code> <code>COMMA_SEPARATED</code>または <code>ARRAY_PAIRS</code>です。 デフォルト値は <code>MULTI_PAIRS</code>です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/queryParamStyle=ARRAY_PAIRS</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/readTimeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">リモート・エンドポイントからの応答を待機するタイムアウト値をミリ秒単位で指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/readTimeout=25</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/scope</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">注入に使用する CDI スコープの完全修飾クラス名を指定します。 デフォルト値は <code>jakarta.enterprise.context.Dependent</code>です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/scope=jakarta.inject.Singleton</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/trustStore</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">トラストストアの場所を指定します。これは、クラスパスまたはファイルのいずれかです。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/trustStore=file:/home/user/client-truststore.p12</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/trustStorePassword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">トラストストアのパスワードを指定します。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/trustStorePassword=myPassword</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/trustStoreType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">トラストストア・タイプを指定します。 デフォルト値は <code>JKS</code>です。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/trustStoreType=pcks12</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">このサービスに使用するベース URL を指定します。 このプロパティーまたは <code>*/mp-rest/uri</code> は必須と見なされます。 ただし、実装によっては、これらの URL/URI を定義する方法が他にもある場合があります。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/url=http://example.com</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>client interface name</em>/mp-rest/uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">このサービスに使用するベース URL を指定します。 このプロパティーまたは <code>*/mp-rest/url</code> は必須と見なされます。 ただし、実装によっては、これらの URL/URI を定義する方法が他にもある場合があります。 このプロパティーは、 <code>@RegisterRestClient</code> アノテーションで指定されたすべての <code>baseUri</code> 値をオーバーライドします。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myClient/mp-rest/uri=http://somehost:9080/someContextRoot</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.eclipse.microprofile.rest.client.propagateHeaders</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">インバウンド JAX-RS 要求からアウトバウンド MicroProfile Rest クライアント要求に伝搬するヘッダーを指定します。 この値は、ヘッダーのコンマ区切りリストでなければなりません。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> Bean が作成されたときのメソッド呼び出しの処理時。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.eclipse.microprofile.rest.client.propagateHeaders==Authorization,Cookie</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+</main>
+</div>
+ <footer>
+    <div id="footer_gray_background">
+        <div id="footer_top_container" class="footer_container container-fluid">
+            <div id="footer_project_container"><span id="footer_open_liberty"></span><p id="footer_project">IBM オープン・ソース・プロジェクト</p>
+            </div>
+            <div id="footer_round_links_container"><a id="footer_github_link" class="footer_round_btn" href="https://github.com/OpenLiberty/" target="_blank" rel="noopener" aria-label="Github"></a> <a id="footer_twitter_link" class="footer_round_btn" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener" aria-label="&lt;"></a> <a id="footer_stackoverflow_link" class="footer_round_btn" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener" aria-label="Stack Overflow での Open Liberty に関する質問"></a> <a id="footer_groupsio_link" class="footer_round_btn" href="https://groups.io/g/openliberty" target="_blank" rel="noopener" aria-label="Open Liberty Groups.io"></a> <a id="footer_gitter_link" class="footer_round_btn" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener" aria-label="Open Liberty Gitter"></a></div>
+        </div>         
+    </div>
+
+    <div id="footer_bottom_container" class="footer_container container-fluid">
+        <div id="footer_bottom_left_section">
+            <p id="footer_copyright">© Copyright IBM Corp. 2017, 2023</p>
+            <p class="vertical_bar">|</p><a id="footer_privacy_policy_link" href="https://www.ibm.com/privacy/" target="_blank" rel="noopener" class="left_footer_link">プライバシー・ポリシー</a><p class="vertical_bar">|</p><a id="footer_license_link" href="https://github.com/OpenLiberty/open-liberty/blob/release/LICENSE" target="_blank" rel="noopener" class="left_footer_link">使用許諾条件</a><p class="vertical_bar">|</p><a id="footer_logos_link" href="https://github.com/OpenLiberty/logos" target="_blank" rel="noopener" class="left_footer_link">ロゴス (論理)</a></div>      
+        <div id="footer_bottom_right_section"><a id="footer_docs_link" href="/docs" aria-label="Open Liberty 資料" class="right_footer_link blue_link_light_background">資料</a> <a id="footer_blog_link" href="/blog" aria-label="Open Liberty ブログ" class="right_footer_link blue_link_light_background">ブログ</a> <a id="footer_support_link" href="/support" aria-label="Open Liberty のサポート" class="right_footer_link blue_link_light_background">サポート</a></div>
+    </div>
+</footer>
+
+<!-- PRE-LOADED IMAGES FOR ON HOVER BEHAVIOR -->
+<div class="d-none hidden"><img src="../../_/img/Footer_GitCat_Hover.svg" alt="OpenLiberty Github リンク"> <img src="../../_/img/Footer_TwitterBird_Hover.svg" alt="OpenLibertyIO Twitter リンク"> <img src="../../_/img/Footer_StackO_Hover.svg" alt="Open-liberty Stack Overflow リンク"> <img src="../../_/img/Footer_GroupsIO_Hover.svg" alt="Openliberty Groups IO リンク"> <img src="../../_/img/footer_gitter_hover.svg" alt="Openliberty Gitter リンク"></div>
+<script src="../../_/js/01-nav.js"></script>
+<script src="../../_/js/02-fragment-jumper.js"></script>
+<script src="../../_/js/03-mobile-navbar.js"></script>
+<script src="../../_/js/07-tabs.js"></script>
+<script src="../../_/js/08-links.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/10-navscroll.js"></script>
+<script src="../../_/js/11-copy-to-clipboard.js"></script>
+  </body>
+</html>
+
+<!-- v2.0.64 : caits-prod-app-gp_openliberty_20240126T173510-2_en_ja -->

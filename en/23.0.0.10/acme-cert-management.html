@@ -1,0 +1,3308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Automatic certificate management with ACME :: Open Liberty Docs</title>
+    <link rel="canonical" href="https://openliberty.io/docs/latest/acme-cert-management.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Asap:400,500" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/default.min.css">
+<link rel="stylesheet" href="../../_/css/site.css">
+<meta name="robots" content="noindex" />
+<meta name="description" content="Open Liberty documentation and reference materials for developers to build applications and for administrators and operation teams to manage DevOps and deploy workloads to clouds by using open cloud-native Java. This content covers Open Liberty basics, development, security, deployment, and operations topics. It also includes Javadoc for Jakarta EE APIs, MicroProfile APIs, Java EE APIs, and Open Liberty APIs and SPIs.">
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@OpenLibertyIO" />
+<meta name="twitter:title" content="Open Liberty Docs" />
+<meta name="twitter:description" content="Open Liberty documentation and reference materials for developers to build applications and for administrators and operation teams to manage DevOps and deploy workloads to clouds by using open cloud-native Java. This content covers Open Liberty basics, development, security, deployment, and operations topics. It also includes Javadoc for Jakarta EE APIs, MicroProfile APIs, Java EE APIs, and Open Liberty APIs and SPIs." />
+<meta name="twitter:image" content="https://openliberty.io/img/twitter_card.jpg" />
+
+
+<meta property="og:title" content="Open Liberty Docs" />
+<meta property="og:description" content="Open Liberty documentation and reference materials for developers to build applications and for administrators and operation teams to manage DevOps and deploy workloads to clouds by using open cloud-native Java. This content covers Open Liberty basics, development, security, deployment, and operations topics. It also includes Javadoc for Jakarta EE APIs, MicroProfile APIs, Java EE APIs, and Open Liberty APIs and SPIs." />
+<meta property="og:image" content="https://openliberty.io/img/twitter_card.jpg" />
+<meta property='og:type' content="website" />
+<meta property='og:url' content="https://openliberty.io/docs/23.0.0.10/acme-cert-management.html" />
+
+    <script async src="../../_/js/vendor/highlight.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  </head>
+  <body class="article">
+<header>
+    <nav id="nav_bar" aria-label="Navigation header links">
+        <div id="nav_header">
+            <a id="home_link" href="/" aria-label="Open Liberty Home">
+                <img id="ol_logo" src="../../_/img/docs_openliberty_logo.png" alt="Open Liberty Logo">
+            </a>
+            <button id="hamburger_toggle_button" onclick="$('#nav_bar').toggleClass('responsive');" aria-label="Toggle the navigation menu">
+                <span id="hamburger_toggle_icon"></span>
+            </button>
+        </div>
+        <div id="hamburger_menu">
+            <ul class="nav_list">
+                <li class="nav_link">
+                    <a href="/start">Get Started</a>
+                </li>
+                <li class="nav_link">
+                    <a href="/guides">Guides</a>
+                </li>
+                <li class="nav_link">
+                    <a href="/docs">Docs</a>
+                </li>
+                <li class="nav_link">
+                    <a href="/support">Support</a>
+                </li>
+                <li class="nav_link">
+                    <a href="/blog">Blog</a>
+                </li>
+            </ul>
+            <div id="header_round_links_container"> 
+                <a id="header_twitter_link" class="header_round_button" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a>
+                <a id="header_stackoverflow_link" class="header_round_button" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty questions on Stack Overflow"></a>
+                <a id="header_groupsio_link" class="header_round_button" href="https://groups.io/g/openliberty" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Groups.io"></a>
+                <a id="header_gitter_link" class="header_round_button" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener noreferrer" aria-label="Open Liberty Gitter"></a>
+            </div>
+        </div>
+    </nav>
+</header><div class="body">
+<div class="nav-container" data-component="docs" data-version="23.0.0.10">
+  <aside class="nav" aria-label="Navigation table of contents">
+    <div class="panels">
+      <div class="nav-panel-explore" data-panel="explore">
+    <div class="doc_select version_select">
+      <div class="context">
+        <span class="title">Version</span>
+        <a class="version" href="#">23.0.0.10</a>
+        <img src="../../_/img/chevron.svg" class="version_select_chevron"/>
+      </div>
+      <ul class="components">
+        <li class="component is-current">
+          <ul class="versions">
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../latest/acme-cert-management.html" aria-label="Version 23.0.0.12">23.0.0.12</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.11/acme-cert-management.html" aria-label="Version 23.0.0.11">23.0.0.11</a>
+              </li>
+              <li class="version is-current">
+                <span class="title">Version</span>
+                          <a href="acme-cert-management.html" aria-label="Version 23.0.0.10">23.0.0.10</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.9/acme-cert-management.html" aria-label="Version 23.0.0.9">23.0.0.9</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.8/acme-cert-management.html" aria-label="Version 23.0.0.8">23.0.0.8</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.7/acme-cert-management.html" aria-label="Version 23.0.0.7">23.0.0.7</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.6/acme-cert-management.html" aria-label="Version 23.0.0.6">23.0.0.6</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.5/acme-cert-management.html" aria-label="Version 23.0.0.5">23.0.0.5</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.4/acme-cert-management.html" aria-label="Version 23.0.0.4">23.0.0.4</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.3/acme-cert-management.html" aria-label="Version 23.0.0.3">23.0.0.3</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.2/acme-cert-management.html" aria-label="Version 23.0.0.2">23.0.0.2</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../23.0.0.1/acme-cert-management.html" aria-label="Version 23.0.0.1">23.0.0.1</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.13/acme-cert-management.html" aria-label="Version 22.0.0.13">22.0.0.13</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.12/acme-cert-management.html" aria-label="Version 22.0.0.12">22.0.0.12</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.11/acme-cert-management.html" aria-label="Version 22.0.0.11">22.0.0.11</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.10/acme-cert-management.html" aria-label="Version 22.0.0.10">22.0.0.10</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.9/acme-cert-management.html" aria-label="Version 22.0.0.9">22.0.0.9</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.8/acme-cert-management.html" aria-label="Version 22.0.0.8">22.0.0.8</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.7/acme-cert-management.html" aria-label="Version 22.0.0.7">22.0.0.7</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.6/acme-cert-management.html" aria-label="Version 22.0.0.6">22.0.0.6</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.5/acme-cert-management.html" aria-label="Version 22.0.0.5">22.0.0.5</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.4/acme-cert-management.html" aria-label="Version 22.0.0.4">22.0.0.4</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.3/acme-cert-management.html" aria-label="Version 22.0.0.3">22.0.0.3</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.2/acme-cert-management.html" aria-label="Version 22.0.0.2">22.0.0.2</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../22.0.0.1/acme-cert-management.html" aria-label="Version 22.0.0.1">22.0.0.1</a>
+              </li>
+              <li class="version">
+                <span class="title">Version</span>
+                          <a href="../21.0.0.12/acme-cert-management.html" aria-label="Version 21.0.0.12">21.0.0.12</a>
+              </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="doc_select language_select">
+      <div class="context lang_picker">
+        <img src="../../_/img/filled_globe.svg" class="globe_icon"/>
+        <a class="version" href="#">
+        </a>
+        <img src="../../_/img/chevron.svg" class="version_select_chevron"/>
+      </div>
+        <ul class="components language_list">
+          <li class="component">
+            <ul class="versions">
+                <li class="version is-current">
+                  <a href="/docs/23.0.0.10/acme-cert-management.html" translate="no">English</a>
+                </li>
+                <li class="version">
+                  <a href="/ja/docs/23.0.0.10/acme-cert-management.html" translate="no">日本語</a>
+                </li>
+                <li class="version">
+                  <a href="/zh-Hans/docs/23.0.0.10/acme-cert-management.html" translate="no">中文（简体)</a>
+                </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    
+</div>
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu" aria-label="Navigation menu for Open Liberty docs">
+    <h3 class="title"><a href="overview.html">Docs overview</a></h3>
+    <ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Basics</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="zero-migration-architecture.html">Zero migration</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="development-mode.html">Dev mode</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="java-se.html">Java SE support</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="installing-open-liberty-betas.html">Installing Open Liberty beta releases</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="develop-liberty-tools.html">Develop with Liberty Tools</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/getting-started.html">Guide: Getting started with Open Liberty</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Development</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="cloud-native-microservices.html">Cloud-native microservices</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="microprofile.html">MicroProfile overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="jakarta-ee.html">Jakarta EE overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="container-images.html">Container images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="verify-signatures-for-container-images-in-open-liberty.html">Verify signatures for container images in Open Liberty</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="rest-microservices.html">RESTful services</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="sync-async-rest-clients.html">Sync and async REST clients</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="rest-clients.html">REST clients</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="json-p-b.html">JSON-P and JSON-B</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="send-receive-multipart-jaxrs.html">Send and receive multipart/form-data parts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#restful_service">Guides: RESTful services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#getting_started">Guides: Getting started</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="rest-alternatives.html">Alternatives to REST</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="microprofile-graphql.html">Build GraphQL applications</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="grpc-services.html">Provide and consume gRPC services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="web-socket.html">Send bidirectional messages among services with WebSocket</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#rest_alternatives">Guides: REST alternatives</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="documentation-openapi.html">Documenting APIs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/microprofile-openapi.html">Guide: Documenting RESTful APIs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="external-configuration.html">External configuration of microservices</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="microprofile-config-properties.html">MicroProfile Config properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#configuration">Guides: Configuration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="cdi-beans.html">Context and Dependency Injection</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="jaxrs-integration-cdi.html">RESTful Web Services integration with CDI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/cdi-intro.html">Guide: Injecting dependencies into microservices</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="data-persistence.html">Data persistence</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="relational-database-connections-JDBC.html">Relational database connections with JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="kerberos-authentication-jdbc.html">Kerberos authentication for JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="data-persistence-jpa.html">Data persistence with JPA</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="access-nosql-databases.html">Access NoSQL databases with CDI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="create-session-table.html">Create a database table for session persistence</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#persistence">Guides: Persistence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="transaction-service.html">Transaction recovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="distributed-caching-jcache.html">Distributed caching with JCache</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="distributed-session-caching.html">Distributed session caching</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="configuring-infinispan-support.html">Configuring Infinispan as a JCache provider</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="observability.html">Observability</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="microservice-observability-metrics.html">Microservice observability with metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="micrometer-metrics.html">Choose your own monitoring tools with MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="health-check-microservices.html">Health checks for microservices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="microprofile-telemetry.html">Enable distributed tracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#observability">Guides: Observability</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="integration-testing.html">Testing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#test">Guides: Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="fault-tolerance.html">Fault tolerance</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="async-programming-fault-tolerance.html">Resilient asynchronous programming</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#fault_tolerance">Guides: Fault tolerance</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="concurrency.html">Concurrency</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="microprofile-context-propagation.html">Concurrency with MicroProfile Context Propagation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="async-io.html">Async input and output</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Security</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="authentication.html">Authentication</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="authentication-filters.html">Authentication filters</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="authentication-cache.html">Authentication cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="user-registries-application-security.html">User registries</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="single-sign-on.html">Single sign-on</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="kerberos-authentication.html">Kerberos authentication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="track-loggedout-sso.html">Track logged-out SSO cookies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="configuring-spnego-authentication.html">Configuring SPNEGO authentication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="enable-openid-connect-client.html">Enable an OpenID Connect client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="authorization.html">Authorization</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="secure-communication-tls.html">Secure communication with TLS</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" tabindex="0" href="acme-cert-management.html">Automatic certificate management with ACME</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="security-hardening.html">Security hardening</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="server-configuration-hardening.html">Server configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="network-hardening.html">Network</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="application-configuration-hardening.html">Application configuration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="password-encryption.html">Password encryption limitations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="audit-logs.html">Audit logs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="verifying-package-signatures.html">Verifying release package signatures</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="enable-fips.html">Run FIPS-compliant applications</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="security-vulnerabilities.html">Security vulnerability list</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="troubleshooting.html">Troubleshooting security</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#security">Guides: Security</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Deployment</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="deployment-openshift.html">Deployment on OpenShift</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="open-liberty-operator.html">Open Liberty Operator</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="container-images.html">Container images</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="instanton.html">Faster startup with InstantOn</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="instanton-sycalls-json.html">InstantOn system calls</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="instanton-limitations.html">InstantOn limitations and known issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="deploy-spring-boot.html">Configure and Deploy Spring Boot applications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="configure-spring-boot-actuator.html">Configuring non-default settings for the Spring Boot Actuator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/spring-boot.html">Guide: Containerizing, packaging, and running a Spring Boot application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="runnable-jar-files.html">Runnable JAR files</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="class-loader-library-config.html">Class loader configuration</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="virtual-hosts.html">Virtual hosts</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="application-bindings.html">Application bindings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#kubernetes">Guides: Kubernetes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="https://openliberty.io/guides/#cloud_deployment">Guides: Cloud deployment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Operations</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="log-trace-configuration.html">Logs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="log-management.html">Log management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="access-logging.html">HTTP access logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="jdbc-tracing.html">JDBC tracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="json-log-events-list.html">JSON log events reference list</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="logstash-events-list.html">Logstash events reference list</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="audit-log-events-list-cadf.html">Audit log events (CADF) reference list</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="analyzing-logs-elk.html">Analyzing JSON logs with Elastic Stack</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="forwarding-logs-logstash.html">Forwarding logs with Logstash collector</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="introduction-monitoring-metrics.html">Metrics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="metrics-list.html">Metrics reference list</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="configuring-jmx-connection.html">Configuring JMX connections</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="jmx-metrics-list.html">JMX metrics reference list</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="slow-hung-request-detection.html">Slow and hung request detection</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="validating-server-connections.html">Validating server connections</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="admin-center.html">Admin Center GUI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="oidc-tools.html">Admin Center OIDC tools</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="performance-tuning.html">Performance tuning</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="thread-pool-tuning.html">Thread pool tuning</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="reference/directory-locations-properties.html">Directory locations and properties</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="reference/default-environment-variables.html">Default environment variables</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="reference/default-port-numbers.html">Default port numbers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" tabindex="0" href="reference/bootstrap-properties.html">Bootstrap properties</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/config/server-configuration-overview.html">Server configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/acmeCA.html">acmeCA</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/acmeRevocationChecker.html">acmeRevocationChecker</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/acmeTransportConfig.html">acmeTransportConfig</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/activationSpec.html">activationSpec</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/activedLdapFilterProperties.html">activedLdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/adminObject.html">adminObject</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/administrator-role.html">administrator-role</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/application.html">application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/applicationManager.html">applicationManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/applicationMonitor.html">applicationMonitor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/auditEvent.html">auditEvent</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/auditFileHandler.html">auditFileHandler</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/authCache.html">authCache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/authData.html">authData</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/authFilter.html">authFilter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/authentication.html">authentication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/authorization-roles.html">authorization-roles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/basicRegistry.html">basicRegistry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/batchJmsDispatcher.html">batchJmsDispatcher</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/batchJmsEvents.html">batchJmsEvents</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/batchJmsExecutor.html">batchJmsExecutor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/batchJobLogging.html">batchJobLogging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/batchPersistence.html">batchPersistence</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/bell.html">bell</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cache.html">cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cacheManager.html">cacheManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cachingProvider.html">cachingProvider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cdi.html">cdi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cdi12.html">cdi12</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/channelfw.html">channelfw</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/classloader.html">classloader</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/classloading.html">classloading</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cloudant.html">cloudant</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cloudantDatabase.html">cloudantDatabase</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/compression.html">compression</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/concurrencyPolicy.html">concurrencyPolicy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/config.html">config</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/connectionFactory.html">connectionFactory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/connectionManager.html">connectionManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/constrainedDelegation.html">constrainedDelegation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/contextService.html">contextService</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/cors.html">cors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/couchdb.html">couchdb</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/customLdapFilterProperties.html">customLdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/dataSource.html">dataSource</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/databaseStore.html">databaseStore</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/distributedMap.html">distributedMap</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/domainResolver.html">domainResolver</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/domino50LdapFilterProperties.html">domino50LdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/edirectoryLdapFilterProperties.html">edirectoryLdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/ejbApplication.html">ejbApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/ejbContainer.html">ejbContainer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/enterpriseApplication.html">enterpriseApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/eventLogging.html">eventLogging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/executor.html">executor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/facebookLogin.html">facebookLogin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/featureManager.html">featureManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/federatedRepository.html">federatedRepository</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/fileset.html">fileset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/githubLogin.html">githubLogin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/googleLogin.html">googleLogin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/grpc.html">grpc</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/grpcClient.html">grpcClient</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/headers.html">headers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpAccessLogging.html">httpAccessLogging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpDispatcher.html">httpDispatcher</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpEncoding.html">httpEncoding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpEndpoint.html">httpEndpoint</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpOptions.html">httpOptions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpProxyRedirect.html">httpProxyRedirect</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpSession.html">httpSession</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpSessionCache.html">httpSessionCache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/httpSessionDatabase.html">httpSessionDatabase</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/idsLdapFilterProperties.html">idsLdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/iiopEndpoint.html">iiopEndpoint</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/iiopServerPolicies.html">iiopServerPolicies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/include.html">include</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/iplanetLdapFilterProperties.html">iplanetLdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jaasLoginContextEntry.html">jaasLoginContextEntry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jaasLoginModule.html">jaasLoginModule</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/javaPermission.html">javaPermission</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jdbcDriver.html">jdbcDriver</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jmsActivationSpec.html">jmsActivationSpec</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jmsConnectionFactory.html">jmsConnectionFactory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jmsDestination.html">jmsDestination</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jmsQueue.html">jmsQueue</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jmsQueueConnectionFactory.html">jmsQueueConnectionFactory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jmsTopic.html">jmsTopic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jmsTopicConnectionFactory.html">jmsTopicConnectionFactory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jndiEntry.html">jndiEntry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jndiObjectFactory.html">jndiObjectFactory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jndiReferenceEntry.html">jndiReferenceEntry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jndiURLEntry.html">jndiURLEntry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jpa.html">jpa</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jspEngine.html">jspEngine</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jwtBuilder.html">jwtBuilder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jwtConsumer.html">jwtConsumer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/jwtSso.html">jwtSso</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/kerberos.html">kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/keyStore.html">keyStore</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/ldapRegistry.html">ldapRegistry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/library.html">library</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/linkedinLogin.html">linkedinLogin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/logging.html">logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/logstashCollector.html">logstashCollector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/ltpa.html">ltpa</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/mailSession.html">mailSession</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/managedExecutorService.html">managedExecutorService</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/managedScheduledExecutorService.html">managedScheduledExecutorService</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/managedThreadFactory.html">managedThreadFactory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/messagingEngine.html">messagingEngine</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/mimeTypes.html">mimeTypes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/mongo.html">mongo</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/mongoDB.html">mongoDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/monitor.html">monitor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/mpJwt.html">mpJwt</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/mpMetrics.html">mpMetrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/netscapeLdapFilterProperties.html">netscapeLdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/oauth-roles.html">oauth-roles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/oauth2Login.html">oauth2Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/oauthProvider.html">oauthProvider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/oidcClientWebapp.html">oidcClientWebapp</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/oidcLogin.html">oidcLogin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/okdServiceLogin.html">okdServiceLogin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/openId.html">openId</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/openidConnectClient.html">openidConnectClient</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/openidConnectProvider.html">openidConnectProvider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/orb.html">orb</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/persistentExecutor.html">persistentExecutor</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/pluginConfiguration.html">pluginConfiguration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/quickStartSecurity.html">quickStartSecurity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/reader-role.html">reader-role</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/remoteFileAccess.html">remoteFileAccess</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/remoteIp.html">remoteIp</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/requestTiming.html">requestTiming</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/resourceAdapter.html">resourceAdapter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/samesite.html">samesite</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/samlWebSso20.html">samlWebSso20</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/securewayLdapFilterProperties.html">securewayLdapFilterProperties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/sipApplicationRouter.html">sipApplicationRouter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/sipContainer.html">sipContainer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/sipEndpoint.html">sipEndpoint</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/sipStack.html">sipStack</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/socialLoginWebapp.html">socialLoginWebapp</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/spnego.html">spnego</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/springBootApplication.html">springBootApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/ssl.html">ssl</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/sslDefault.html">sslDefault</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/sslOptions.html">sslOptions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/tcpOptions.html">tcpOptions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/transaction.html">transaction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/trustAssociation.html">trustAssociation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/twitterLogin.html">twitterLogin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/userInfo.html">userInfo</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/variable.html">variable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/virtualHost.html">virtualHost</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/wasJmsEndpoint.html">wasJmsEndpoint</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/wasJmsOutbound.html">wasJmsOutbound</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/webAppSecurity.html">webAppSecurity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/webApplication.html">webApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/webContainer.html">webContainer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/webTarget.html">webTarget</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/wsAtomicTransaction.html">wsAtomicTransaction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/wsSecurityClient.html">wsSecurityClient</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/wsSecurityProvider.html">wsSecurityProvider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/config/wsocOutbound.html">wsocOutbound</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/feature/feature-overview.html">Features</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/adminCenter-1.0.html">Admin Center</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/localConnector-1.0.html">Admin Local Connector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/restConnector-2.0.html">Admin REST Connector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-1.0.html">Application Client Support for Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appSecurity-1.0.html">Application Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appSecurity-2.0.html">Application Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appSecurity-3.0.html">Application Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appSecurity-4.0.html">Application Security (Jakarta Security )</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appSecurity-5.0.html">Application Security (Jakarta Security )</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appSecurityClient-1.0.html">Application Security for Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/audit-1.0.html">Audit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/acmeCA-2.0.html">Automatic Certificate Management Environment (ACME) Support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/bells-1.0.html">Basic Extensions using Liberty Libraries</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/batch-1.0.html">Batch API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/batchManagement-1.0.html">Batch Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/beanValidation-1.1.html">Bean Validation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/beanValidation-2.0.html">Bean Validation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/cloudant-1.0.html">Cloudant Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/concurrent-1.0.html">Concurrency Utilities for Java EE</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/cdi-1.2.html">Contexts and Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/cdi-2.0.html">Contexts and Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/couchdb-1.0.html">CouchDB Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/sessionDatabase-1.0.html">Database Session Persistence</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/distributedMap-1.0.html">Distributed Map interface for Dynamic Caching</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/ejb-3.2.html">Enterprise JavaBeans</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/ejbHome-3.2.html">Enterprise JavaBeans Home Interfaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/ejbLite-3.2.html">Enterprise JavaBeans Lite</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/ejbPersistentTimer-3.2.html">Enterprise JavaBeans Persistent Timers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/ejbRemote-3.2.html">Enterprise JavaBeans Remote</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/eventLogging-1.0.html">Event Logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/el-3.0.html">Expression Language</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/federatedRegistry-1.0.html">Federated User Registry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/grpc-1.0.html">gRPC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/grpcClient-1.0.html">gRPC Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appClientSupport-2.0.html">Jakarta Application Client Support for Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appAuthentication-2.0.html">Jakarta Authentication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appAuthentication-3.0.html">Jakarta Authentication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appAuthorization-2.0.html">Jakarta Authorization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/appAuthorization-2.1.html">Jakarta Authorization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/batch-2.0.html">Jakarta Batch</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/batch-2.1.html">Jakarta Batch</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/beanValidation-3.0.html">Jakarta Bean Validation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/concurrent-2.0.html">Jakarta Concurrency</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/concurrent-3.0.html">Jakarta Concurrency</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/connectors-2.0.html">Jakarta Connectors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/connectors-2.1.html">Jakarta Connectors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/connectorsInboundSecurity-2.0.html">Jakarta Connectors Inbound Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/cdi-3.0.html">Jakarta Contexts and Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/cdi-4.0.html">Jakarta Contexts and Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jakartaeeClient-10.0.html">Jakarta EE Application Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jakartaeeClient-9.1.html">Jakarta EE Application Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jakartaee-8.0.html">Jakarta EE Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jakartaee-10.0.html">Jakarta EE Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jakartaee-9.1.html">Jakarta EE Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/webProfile-10.0.html">Jakarta EE Web Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/webProfile-9.1.html">Jakarta EE Web Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeans-4.0.html">Jakarta Enterprise Beans</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansHome-4.0.html">Jakarta Enterprise Beans Home Interfaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansLite-4.0.html">Jakarta Enterprise Beans Lite</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mdb-4.0.html">Jakarta Enterprise Beans Message-Driven Beans</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansPersistentTimer-4.0.html">Jakarta Enterprise Beans Persistent Timers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/enterpriseBeansRemote-4.0.html">Jakarta Enterprise Beans Remote</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/expressionLanguage-4.0.html">Jakarta Expression Language</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/expressionLanguage-5.0.html">Jakarta Expression Language</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/faces-4.0.html">Jakarta Faces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/facesContainer-4.0.html">Jakarta Faces Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonb-2.0.html">Jakarta JSON Binding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonb-3.0.html">Jakarta JSON Binding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-2.0.html">Jakarta JSON Binding Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-3.0.html">Jakarta JSON Binding Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonp-2.0.html">Jakarta JSON Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonp-2.1.html">Jakarta JSON Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-2.0.html">Jakarta JSON Processing Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-2.1.html">Jakarta JSON Processing Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mail-2.0.html">Jakarta Mail</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mail-2.1.html">Jakarta Mail</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/managedBeans-2.0.html">Jakarta Managed Beans</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/messaging-3.0.html">Jakarta Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/messaging-3.1.html">Jakarta Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/persistence-3.0.html">Jakarta Persistence</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/persistence-3.1.html">Jakarta Persistence</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/persistenceContainer-3.0.html">Jakarta Persistence Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/persistenceContainer-3.1.html">Jakarta Persistence Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/restfulWS-3.0.html">Jakarta RESTful Web Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/restfulWS-3.1.html">Jakarta RESTful Web Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/restfulWSClient-3.0.html">Jakarta RESTful Web Services Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/restfulWSClient-3.1.html">Jakarta RESTful Web Services Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/faces-3.0.html">Jakarta Server Faces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/facesContainer-3.0.html">Jakarta Server Faces Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/pages-3.0.html">Jakarta Server Pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/pages-3.1.html">Jakarta Server Pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/servlet-5.0.html">Jakarta Servlet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/servlet-6.0.html">Jakarta Servlet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/websocket-2.0.html">Jakarta WebSocket</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/websocket-2.1.html">Jakarta WebSocket</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/xmlBinding-3.0.html">Jakarta XML Binding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/xmlBinding-4.0.html">Jakarta XML Binding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/xmlWS-3.0.html">Jakarta XML Web Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/xmlWS-4.0.html">Jakarta XML Web Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jaspic-1.1.html">Java Authentication SPI for Containers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jacc-1.5.html">Java Authorization Contract for Containers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jca-1.7.html">Java Connector Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jcaInboundSecurity-1.0.html">Java Connector Architecture Security Inflow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.0.html">Java Database Connectivity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.1.html">Java Database Connectivity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.2.html">Java Database Connectivity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jdbc-4.3.html">Java Database Connectivity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-7.0.html">Java EE Application Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/javaeeClient-8.0.html">Java EE Application Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/javaee-7.0.html">Java EE Full Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/javaee-8.0.html">Java EE Full Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/managedBeans-1.0.html">Java EE Managed Bean</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/webProfile-7.0.html">Java EE Web Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/webProfile-8.0.html">Java EE Web Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jms-2.0.html">Java Message Service</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jndi-1.0.html">Java Naming and Directory Interface</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jpa-2.1.html">Java Persistence API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jpa-2.2.html">Java Persistence API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.1.html">Java Persistence API Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jpaContainer-2.2.html">Java Persistence API Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.0.html">Java RESTful Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jaxrs-2.1.html">Java RESTful Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.0.html">Java RESTful Services Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jaxrsClient-2.1.html">Java RESTful Services Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/servlet-3.1.html">Java Servlets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/servlet-4.0.html">Java Servlets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jaxws-2.2.html">Java Web Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/websocket-1.0.html">Java WebSocket</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/websocket-1.1.html">Java WebSocket</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jaxb-2.2.html">Java XML Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.5.html">JavaMail</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/javaMail-1.6.html">JavaMail</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonb-1.0.html">JavaScript Object Notation Binding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonbContainer-1.0.html">JavaScript Object Notation Binding via Bells</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/json-1.0.html">JavaScript Object Notation for Java</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.0.html">JavaScript Object Notation Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonp-1.1.html">JavaScript Object Notation Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsonpContainer-1.1.html">JavaScript Object Notation Processing via Bells</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsf-2.2.html">JavaServer Faces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsf-2.3.html">JavaServer Faces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.2.html">JavaServer Faces Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsfContainer-2.3.html">JavaServer Faces Container</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsp-2.2.html">JavaServer Pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jsp-2.3.html">JavaServer Pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/sessionCache-1.0.html">JCache Session Persistence</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/j2eeManagement-1.1.html">JEE Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/wasJmsClient-2.0.html">JMS Client for Message Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jmsMdb-3.2.html">JMS Message-Driven Beans</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jwt-1.0.html">JSON Web Token</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/jwtSso-1.0.html">JSON Web Token Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/constrainedDelegation-1.0.html">Kerberos Constrained Delegation for SPNEGO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/ldapRegistry-3.0.html">LDAP User Registry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/kernel.html">Liberty Kernel</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/logstashCollector-1.0.html">Logstash Collector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/wasJmsServer-1.0.html">Message Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/wasJmsSecurity-1.0.html">Message Server Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mdb-3.2.html">Message-Driven Beans</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/messagingServer-3.0.html">Messaging Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/messagingClient-3.0.html">Messaging Server Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/messagingSecurity-3.0.html">Messaging Server Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.0.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.2.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.3.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-1.4.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.0.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.1.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-2.2.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.0.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.2.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-3.3.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.0.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-4.1.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-5.0.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/microProfile-6.0.html">MicroProfile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.1.html">MicroProfile Config</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.2.html">MicroProfile Config</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.3.html">MicroProfile Config</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpConfig-1.4.html">MicroProfile Config</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpConfig-2.0.html">MicroProfile Config</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpConfig-3.0.html">MicroProfile Config</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.0.html">MicroProfile Context Propagation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.2.html">MicroProfile Context Propagation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpContextPropagation-1.3.html">MicroProfile Context Propagation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.0.html">MicroProfile Fault Tolerance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-1.1.html">MicroProfile Fault Tolerance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.0.html">MicroProfile Fault Tolerance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-2.1.html">MicroProfile Fault Tolerance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-3.0.html">MicroProfile Fault Tolerance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpFaultTolerance-4.0.html">MicroProfile Fault Tolerance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-1.0.html">MicroProfile GraphQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpGraphQL-2.0.html">MicroProfile GraphQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpHealth-1.0.html">MicroProfile Health</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.0.html">MicroProfile Health</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.1.html">MicroProfile Health</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpHealth-2.2.html">MicroProfile Health</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.0.html">MicroProfile Health</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpHealth-3.1.html">MicroProfile Health</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpHealth-4.0.html">MicroProfile Health</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.0.html">MicroProfile JSON Web Token</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.1.html">MicroProfile JSON Web Token</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpJwt-1.2.html">MicroProfile JSON Web Token</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpJwt-2.0.html">MicroProfile JSON Web Token</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpJwt-2.1.html">MicroProfile JSON Web Token</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.0.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-1.1.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.0.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.2.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-2.3.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-3.0.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-4.0.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpMetrics-5.0.html">MicroProfile Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.0.html">MicroProfile OpenAPI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-1.1.html">MicroProfile OpenAPI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-2.0.html">MicroProfile OpenAPI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-3.0.html">MicroProfile OpenAPI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenAPI-3.1.html">MicroProfile OpenAPI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.0.html">MicroProfile OpenTracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.1.html">MicroProfile OpenTracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.2.html">MicroProfile OpenTracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-1.3.html">MicroProfile OpenTracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-2.0.html">MicroProfile OpenTracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpOpenTracing-3.0.html">MicroProfile OpenTracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpReactiveMessaging-1.0.html">MicroProfile Reactive Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpReactiveStreams-1.0.html">MicroProfile Reactive Streams</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.0.html">MicroProfile Rest Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.1.html">MicroProfile Rest Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.2.html">MicroProfile Rest Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.3.html">MicroProfile Rest Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-1.4.html">MicroProfile Rest Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-2.0.html">MicroProfile Rest Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpRestClient-3.0.html">MicroProfile Rest Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mpTelemetry-1.0.html">MicroProfile Telemetry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/mongodb-2.0.html">MongoDB Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/oauth-2.0.html">OAuth</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/openapi-3.1.html">OpenAPI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/openid-2.0.html">OpenID</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/openidConnectClient-1.0.html">OpenID Connect Client</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/openidConnectServer-1.0.html">OpenID Connect Provider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.0.html">Opentracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.1.html">Opentracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.2.html">Opentracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/opentracing-1.3.html">Opentracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/opentracing-2.0.html">Opentracing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/osgiConsole-1.0.html">OSGi Debug Console</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.0.html">Password Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/passwordUtilities-1.1.html">Password Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/monitor-1.0.html">Performance Monitoring</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/requestTiming-1.0.html">Request Timing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/samlWeb-2.0.html">SAML Web Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/ssl-1.0.html">Secure Socket Layer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/spnego-1.0.html">Simple and Protected GSSAPI Negotiation Mechanism</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/sipServlet-1.1.html">SIP Servlet</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/socialLogin-1.0.html">Social Media Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/springBoot-1.5.html">Spring Boot Support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/springBoot-2.0.html">Spring Boot Support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/springBoot-3.0.html">Spring Boot Support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/transportSecurity-1.0.html">Transport Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/webCache-1.0.html">Web Response Cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/wsSecurity-1.1.html">Web Service Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/wsAtomicTransaction-1.2.html">WS-AT Service</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/feature/wsSecuritySaml-1.1.html">WSSecurity SAML</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/command/command-overview.html">Commands</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/command/auditUtility-auditReader.html">auditUtility auditReader</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/command/featureUtility-commands.html">featureUtility commands</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/featureUtility-find.html">find</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/featureUtility-help.html">help</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/featureUtility-installFeature.html">installFeature</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/featureUtility-installServerFeatures.html">installServerFeatures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/featureUtility-viewSettings.html">viewSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/command/securityUtility-commands.html">securityUtility commands</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/securityUtility-createLTPAKeys.html">createLTPAKeys</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/securityUtility-createSSLCertificate.html">createSSLCertificate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/securityUtility-encode.html">encode</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/securityUtility-help.html">help</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/command/schemaGen.html">schemaGen</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/command/serverSchemaGen.html">serverSchemaGen</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/command/server-commands.html">server commands</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-create.html">create</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-debug.html">debug</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-dump.html">dump</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-help.html">help</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-javadump.html">javadump</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-list.html">list</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-package.html">package</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-pause.html">pause</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-resume.html">resume</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-run.html">run</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-start.html">start</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-status.html">status</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-stop.html">stop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/server-version.html">version</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/command/springbootUtility-commands.html">springbootUtility commands</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/springbootUtility-help.html">help</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/command/springbootUtility-thin.html">thin</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/jakarta-ee-api.html">Jakarta EE API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee10-javadoc.html">Jakarta EE 10</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee9.1-javadoc.html">Jakarta EE 9.1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/liberty-jakartaee8-javadoc.html">Jakarta EE 8</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/jakarta-ee10-diff.html">Differences between Jakarta EE 10.0 and 9.1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/jakarta-ee-diff.html">Differences between Jakarta EE 9.1 and 8.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/jakarta-ee9-feature-updates.html">Jakarta EE 9.1 feature updates</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/java-ee-api.html">Java EE API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee8-javadoc.html">Java EE 8</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/liberty-javaee7-javadoc.html">Java EE 7</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/microprofile-api.html">MicroProfile API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-6.0-javadoc.html">MicroProfile 6.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-5.0-javadoc.html">MicroProfile 5.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.1-javadoc.html">MicroProfile 4.1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-4.0-javadoc.html">MicroProfile 4.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.3-javadoc.html">MicroProfile 3.3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.2-javadoc.html">MicroProfile 3.2</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-3.0-javadoc.html">MicroProfile 3.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.2-javadoc.html">MicroProfile 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.1-javadoc.html">MicroProfile 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-2.0-javadoc.html">MicroProfile 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.4-javadoc.html">MicroProfile 1.4</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.3-javadoc.html">MicroProfile 1.3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/microprofile-1.2-javadoc.html">MicroProfile 1.2</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/mp-50-60-diff.html">Differences between MicroProfile 6.0 and 5.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/mp-41-50-diff.html">Differences between MicroProfile 5.0 and 4.1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/mp-33-40-diff.html">Differences between MicroProfile 4.0 and 3.3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/mp-22-30-diff.html">Differences between MicroProfile 3.0 and 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" tabindex="0" href="reference/diff/mp-21-22-diff.html">Differences between MicroProfile 2.2 and 2.1</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/api/open-liberty-apis.html">Open Liberty APIs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Admin REST Connector 2.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/restConnector-2.0.com.ibm.websphere.filetransfer.html">com.ibm.websphere.filetransfer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/restConnector-2.0.com.ibm.websphere.jmx.connector.rest.html">com.ibm.websphere.jmx.connector.rest</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/restConnector-2.0.com.ibm.ws.jmx.connector.client.rest.html">com.ibm.ws.jmx.connector.client.rest</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Application Security for Client 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/appSecurityClient-1.0.com.ibm.websphere.security.html">com.ibm.websphere.security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/appSecurityClient-1.0.com.ibm.websphere.security.auth.callback.html">com.ibm.websphere.security.auth.callback</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/appSecurityClient-1.0.com.ibm.wsspi.security.auth.callback.html">com.ibm.wsspi.security.auth.callback</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Distributed Map interface for Dynamic Caching 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.websphere.cache.html">com.ibm.websphere.cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.websphere.cache.exception.html">com.ibm.websphere.cache.exception</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.websphere.exception.html">com.ibm.websphere.exception</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.ws.cache.spi.html">com.ibm.ws.cache.spi</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/distributedMap-1.0.com.ibm.wsspi.cache.html">com.ibm.wsspi.cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Enterprise JavaBeans Lite 3.2</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/ejbLite-3.2.com.ibm.websphere.ejbcontainer.html">com.ibm.websphere.ejbcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/ejbLite-3.2.com.ibm.websphere.ejbcontainer.mbean.html">com.ibm.websphere.ejbcontainer.mbean</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">J2EE Management 1.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/j2eeManagement-1.1.html">com.ibm.websphere.management.j2ee</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">JSON Web Token 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/jwt-1.0.html">com.ibm.websphere.security.jwt</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Authorization 2.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/appAuthorization-2.0.html">com.ibm.wsspi.security.authorization.jacc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Authorization 2.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/appAuthorization-2.1.html">com.ibm.wsspi.security.authorization.jacc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Enterprise Beans 4.0 Lite</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/enterpriseBeansLite-4.0.com.ibm.websphere.ejbcontainer.html">com.ibm.websphere.ejbcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/enterpriseBeansLite-4.0.com.ibm.websphere.ejbcontainer.mbean.html">com.ibm.websphere.ejbcontainer.mbean</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta RESTful Web Services 3.0 Client</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/restfulWSClient-3.0.html">com.ibm.websphere.jaxrs20.multipart</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta RESTful Web Services 3.1 Client</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/restfulWSClient-3.1.html">com.ibm.websphere.jaxrs20.multipart</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Servlet 5.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-5.0.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Servlet 6.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-6.0.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta WebSocket 2.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-2.0.html">com.ibm.websphere.wsoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta WebSocket 2.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-2.1.html">com.ibm.websphere.wsoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java Authorization Contract for Containers 1.5</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/jacc-1.5.html">com.ibm.wsspi.security.authorization.jacc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java RESTful Services Client 2.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/jaxrsClient-2.1.com.ibm.websphere.jaxrs.providers.json4j.html">com.ibm.websphere.jaxrs.providers.json4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/jaxrsClient-2.1.com.ibm.websphere.jaxrs20.multipart.html">com.ibm.websphere.jaxrs20.multipart</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java Servlets 3.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-3.1.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java Servlets 4.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.container.html">com.ibm.websphere.servlet.container</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.context.html">com.ibm.websphere.servlet.context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.error.html">com.ibm.websphere.servlet.error</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.event.html">com.ibm.websphere.servlet.event</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.servlet.session.html">com.ibm.websphere.servlet.session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.websphere.webcontainer.html">com.ibm.websphere.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/servlet-4.0.com.ibm.wsspi.servlet.session.html">com.ibm.wsspi.servlet.session</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java WebSocket 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-1.0.html">com.ibm.websphere.wsoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java WebSocket 1.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/websocket-1.1.html">com.ibm.websphere.wsoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">JavaScript Object Notation for Java 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/json-1.0.com.ibm.json.java.html">com.ibm.json.java</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/json-1.0.com.ibm.json.xml.html">com.ibm.json.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Kerberos Constrained Delegation for SPNEGO 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/constrainedDelegation-1.0.html">com.ibm.websphere.security.s4u2proxy</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Message Server 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/wasJmsServer-1.0.html">com.ibm.websphere.messaging.mbean</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Messaging Server 3.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/messagingServer-3.0.html">com.ibm.websphere.messaging.mbean</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">OAuth 2.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.attributes.html">com.ibm.oauth.core.api.attributes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.config.html">com.ibm.oauth.core.api.config</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.error.html">com.ibm.oauth.core.api.error</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.error.oauth20.html">com.ibm.oauth.core.api.error.oauth20</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.oauth.core.api.oauth20.mediator.html">com.ibm.oauth.core.api.oauth20.mediator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.websphere.security.oauth20.html">com.ibm.websphere.security.oauth20</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.websphere.security.oauth20.store.html">com.ibm.websphere.security.oauth20.store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.websphere.security.openidconnect.token.html">com.ibm.websphere.security.openidconnect.token</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/oauth-2.0.com.ibm.wsspi.security.oauth20.token.html">com.ibm.wsspi.security.oauth20.token</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">OpenID Connect Client 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/openidConnectClient-1.0.html">com.ibm.websphere.security.openidconnect</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">OpenID Connect Provider 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/openidConnectServer-1.0.html">com.ibm.websphere.security.openidconnect</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Password Utilities 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.0.com.ibm.websphere.crypto.html">com.ibm.websphere.crypto</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.0.com.ibm.websphere.security.auth.data.html">com.ibm.websphere.security.auth.data</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.0.com.ibm.websphere.security.jca.html">com.ibm.websphere.security.jca</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Password Utilities 1.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.1.com.ibm.websphere.crypto.html">com.ibm.websphere.crypto</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.1.com.ibm.websphere.security.auth.data.html">com.ibm.websphere.security.auth.data</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/passwordUtilities-1.1.com.ibm.websphere.security.jca.html">com.ibm.websphere.security.jca</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Performance Monitoring 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/monitor-1.0.html">com.ibm.websphere.monitor.jmx</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">SIP Servlet 1.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.html">com.ibm.websphere.sip</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.resolver.html">com.ibm.websphere.sip.resolver</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.resolver.events.html">com.ibm.websphere.sip.resolver.events</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.resolver.exception.html">com.ibm.websphere.sip.resolver.exception</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.unmatchedMessages.html">com.ibm.websphere.sip.unmatchedMessages</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/sipServlet-1.1.com.ibm.websphere.sip.unmatchedMessages.events.html">com.ibm.websphere.sip.unmatchedMessages.events</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Secure Socket Layer 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/ssl-1.0.html">com.ibm.websphere.ssl</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Social Media Login 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/socialLogin-1.0.html">com.ibm.websphere.security.social</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Web Response Cache 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/webCache-1.0.com.ibm.websphere.command.html">com.ibm.websphere.command</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/webCache-1.0.com.ibm.websphere.command.web.html">com.ibm.websphere.command.web</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/webCache-1.0.com.ibm.websphere.servlet.cache.html">com.ibm.websphere.servlet.cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">gRPC 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/api/grpc-1.0.html">io.openliberty.grpc.annotation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <a class="nav-link" tabindex="0" href="reference/spi/open-liberty-spis.html">Open Liberty SPIs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Contexts and Dependency Injection 1.2</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-1.2.html">io.openliberty.cdi.spi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Contexts and Dependency Injection 2.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-2.0.html">io.openliberty.cdi.spi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Federated User Registry 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/federatedRegistry-1.0.com.ibm.wsspi.security.wim.html">com.ibm.wsspi.security.wim</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/federatedRegistry-1.0.com.ibm.wsspi.security.wim.exception.html">com.ibm.wsspi.security.wim.exception</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/federatedRegistry-1.0.com.ibm.wsspi.security.wim.model.html">com.ibm.wsspi.security.wim.model</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Authentication 2.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/appAuthentication-2.0.html">com.ibm.wsspi.security.jaspi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Authentication 3.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/appAuthentication-3.0.html">com.ibm.wsspi.security.jaspi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Contexts and Dependency Injection 3.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-3.0.html">io.openliberty.cdi.spi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Contexts and Dependency Injection 4.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/cdi-4.0.html">io.openliberty.cdi.spi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta RESTful Web Services 3.0 Client</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/restfulWSClient-3.0.html">com.ibm.wsspi.webservices.handler</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Server Pages 3.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/pages-3.0.html">com.ibm.wsspi.jsp.taglib.config</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Server Pages 3.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/pages-3.1.html">com.ibm.wsspi.jsp.taglib.config</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Servlet 5.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.websphere.servlet.filter.html">com.ibm.websphere.servlet.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.websphere.servlet.request.html">com.ibm.websphere.servlet.request</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.websphere.servlet.response.html">com.ibm.websphere.servlet.response</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.websphere.webcontainer.async.html">com.ibm.websphere.webcontainer.async</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.ws.webcontainer.extension.html">com.ibm.ws.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.ws.webcontainer.spiadapter.collaborator.html">com.ibm.ws.webcontainer.spiadapter.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.html">com.ibm.wsspi.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.collaborator.html">com.ibm.wsspi.webcontainer.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.extension.html">com.ibm.wsspi.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.filter.html">com.ibm.wsspi.webcontainer.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.metadata.html">com.ibm.wsspi.webcontainer.metadata</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.osgi.extension.html">com.ibm.wsspi.webcontainer.osgi.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.servlet.html">com.ibm.wsspi.webcontainer.servlet</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-5.0.com.ibm.wsspi.webcontainer.webapp.html">com.ibm.wsspi.webcontainer.webapp</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Jakarta Servlet 6.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.websphere.servlet.filter.html">com.ibm.websphere.servlet.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.websphere.servlet.request.html">com.ibm.websphere.servlet.request</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.websphere.servlet.response.html">com.ibm.websphere.servlet.response</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.websphere.webcontainer.async.html">com.ibm.websphere.webcontainer.async</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.ws.webcontainer.extension.html">com.ibm.ws.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.ws.webcontainer.spiadapter.collaborator.html">com.ibm.ws.webcontainer.spiadapter.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.html">com.ibm.wsspi.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.collaborator.html">com.ibm.wsspi.webcontainer.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.extension.html">com.ibm.wsspi.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.filter.html">com.ibm.wsspi.webcontainer.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.metadata.html">com.ibm.wsspi.webcontainer.metadata</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.osgi.extension.html">com.ibm.wsspi.webcontainer.osgi.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.servlet.html">com.ibm.wsspi.webcontainer.servlet</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-6.0.com.ibm.wsspi.webcontainer.webapp.html">com.ibm.wsspi.webcontainer.webapp</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java Authentication SPI for Containers 1.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/jaspic-1.1.html">com.ibm.wsspi.security.jaspi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java RESTful Services Client 2.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/jaxrsClient-2.1.html">com.ibm.wsspi.webservices.handler</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java Servlets 3.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.websphere.servlet.filter.html">com.ibm.websphere.servlet.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.websphere.servlet.request.html">com.ibm.websphere.servlet.request</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.websphere.servlet.response.html">com.ibm.websphere.servlet.response</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.websphere.webcontainer.async.html">com.ibm.websphere.webcontainer.async</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.ws.webcontainer.extension.html">com.ibm.ws.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.ws.webcontainer.spiadapter.collaborator.html">com.ibm.ws.webcontainer.spiadapter.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.html">com.ibm.wsspi.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.collaborator.html">com.ibm.wsspi.webcontainer.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.extension.html">com.ibm.wsspi.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.filter.html">com.ibm.wsspi.webcontainer.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.metadata.html">com.ibm.wsspi.webcontainer.metadata</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.osgi.extension.html">com.ibm.wsspi.webcontainer.osgi.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.servlet.html">com.ibm.wsspi.webcontainer.servlet</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-3.1.com.ibm.wsspi.webcontainer.webapp.html">com.ibm.wsspi.webcontainer.webapp</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java Servlets 4.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.websphere.servlet.filter.html">com.ibm.websphere.servlet.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.websphere.servlet.request.html">com.ibm.websphere.servlet.request</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.websphere.servlet.response.html">com.ibm.websphere.servlet.response</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.websphere.webcontainer.async.html">com.ibm.websphere.webcontainer.async</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.ws.webcontainer.extension.html">com.ibm.ws.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.ws.webcontainer.spiadapter.collaborator.html">com.ibm.ws.webcontainer.spiadapter.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.html">com.ibm.wsspi.webcontainer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.collaborator.html">com.ibm.wsspi.webcontainer.collaborator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.extension.html">com.ibm.wsspi.webcontainer.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.filter.html">com.ibm.wsspi.webcontainer.filter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.metadata.html">com.ibm.wsspi.webcontainer.metadata</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.osgi.extension.html">com.ibm.wsspi.webcontainer.osgi.extension</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.servlet.html">com.ibm.wsspi.webcontainer.servlet</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/servlet-4.0.com.ibm.wsspi.webcontainer.webapp.html">com.ibm.wsspi.webcontainer.webapp</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Java Web Services 2.2</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/jaxws-2.2.html">com.ibm.wsspi.webservices.handler</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">JavaServer Pages 2.2</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/jsp-2.2.html">com.ibm.wsspi.jsp.taglib.config</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">JavaServer Pages 2.3</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/jsp-2.3.html">com.ibm.wsspi.jsp.taglib.config</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">OAuth 2.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/oauth-2.0.com.ibm.wsspi.security.oauth20.html">com.ibm.wsspi.security.oauth20</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/oauth-2.0.com.ibm.wsspi.security.openidconnect.html">com.ibm.wsspi.security.openidconnect</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">OpenAPI 3.1</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/openapi-3.1.html">com.ibm.wsspi.openapi31</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Secure Socket Layer 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/ssl-1.0.html">com.ibm.wsspi.ssl</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">WS-AT Service 1.2</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/wsAtomicTransaction-1.2.html">com.ibm.wsspi.webservices.wsat</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle" aria-label="Expand the pages under this category"></button>
+    <span class="nav-text" tabindex="0" role="button">Web Response Cache 1.0</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" tabindex="0" href="reference/javadoc/spi/webCache-1.0.html">com.ibm.wsspi.cache.web</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+
+    </div>
+  </aside>
+</div>
+<main role="main">
+<div class="toolbar" role="navigation" aria-label="Toolbar for this doc">
+<button class="nav-toggle" aria-label="Toggle the navigation menu"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="overview.html">Docs overview</a></li>
+    <li>Security</li>
+    <li><a href="secure-communication-tls.html">Secure communication with TLS</a></li>
+    <li><a href="acme-cert-management.html">Automatic certificate management with ACME</a></li>
+  </ul>
+</nav>
+    <div id="github_link">
+      <img id="docs_github_logo" src="/img/docs_github_logo.svg" alt="GitHub logo">
+      <a id="open_issue_link" href="https://github.com/OpenLiberty/docs/issues/new?body=Document: Automatic certificate management with ACME%0Ahttp://openliberty.io/docs/23.0.0.10/acme-cert-management.html%0A%0A**Please describe the problem you are having with the documentation. Is information missing, inaccurate, or unclear? Tell us about the context where you encountered the problem so we can understand how to address it.**" target="_blank">Open Issue</a> 
+      | 
+      <a id="edit_topic_link" href="https://github.com/OpenLiberty/docs/edit/v23.0.0.10/modules/ROOT/pages/acme-cert-management.adoc" target="_blank" rel="noopener">Edit Topic</a>
+    </div>
+</div>
+<article class="doc">   
+<h1 class="page">Automatic certificate management with ACME</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Automatic Certificate Management Environment (ACME) protocol automates the process of transport layer security (TLS) certificate issuance and verification. You can use the Open Liberty Automatic Certificate Management Environment (ACME) Support feature to automatically get a browser-trusted TLS certificate for domains on your server from an ACME certificate authority (CA).</p>
+</div>
+<div class="paragraph">
+<p>Clients use TLS certificates to authenticate domain names on a server. These TLS certificates verify that the server legitimately controls a domain and protect clients from man-in-the-middle attacks. The TLS certificate is a record that server control over a domain is tested and verified by a CA. To get a TLS certificate, the server must generate a certificate signing request (CSR) and respond to several challenges from the CA. These challenges prove the server controls the domain that is being verified.</p>
+</div>
+<div class="paragraph">
+<p>In the past, TLS certificate issuance required significant human involvement. The <a href="https://tools.ietf.org/html/draft-ietf-acme-acme-18">ACME protocol</a> standardizes the process so that it can be carried out between an automatic certificate management agent on the server and an ACME CA, such as <a href="https://letsencrypt.org/how-it-works">Let&#8217;s Encrypt</a> &#8482;.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acme_and_open_liberty"><a class="anchor" href="#_acme_and_open_liberty"></a>ACME and Open Liberty</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use an ACME CA with your Open Liberty server, you must enable and configure the <a href="/docs/latest/reference/feature/acmeCA.html">ACME Support</a> feature (<code>acmeCA-2.0</code>). At a minimum, you must provide the URL of an ACME CA and the name of one or more domains that your server controls. To receive a callback from a public ACME provider, port 80 must be open to comply with the standards for <a href="https://letsencrypt.org/docs/challenge-types/">the HTTP-01 challenge type</a>. For many internal or test ACME providers, you can use any open port to complete the ACME challenge. For more information about using an ACME test server, see <a href="reference/feature/acmeCA-2.0.html#_use_an_acme_test_server" class="xref page">Use an ACME test server</a>.</p>
+</div>
+<div class="paragraph">
+<p>When an Open Liberty server starts with TLS enabled, a self-signed TLS certificate is created for the server. This certificate can be used for testing and development purposes. However, since the certificate isn&#8217;t signed by a CA, clients that connect to the server over TLS don&#8217;t trust it. Browsers then require clients to confirm whether they trust the server, which can cause problems for containerized environments and microservices, even during testing and development.</p>
+</div>
+<div class="paragraph">
+<p>To avoid problems with self-signed certificates, services such as Let&#8217;s Encrypt use the ACME protocol to provide free CA-signed TLS certificates over the public internet. When the ACME Support feature is enabled, the Open Liberty server automatically requests a certificate from your configured CA provider at startup if a new certificate is needed. The feature can also respond to challenges from the CA and manage certificate renewals and revocations.</p>
+</div>
+<div class="paragraph">
+<p>You can view, renew, or revoke TLS certificates and get details about the active ACME CA account by making HTTPS calls to the REST API. Depending on the action you want to take, you must be in either the administrator or reader role to use the REST API. For more information about configuring Open Liberty administrator and reader roles, see the <a href="/docs/latest/reference/feature/appSecurity.html">Application security</a> feature.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acme_ca_account_management"><a class="anchor" href="#_acme_ca_account_management"></a>ACME CA account management</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The ACME Support feature requires a valid account with an ACME CA. Account details are stored in an account key file. Before a CSR is sent, the feature first checks for an existing account key file. If no account key file exists, the feature generates a new one. This file is then used to either register a new account or log in to an existing account. Like any security credential, the account key file must be backed up and protected.</p>
+</div>
+<div class="paragraph">
+<p>You can request a new account key at any time by using the REST API. Renewing an account key might be necessary if your existing key is compromised, or as a periodic security precaution. To renew the account key, a user that is in the administrator role can send the following HTTPS request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-command hljs" data-lang="command">curl -kv https://mydomain.com:443/ibm/api/acmeca/account -X post -H "content-type: application/json" -d '{"operation":"renewAccountKeyPair"}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some certificate authorities provide terms of service. If an ACME CA modifies its terms of service, you might be required to agree to the new terms manually. If you fail to agree to the modified terms of service, the ACME CA server might refuse any future requests from your account until you confirm your agreement. To avoid service interruption, provide an account contact in your ACME configuration that specifies a monitored email address. For more information, see the <a href="/docs/latest/reference/feature/acmeCA.html">ACME Support</a> feature.</p>
+</div>
+<div class="sect2">
+<h3 id="_certificate_renewal_and_revocation"><a class="anchor" href="#_certificate_renewal_and_revocation"></a>Certificate renewal and revocation</h3>
+<div class="paragraph">
+<p>The ACME Support feature automatically renews any expiring or revoked TLS certificates by default. The <code>renewBeforeExpiration</code> property specifies the amount of time before a certificate expires that the server requests a new certificate. The default value for this property is seven days.</p>
+</div>
+<div class="paragraph">
+<p>When the server starts, it checks the expiration date on the CA-signed TLS certificate. If the expiration date is within the specified range of time, or if the certificate is already expired or revoked, the server automatically requests a new TLS certificate. While the server is running, it checks the TLS certificate daily and automatically renews any expiring or revoked certificate. If a renew request fails, the background process continues to request a new TLS certificate hourly until the request is successful. For more information, see the <a href="/docs/latest/reference/feature/acmeCA.html">ACME Support</a> feature.</p>
+</div>
+<div class="paragraph">
+<p>Runtime changes to the acmeCA configuration can trigger an automatic certificate renewal request. For example, if the directory URI is changed to a different endpoint, the server requests a new TLS certificate.</p>
+</div>
+<div class="paragraph">
+<p>You can also choose to manually renew the active TLS certificate. To renew the active certificate, a user that is in the administrator role can send the following HTTPS request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-command hljs" data-lang="command">curl -kv https://mydomain.com:443/ibm/api/acmeca/certificate -X POST -u admin:password -H "content-type: application/json" -d '{"operation":"renewCertificate"}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The TLS certificate that is replaced is revoked automatically after the new TLS certificate is installed. When a TLS certificate is renewed, new connections use the new TLS certificate. Existing connections are not interrupted.</p>
+</div>
+<div class="paragraph">
+<p>To revoke a TLS certificate before you retire a server, during testing, or before you move from one ACME CA to another, a user that is in the administrator role can send the following HTTPS request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-command hljs" data-lang="command">curl -kv https://mydomain.com:443/ibm/api/acmeca/certificate -X POST -u admin:password -H "content-type: application/json" -d '{"operation":"revokeCertificate","reason":"key_compromise"}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can specify a revocation reason by using the <code>reason</code> key-value pair. The following reason values are valid:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>unspecified</code></p>
+</li>
+<li>
+<p><code>key_compromise</code></p>
+</li>
+<li>
+<p><code>ca_compromise</code></p>
+</li>
+<li>
+<p><code>affiliation_changed</code></p>
+</li>
+<li>
+<p><code>superseded</code></p>
+</li>
+<li>
+<p><code>cessation_of_operations</code></p>
+</li>
+<li>
+<p><code>certificate_hold</code></p>
+</li>
+<li>
+<p><code>remove_from_crl</code></p>
+</li>
+<li>
+<p><code>privilege_withdrawn</code></p>
+</li>
+<li>
+<p><code>aa_compromise</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t specify a reason value, the default value is <code>unspecified</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_acme_ca_account_and_certificate_monitoring_with_the_rest_api"><a class="anchor" href="#_acme_ca_account_and_certificate_monitoring_with_the_rest_api"></a>ACME CA account and certificate monitoring with the REST API</h3>
+<div class="paragraph">
+<p>You can monitor the active ACME CA account and any active TLS certificates by sending HTTPS requests to the REST API. You can check your account details and contact information or view the current CA-signed TLS certificate details, such as the validity dates for the certificate and the issuer. If you request a certificate renewal, you can see the updated TLS certificate information. However, the content that is returned from these HTTPS endpoints is for informational purposes only and cannot be used or depended on programmatically.</p>
+</div>
+<div class="paragraph">
+<p>To view both the active ACME CA account and TLS certificate, a user that is in either the administrator or reader role can send the following HTTPS request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-command hljs" data-lang="command">curl -kv https://mydomain.com:443/ibm/api/acmeca -X GET -u admin:password</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To view only the active account, a user that is in either the administrator or reader role can send the following HTTPS request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-command hljs" data-lang="command">curl -kv https://mydomain.com:443/ibm/api/acmeca/account -X GET -u admin:password</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To view only the active TLS certificate, a user that is in either the administrator or reader role can send the following HTTPS request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-command hljs" data-lang="command">curl -kv https://mydomain.com:443/ibm/api/acmeca/certificate -X GET -u admin:password</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also access the REST endpoint by using a browser and providing administrator or reader role credentials, as shown in the following examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>https://mydomain.com:443/ibm/api/acmeca
+https://mydomain.com:443/ibm/api/acmeca/account
+https://mydomain.com:443/ibm/api/acmeca/certificate</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_see_also"><a class="anchor" href="#_see_also"></a>See Also</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="troubleshooting.html#Troubleshooting_ACME" class="xref page">Troubleshooting ACME certificates</a></p>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+ <footer>
+    <div id="footer_gray_background">
+        <div id="footer_top_container" class="footer_container container-fluid">
+            <div id="footer_project_container">
+                <span id="footer_open_liberty"></span>
+                <p id="footer_project">an IBM open source project</p>
+            </div>
+            <div id="footer_round_links_container">
+                <a id="footer_github_link" class="footer_round_btn" href="https://github.com/OpenLiberty/" target="_blank" rel="noopener" aria-label="Github"></a>
+                <a id="footer_twitter_link" class="footer_round_btn" href="https://twitter.com/OpenLibertyIO" target="_blank" rel="noopener" aria-label="Twitter"></a>
+                <a id="footer_stackoverflow_link" class="footer_round_btn" href="https://stackoverflow.com/questions/tagged/open-liberty" target="_blank" rel="noopener" aria-label="Open Liberty questions on Stack Overflow"></a>
+                <a id="footer_groupsio_link" class="footer_round_btn" href="https://groups.io/g/openliberty" target="_blank" rel="noopener" aria-label="Open Liberty Groups.io"></a>
+                <a id="footer_gitter_link" class="footer_round_btn" href="https://app.gitter.im/#/room/#OpenLiberty_development:gitter.im" target="_blank" rel="noopener" aria-label="Open Liberty Gitter"></a>
+            </div>
+        </div>         
+    </div>
+
+    <div id="footer_bottom_container" class="footer_container container-fluid">
+        <div id="footer_bottom_left_section">
+            <p id="footer_copyright">&copy; Copyright IBM Corp. 2017, 2023</p>
+            <p class="vertical_bar">|</p>
+            <a id="footer_privacy_policy_link" href="https://www.ibm.com/privacy/" target="_blank" rel="noopener" class="left_footer_link">Privacy policy</a>
+            <p class="vertical_bar">|</p>
+            <a id="footer_license_link" href="https://github.com/OpenLiberty/open-liberty/blob/release/LICENSE" target="_blank" rel="noopener" class="left_footer_link">License</a>
+            <p class="vertical_bar">|</p>
+            <a id="footer_logos_link" href="https://github.com/OpenLiberty/logos" target="_blank" rel="noopener" class="left_footer_link">Logos</a>
+        </div>      
+        <div id="footer_bottom_right_section">
+            <a id="footer_docs_link" href="/docs" aria-label="Open Liberty Docs" class="right_footer_link blue_link_light_background">Docs</a>
+            <a id="footer_blog_link" href="/blog" aria-label="Open Liberty Blog" class="right_footer_link blue_link_light_background">Blog</a>
+            <a id="footer_support_link" href="/support" aria-label="Open Liberty Support" class="right_footer_link blue_link_light_background">Support</a>
+        </div>
+    </div>
+</footer>
+
+<!-- PRE-LOADED IMAGES FOR ON HOVER BEHAVIOR -->
+<div class="d-none hidden">
+    <img src="../../_/img/Footer_GitCat_Hover.svg" alt="OpenLiberty Github link">
+    <img src="../../_/img/Footer_TwitterBird_Hover.svg" alt="OpenLibertyIO Twitter link">
+    <img src="../../_/img/Footer_StackO_Hover.svg" alt="Open-liberty Stack Overflow link">
+    <img src="../../_/img/Footer_GroupsIO_Hover.svg" alt="Openliberty Groups IO link">    
+    <img src="../../_/img/footer_gitter_hover.svg" alt="Openliberty Gitter link">
+</div>
+<script src="../../_/js/01-nav.js"></script>
+<script src="../../_/js/02-fragment-jumper.js"></script>
+<script src="../../_/js/03-mobile-navbar.js"></script>
+<script src="../../_/js/07-tabs.js"></script>
+<script src="../../_/js/08-links.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/10-navscroll.js"></script>
+<script src="../../_/js/11-copy-to-clipboard.js"></script>
+  </body>
+</html>
